@@ -16,7 +16,7 @@ SET(CHAPTER_FILES
 
 ADD_LATEX_DOCUMENT(ParaViewTutorial.tex
   INPUTS ${CHAPTER_FILES}
-  CONFIGURE SC08_tut121_ParaView_Handouts.tex
+  CONFIGURE ParaViewTutorial.tex
   IMAGE_DIRS images images/icons
   USE_INDEX
   )
