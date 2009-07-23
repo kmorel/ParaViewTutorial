@@ -1,0 +1,214 @@
+% -*- latex -*-
+
+\documentclass[12pt]{book}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{picins}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage{xspace}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage{color}
+\definecolor{yellow}{rgb}{1,1,0}
+\definecolor{black}{rgb}{0,0,0}
+\definecolor{ltcyan}{rgb}{.75,1,1}
+\definecolor{red}{rgb}{1,0,0}
+
+% This wonderful package allows hyphenation in tt fonts and hyphenation of
+% words with underscores in them.
+\usepackage[htt]{hyphenat}
+
+\usepackage{hyperref}
+\hypersetup{pdftitle={@SHORT_TITLE@}}
+\hypersetup{pdfauthor={Kenneth Moreland}}
+% \hypersetup{colorlinks}
+% \hypersetup{linkcolor=blue}
+% \hypersetup{linkcolor=blue}
+\hypersetup{breaklinks}
+\hypersetup{pagebackref}
+\hypersetup{pdfstartpage=3}
+
+% -----------------------------------------------------------------------------
+%
+% Set the title, author, and date
+%
+
+\newcommand{\authorinfo}[3]{#1\thanks{\href{mailto:#2}{#2}} \\ #3}
+
+\title{@LONG_TITLE@}
+\author{%
+  \authorinfo{Kenneth~Moreland}{kmorel@sandia.gov}{Sandia~National~Laboratories}
+  %\and
+  %\authorinfo{John~Doe}{john.doe@kitware.com}{Kitware~inc.}
+  }
+
+\date{}
+
+
+%-----------------------------------------------------------------------------
+% Set up headers and footers with the fancyhdr package.
+\pagestyle{fancy}
+\fancyhead{} % clear header/footer fields
+\fancyfoot{}
+\fancyhead[EL]{\thepage}
+\fancyhead[ER]{\leftmark}
+\fancyhead[OL]{\rightmark}
+\fancyhead[OR]{\thepage}
+\renewcommand\headrulewidth{0.25pt}
+\setlength{\headheight}{14.5pt}
+
+% -----------------------------------------------------------------------------
+% Environment, text types, and other common formatting for this document.
+
+% An environment for our figures, which we want to keep inline with the
+% text.
+\newenvironment{inlinefig}{\begin{center}}{\end{center}\nopagebreak[3]}
+
+% An environment for listing reference materials.
+%%% \newenvironment{reflist}%
+%%%		   {\begin{quote}\begin{description}}%
+%%%		   {\end{description}\end{quote}}
+\newenvironment{reflist}%
+	       {\begin{description}}%
+	       {\end{description}}
+
+% Font for text taken from the GUI
+\newcommand*{\gui}[1]{\textsf{#1}}
+
+% Right arrow (used frequently to show sequence of clicks).
+\newcommand{\ra}{\ensuremath{\rightarrow}\xspace}
+
+% Font for a keyterm
+\newcommand*{\keyterm}[1]{\index{#1}\textbf{#1}}
+
+% Insert an icon image.
+\newlength{\fontdrop}		% Set length to drop below baseline so that
+\settodepth{\fontdrop}{()}	% we can drop the image to fill the actual line
+\newcommand*{\includeinlinegraphics}[1]{%
+  \raisebox{-\fontdrop}{\includegraphics[height=\baselineskip]{#1}}
+}
+\newcommand*{\icon}[1]{\includeinlinegraphics{images/icons/#1}}
+
+% Common images for the object inspector buttons.
+\newcommand{\apply}{\includeinlinegraphics{images/Apply}\xspace}
+\newcommand{\reset}{\includeinlinegraphics{images/Reset}\xspace}
+\newcommand{\delete}{\includeinlinegraphics{images/Delete}\xspace}
+
+% Icons for common filters.
+\newcommand{\calculator}{\index{calculator}\icon{pqCalculator24}\xspace}
+\newcommand{\contour}{\index{contour}\icon{pqIsosurface24}\xspace}
+\newcommand{\clip}{\index{clip}\icon{pqClip24}\xspace}
+\newcommand{\slice}{\index{slice}\icon{pqSlice24}\xspace}
+\newcommand{\threshold}{\index{threshold}\icon{pqThreshold24}\xspace}
+\newcommand{\extractSubset}{\index{extract subset}\icon{pqExtractGrid24}\xspace}
+\newcommand{\glyph}{\index{glyph}\icon{pqGlyph24}\xspace}
+\newcommand{\streamTracer}{\index{stream tracer}\icon{pqStreamTracer24}\xspace}
+\newcommand{\warp}{\index{warp!vector}\icon{pqWarp24}\xspace}
+\newcommand{\group}{\index{group}\icon{pqGroup24}\xspace}
+\newcommand{\extractGroup}{\index{extract group}\icon{pqGroupExtract24}\xspace}
+
+% Camera view icons
+\newcommand{\xPlus}{\icon{pqXPlus32}\xspace}
+\newcommand{\xMinus}{\icon{pqXMinus32}\xspace}
+\newcommand{\yPlus}{\icon{pqYPlus32}\xspace}
+\newcommand{\yMinus}{\icon{pqYMinus32}\xspace}
+\newcommand{\zPlus}{\icon{pqZPlus32}\xspace}
+\newcommand{\zMinus}{\icon{pqZMinus32}\xspace}
+\newcommand{\resetCamera}{\icon{pqResetCamera24}\xspace}
+
+% Animation buttons
+\newcommand{\vcrPlay}{\icon{pqVcrPlay32}\xspace}
+\newcommand{\vcrPause}{\icon{pqVcrPause32}\xspace}
+\newcommand{\vcrLoop}{\icon{pqVcrLoop24}\xspace}
+\newcommand{\vcrFirst}{\icon{pqVcrFirst32}\xspace}
+\newcommand{\vcrLast}{\icon{pqVcrLast32}\xspace}
+\newcommand{\vcrForward}{\icon{pqVcrForward32}\xspace}
+\newcommand{\vcrBack}{\icon{pqVcrBack32}\xspace}
+
+% Multiview icons
+\newcommand{\splitViewH}{\includegraphics[height=.75\baselineskip]{images/icons/pqSplitViewH12}\xspace}
+\newcommand{\splitViewV}{\includegraphics[height=.75\baselineskip]{images/icons/pqSplitViewV12}\xspace}
+\newcommand{\deleteView}{\icon{DeleteView}\xspace}
+\newcommand{\maximizeView}{\icon{MaximizeView}\xspace}
+\newcommand{\restoreView}{\icon{RestoreView}\xspace}
+
+% Selection icons
+\newcommand{\selectCellsOn}{\icon{pqSurfaceSelectionCell24}\xspace}
+\newcommand{\selectPointsOn}{\icon{pqSurfaceSelectionPoint24}\xspace}
+\newcommand{\selectCellsThrough}{\icon{pqFrustumSelectionCell24}\xspace}
+\newcommand{\selectPointsThrough}{\icon{pqFrustumSelectionPoint24}\xspace}
+\newcommand{\selectBlocks}{\icon{pqGroupExtract24}\xspace}
+
+% Other common icons
+\newcommand{\eyeball}{\icon{pqEyeball16}\xspace}
+\newcommand{\eyeballg}{\icon{pqEyeballd16}\xspace}
+
+\newcommand{\connect}{\icon{pqConnect32}\xspace}
+\newcommand{\disconnect}{\icon{pqDisconnect32}\xspace}
+
+% Used for saving enumeration numbers
+\newcounter{saveenumi}
+\newcommand{\savecounter}{\setcounter{saveenumi}{\theenumi}}
+\newcommand{\restorecounter}{\setcounter{enumi}{\thesaveenumi}}
+
+
+% -----------------------------------------------------------------------------
+\begin{document}
+
+\frontmatter
+
+\sloppy
+\maketitle
+
+\chapter*{Abstract}
+
+ParaView is a powerful open-source turnkey application for analyzing and
+visualizing large data sets in parallel.  ParaView is regularly used by
+Sandia National Laboratories analysts to visualize simulations run on the
+Red Storm and ASC Purple supercomputers and by thousands of other users in
+worldwide.  Designed to be configurable, extendible, and scalable, ParaView
+is built upon the Visualization Toolkit (VTK) to allow rapid deployment of
+visualization components.  This tutorial presents the architecture of
+ParaView and the fundamentals of parallel visualization.  Attendees will
+learn the basics of using ParaView for scientific visualization with
+hands-on lessons.  The tutorial features detailed guidance in visualizing
+the massive simulations run on today’s supercomputers and an introduction
+to scripting and extending ParaView.
+
+\tableofcontents
+
+\mainmatter
+
+\input{Introduction.tex}
+
+\input{BasicUsage.tex}
+
+\input{VisualizingLargeModels.tex}
+
+\input{FurtherReading.tex}
+
+\backmatter
+
+\chapter{Acknowledgements}
+
+Thanks to Amy Squillacote for contributing material to the tutorial.  And,
+of course, thanks to everyone at Kitware, Sandia, and CSimSoft for their
+hard work in making ParaView what it is today.
+
+Sandia is a multiprogram laboratory operated by Sandia Corporation, a
+Lockheed Martin Company, for the United States Department of Energy's
+National Nuclear Security Administration under contract DE-AC04-94AL85000.
+
+\clearpage
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+\end{document}
