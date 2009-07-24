@@ -2,8 +2,9 @@
 \label{chap:BasicUsage}
 
 Let us get started using ParaView.  In order to follow along, you will need
-your own installation of ParaView.  If you do not already have ParaView,
-you can download a copy from
+your own installation of ParaView.  Specifically, this document is based
+off of ParaView version \pvversion.  If you do not already have ParaView
+\pvversion, you can download a copy from
 \href{http://www.paraview.org}{www.paraview.org} (click on the download
 link).  ParaView launches like most other applications.  On Windows, the
 launcher is located in the start menu.  On Macintosh, open the application
@@ -11,7 +12,7 @@ bundle that you installed.  On Linux, execute \texttt{paraview} from a
 command prompt (you may need to set your path).
 
 The examples in this tutorial also rely on some data that is available at
-\href{http://www.paraview.org/Wiki/SC08_ParaView_Tutorial}{http://www.paraview.org/Wiki/SC08\_ParaView\_Tutorial}.
+\href{http://www.paraview.org/Wiki/ParaView_Tutorial}{http://www.paraview.org/Wiki/ParaView\_Tutorial}.
 You may install this data into any directory that you like, but make sure
 that you can find that directory easily.  Any time the tutorial asks you to
 load a file it will be from the directory you installed this data in.
@@ -67,53 +68,69 @@ the \gui{View} menu.
 
 There are two ways to get data into ParaView: read data from a file or
 generate data with a \keyterm{source} object.  All sources are located in
-the \gui{Source} menu.  Sources can be used to add annotation to a view,
-but they are also very handy when exploring ParaView’s features.  Let us
-start with a simple one.  Go to the \gui{Source} menu and select
-\gui{Cylinder}.  Once you select the \gui{Cylinder} item you will notice
-that an item named \gui{CylinderSource1} is added to and selected in the
-pipeline browser.  You will also notice that the object inspector is filled
-with the properties for the cylinder source.  Click the \gui{Apply} button
-\apply to accept the default parameters.
+the \gui{Sources} menu.  Sources can be used to add annotation to a view,
+but they are also very handy when exploring ParaView’s features.
 
-Once you click \gui{Apply}, the cylinder object will be displayed in the 3D
-view window on the right.  You can manipulate this 3D view by dragging the
-mouse over the 3D view.  Experiment with dragging different mouse
-buttons---left, middle, and right---to perform different rotate, pan, and
-zoom operations.  Also try using the buttons in conjunction with the
-modifier keys: shift, ctrl, and alt.
+\begin{exercise}{Creating a Source}
+  \label{ex:CreatingASource}
+  Let us start with a simple one.  Go to the \gui{Sources} menu and select
+  \gui{Cylinder}.  Once you select the \gui{Cylinder} item you will notice
+  that an item named \gui{Cylinder1} is added to and selected in the
+  pipeline browser.  You will also notice that the object inspector is
+  filled with the properties for the cylinder source.  Click the
+  \gui{Apply} button \apply to accept the default parameters.
 
-You will quickly notice that ParaView creates not a real cylinder but
-rather an approximation of a cylinder using polygonal \keyterm{facets}.
-The default parameters for the cylinder source provide a very coarse
-approximation of only six facets. (In fact, this object looks more like a
-prism than a cylinder.) If we want a better representation of a cylinder,
-we can create one by increasing the \gui{Resolution} parameter.
+  Once you click \gui{Apply}, the cylinder object will be displayed in the
+  3D view window on the right.  You can manipulate this 3D view by dragging
+  the mouse over the 3D view.  Experiment with dragging different mouse
+  buttons---left, middle, and right---to perform different rotate, pan, and
+  zoom operations.  Also try using the buttons in conjunction with the
+  shift and ctrl modifier keys.
 
-\begin{inlinefig}
-  \includegraphics[width=2.5in]{images/ResolutionParameter}
-\end{inlinefig}
+  You will quickly notice that ParaView creates not a real cylinder but
+  rather an approximation of a cylinder using polygonal \keyterm{facets}.
+  The default parameters for the cylinder source provide a very coarse
+  approximation of only six facets. (In fact, this object looks more like a
+  prism than a cylinder.) If we want a better representation of a cylinder,
+  we can create one by increasing the \gui{Resolution} parameter.
 
-Using either the slider or text edit, increase the resolution to 50 or
-more.  Notice that the \gui{Apply} button \apply has turned green (or blue
-on Mac) again.  This is because changes you make to the object inspector
-are not immediately enacted.  The highlighted button is a reminder that the
-parameters of one or more pipeline objects are “out of sync” with the data
-that you are viewing.  Hitting the \gui{Apply} button will accept these
-changes whereas hitting the \gui{Reset} button \reset will revert the
-options back to the last time they were applied.  Hit the \gui{Apply}
-button now.  The resolution is changed so that it is virtually
-indistinguishable from a true cylinder.
+  \begin{inlinefig}
+    \includegraphics[width=2.5in]{images/ResolutionParameter}
+  \end{inlinefig}
+
+  Using either the slider or text edit, increase the resolution to 50 or
+  more.  Notice that the \gui{Apply} button \apply has turned green (or
+  blue on Mac) again.  This is because changes you make to the object
+  inspector are not immediately enacted.  The highlighted button is a
+  reminder that the parameters of one or more pipeline objects are ``out of
+  sync'' with the data that you are viewing.  Hitting the \gui{Apply} button
+  will accept these changes whereas hitting the \gui{Reset} button \reset
+  will revert the options back to the last time they were applied.  Hit the
+  \gui{Apply} button now.  The resolution is changed so that it is
+  virtually indistinguishable from a true cylinder.
+\end{exercise}
 
 Now is a good time to note the undo~\icon{pqUndo32} and
-redo~\icon{pqRedo32} buttons in the toolbar, which are new to ParaView 3.
-Visualizing your data is often an exploratory process, and it is often
-helpful to revert back to a previous state.  You can even undo back to the
-point before your data was created and redo again.  Try that now.  There
-are also special undo camera~\icon{pqUndoCamera24} and redo
-camera~\icon{pqRedoCamera24} buttons.  These allow you to go back and forth
-between camera angles that you have made so that you no longer have to
-worry about errant mouse movements ruining that perfect view.
+redo~\icon{pqRedo32} buttons in the toolbar.  Visualizing your data is
+often an exploratory process, and it is often helpful to revert back to a
+previous state.  You can even undo back to the point before your data was
+created and redo again.
+
+\begin{exercise}{Undo and Redo}
+  \label{ex:UndoAndRedo}
+  Experiment with the undo~\icon{pqUndo32} and redo~\icon{pqRedo32}
+  buttons.  If you have not done so, create and modify a pipeline object
+  like what is done in Exercise~\ref{ex:CreatingASource}.  Watch how
+  parameter changes can be reverted and restored.  Also notice how whole
+  pipeline objects can be destroyed and recreated.
+
+  There are also special undo camera~\icon{pqUndoCamera24} and redo
+  camera~\icon{pqRedoCamera24} buttons.  These allow you to go back and
+  forth between camera angles that you have made so that you no longer have
+  to worry about errant mouse movements ruining that perfect view.  Move
+  the camera around and then use these buttons to revert and restore the
+  camera angle.
+\end{exercise}
 
 There are also many options for selecting how objects are rendered.  You
 will notice over the 3D view a \icon{pqOptions16} button for changing the
@@ -124,29 +141,64 @@ change things like the background color, the lighting, and annotation.
   \includegraphics[width=3in]{images/RenderViewOptions}
 \end{inlinefig}
 
-Also be aware of the \gui{Display} tab in the object inspector.  This tab
-provides the rendering options for the selected object.  It includes the
-visibility, coloring, and representation.  Be aware that some of the view
-options and object display options are repeated elsewhere in the ParaView
-GUI for convenience.
+Another location for rendering options is the \gui{Display} tab in the
+object inspector.  This tab provides the rendering options that apply
+specifically for the selected object.  It includes the visibility,
+coloring, and representation.  Be aware that some of the view options and
+object display options are repeated elsewhere in the ParaView GUI for
+convenience.
 
 \begin{inlinefig}
   \includegraphics[width=1.6in]{images/DisplayTab}
 \end{inlinefig}
 
-We are done with the cylinder source now.  We can delete the pipeline
-object by selecting the \gui{Properties} tab and hitting delete \delete in
-the object inspector.
+\begin{exercise}{Modifying Rendering Parameters}
+  \label{ex:ModifyingRenderingParameters}
+  Click the \icon{pqOptions16} button above the 3D view to bring up the
+  \gui{Render View Options} dialog box.  Explore the different panels of
+  options.  Try modifying how the view looks in the following ways.
+  (Remember that you will have to hit \gui{Apply} or \gui{OK} before the
+  changes take effect.)
+
+  \begin{itemize}
+  \item Change the background color.  (Notice that you can reset it to the
+    default.)
+  \item Turn the Orientation Axis (the axis in the lower left corner of the
+    view) off and on.
+  \item Move the Orientation Axis in the view.  (Hint: Make the axis
+    interactive and then click and drag in the 3D view.)
+  \end{itemize}
+
+  Now change the drawing parameters of the cylinder.  (If you do not have a
+  cylinder or another pipeline object, create one as described in
+  Exercise~\ref{ex:CreatingASource}.)  Make sure the cylinder is selected
+  in the pipeline browser.  In the object inspector, select the
+  \gui{Display} tab.
+
+  \begin{itemize}
+  \item Set the (solid) color of the cylinder.  (Note: You can also set the
+    color with the \icon{pqEditColor24} toolbar button.)
+  \item Make the cylinder shiny.  (Hint: Make the \gui{Specular Intensity}
+    1.0.)
+  \item Make the cylinder transparent.  (Hint: Lower the \gui{Opacity}.)
+  \item Show 3D axes with tic marks giving spatial position (\gui{Show cube
+    axes}).
+  \end{itemize}
+
+  We are done with the cylinder source now.  We can delete the pipeline
+  object by selecting the \gui{Properties} tab and hitting delete \delete
+  in the object inspector.
+\end{exercise}
 
 
 \section{Loading Data}
 
 Now that we have had some practice using the ParaView GUI, let us load in
 some real data.  As you would expect, the \gui{Open} command is the first
-one off of the \gui{File} menu, and there is also toolbar button for
-opening a file.  ParaView supports many file types, and the list grows as
-more types get added.  The following is a list of currently available
-readers.
+one off of the \gui{File} menu, and there is also toolbar
+button~\icon{pqOpen32} for opening a file.  ParaView supports many file
+types, and the list grows as more types get added.  The following is a list
+of currently available readers.
 
 \begin{multicols}{2}
   \begin{itemize}
@@ -160,6 +212,7 @@ readers.
   \item LS-DYNA
   \item SpyPlot CTH
   \item EnSight (.case, .sos)
+  \item netCDF (.ncdf, .nc)
   \item BYU (.g)
   \item Protein Data Bank (.pdb)
   \item XMol Molecule
@@ -174,7 +227,13 @@ readers.
   \item Meta Image (.mhd, .mha)
   \item Facet Polygonal Data
   \item Phasta Files (.pht)
+  \item SESAME Tables
+  \item MFIX (.RES)
+  \item Fluent Case Files (.cas)
+  \item OpenFOAM Files (.foam)
+  \item Cosmology Files (.cosmo)
   \item PNG Image Files
+  \item TIFF Image Files
   \item Raw Image Files
   \item Comma Separated Values (.csv)
   \end{itemize}
@@ -190,26 +249,29 @@ could easily be added.  There are also many readers created that can plug
 into the VTK framework but have not been committed back to VTK; someone may
 have a reader readily available that you can use.
 
-Let us open our first file now.  Click the \gui{Open} toolbar (or menu item) and
-open the file \gui{disk\_out\_ref.ex2}.  Note that opening a file is a two step
-process, so that you do not see any data yet.  Instead, you see that the
-object inspector is populated with several options about how we want to
-read the data.
+\begin{exercise}{Opening a File}
+  \label{ex:OpeningAFile}
+  Let us open our first file now.  Click the \gui{Open} toolbar (or menu
+  item)~\icon{pqOpen32} and open the file \gui{disk\_out\_ref.ex2}.  Note
+  that opening a file is a two step process, so that you do not see any
+  data yet.  Instead, you see that the object inspector is populated with
+  several options about how we want to read the data.
 
-\begin{inlinefig}
-  \includegraphics{images/Variables_disk_out_ref}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics{images/Variables_disk_out_ref}
+  \end{inlinefig}
 
-Click the checkbox in the header of the variable list to turn on the
-loading of all the variables.  This is a small data set, so we do not have
-to worry about loading too much into memory.  Once all of the variables are
-selected, click \apply to load all of the data.  When the data is loaded you
-will see that the geometry looks like a cylinder with a hollowed out
-portion in one end.  This data is the output of a simulation for the flow
-of air around a heated and spinning disk.  The mesh you are seeing is the
-air around the disk (with the cylinder shape being the boundary of the
-simulation.  The hollow area in the middle is where the heated disk would
-be were it meshed for the simulation.
+  Click the checkbox in the header of the variable list to turn on the
+  loading of all the variables.  This is a small data set, so we do not
+  have to worry about loading too much into memory.  Once all of the
+  variables are selected, click \apply to load all of the data.  When the
+  data is loaded you will see that the geometry looks like a cylinder with
+  a hollowed out portion in one end.  This data is the output of a
+  simulation for the flow of air around a heated and spinning disk.  The
+  mesh you are seeing is the air around the disk (with the cylinder shape
+  being the boundary of the simulation.  The hollow area in the middle is
+  where the heated disk would be were it meshed for the simulation.
+\end{exercise}
 
 Before we continue on to filtering the data, let us take a quick look at
 some of the ways to represent the data.  The most common parameters for
@@ -219,19 +281,24 @@ representing data are located in a pair of toolbars.
   \includegraphics[width=\linewidth]{images/DataRepresentationToolbars}
 \end{inlinefig}
 
-Play with the data representation a bit.  Use the variable chooser to color
-the surface by the \gui{Pres} variable.  Then turn the color legend on to
-see the actual pressure values.  To see the structure of the mesh, change
-the representation to \gui{Surface With Edges}.  You can view both the cell
-structure and the interior of the mesh with the \gui{Wireframe}
-representation.
+\begin{exercise}{Representation and Field Coloring}
+  \label{ex:RepresentationAndFieldColoring}
+  Play with the data representation a bit.  Make sure
+  \gui{disk\_out\_ref.ex2} is selected in the pipeline browser.  (If you do
+  not have the data loaded, repeat Exercise~\ref{ex:OpeningAFile}.)  Use
+  the variable chooser to color the surface by the \gui{Pres} variable.
+  Then turn the color legend on to see the actual pressure values.  To see
+  the structure of the mesh, change the representation to \gui{Surface With
+    Edges}.  You can view both the cell structure and the interior of the
+  mesh with the \gui{Wireframe} representation.
 
-\begin{inlinefig}
-  \includegraphics[width=2.25in]{images/DataRepresentation1}
-  \includegraphics[width=2.25in]{images/DataRepresentation2} \\
-  \includegraphics[width=2.25in]{images/DataRepresentation3}
-  \includegraphics[width=2.25in]{images/DataRepresentation4}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=2.25in]{images/DataRepresentation1}
+    \includegraphics[width=2.25in]{images/DataRepresentation2} \\
+    \includegraphics[width=2.25in]{images/DataRepresentation3}
+    \includegraphics[width=2.25in]{images/DataRepresentation4}
+  \end{inlinefig}
+\end{exercise}
 
 
 \section{Filters}
@@ -320,29 +387,45 @@ Throughout this tutorial we will explore many filters.  However, we cannot
 explore all the filters in this forum.  Consult \emph{The ParaView Guide}
 for more information on each filter.
 
-Let us apply our first filter.  Make sure that \gui{disk\_out\_ref.ex2} is
-selected in the pipeline browser and then select the contour
-filter~\contour from the filter toolbar or \gui{Filters} menu.  Notice that
-a new item is added to the pipeline filter underneath the reader and the
-object inspector updates to the parameters of the new filter.  As with
-reading a file, applying a filter is a two step process.  After creating
-the filter you get a chance to modify the parameters (which you will almost
-always do) before applying the filter.
+\begin{exercise}{Apply a Filter}
+  \label{ex:ApplyAFilter}
+  Let us apply our first filter.  If you do not have the disk\_out\_ref.ex2
+  data loaded, do so know (Exercise~\ref{ex:OpeningAFile}).  Make sure that
+  \gui{disk\_out\_ref.ex2} is selected in the pipeline browser and then
+  select the contour filter~\contour from the filter toolbar or
+  \gui{Filters} menu.  Notice that a new item is added to the pipeline
+  filter underneath the reader and the object inspector updates to the
+  parameters of the new filter.  As with reading a file, applying a filter
+  is a two step process.  After creating the filter you get a chance to
+  modify the parameters (which you will almost always do) before applying
+  the filter.
 
-\begin{inlinefig}
-  \includegraphics{images/ContourOptions}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics{images/ContourOptions}
+  \end{inlinefig}
 
-We will use the contour filter to create an isosurface where the
-temperature is equal to 400 K.  First, change the \gui{Contour By}
-parameter to the \gui{Temp} variable.  Then, change the isosurface value to
-\gui{400}.  Finally, hit \apply.  You will see the isosurface appear inside
-of the volume.  The surface is colored by pressure, which matches the
-source.
+  We will use the contour filter to create an isosurface where the
+  temperature is equal to 400 K.  First, change the \gui{Contour By}
+  parameter to the \gui{Temp} variable.  Then, change the isosurface value
+  to \gui{400}.  Finally, hit \apply.  You will see the isosurface appear
+  inside of the volume.  If \gui{disk\_out\_ref.ex2} was still colored by
+  pressure from Exercise~\ref{ex:RepresentationAndFieldColoring}, then the
+  surface is colored by pressure to match.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/ContourResults}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/ContourResults}
+  \end{inlinefig}
+\end{exercise}
+
+In the preceding exercise, we applied a filter that processed the data and
+gave us the results we needed.  For most common operations, a single filter
+operation is sufficient to get the information we need.  However, filters
+are of the same class as readers.  That is, the general operations we apply
+to readers can also be applied to filters.  Thus, you can apply one filter
+to the data that is generated by another filter.  These readers and filters
+connected together form what we call a \keyterm{visualization pipeline}.
+The ability to form visualization pipelines provides a powerful mechanism
+for customizing the visualization to your needs.
 
 Let us play with some more filters.  Rather than show the mesh surface in
 wireframe, which often interferes with the view of what is inside it, we
@@ -350,47 +433,63 @@ will replace it with a cutaway of the surface.  We need to filters to
 perform this task.  The first filter will extract the surface, and the
 second filter will cut some away.
 
-Start by adding a filter that will extract the surfaces.  We do that with
-the following steps.
+\begin{exercise}{Creating a Visualization Pipeline}
+  \label{ex:CreatingAVisualizationPipeline}
+  The images and some of the discussion in this exercise assume you are
+  starting with the state right after finishing
+  Exercise~\ref{ex:ApplyAFilter}.  If you have had to restart ParaView
+  since or your state does not match up well enough, it is sufficient to
+  simply have disk\_out\_ref.ex2 loaded.
 
-\begin{enumerate}
-\item Select \gui{disk\_out\_ref.ex2} in the pipeline browser.
-\item From the menu bar, select \gui{Filters} \ra \gui{Alphabetical} \ra
-  \gui{Extract Surface}. \index{extract surface}
-\item Hit the \apply button.
-\end{enumerate}
+  Start by adding a filter that will extract the surfaces.  We do that with
+  the following steps.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/CutSurface1}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Select \gui{disk\_out\_ref.ex2} in the pipeline browser.
+  \item From the menu bar, select \gui{Filters} \ra \gui{Alphabetical} \ra
+    \gui{Extract Surface}. \index{extract surface}
+  \item Hit the \apply button.
+    \savecounter
+  \end{enumerate}
 
-The wireframe has been replaced by a solid surface.  You cannot see the
-contour anymore, but do not worry.  It is still in there hidden by the
-surface.  If you did not see any effect after applying the filter, you may
-have forgotten step one and applied the filter to the wrong object.  If the
-\gui{ExtractSurface1} object is not connected directly to the
-\gui{disk\_out\_ref.ex2}, then this is what went wrong.  If so, you can
-delete the filter and try again.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/CutSurface1}
+  \end{inlinefig}
 
-Now we will cut away the external surface to expose the isosurface
-underneath.
+  When you apply the \gui{Extract Surface} filter, you will once again see
+  the surface of the mesh.  Although it looks like the original mesh, it is
+  different in that this data is hollow whereas the original data was solid
+  throughout.
 
-\begin{enumerate}
-\item Verify that \gui{ExtractSurface1} is selected in the pipeline
-  browser.
-\item Create a clip filter \clip from the toolbar or \gui{Filters} menu.
-\item Uncheck the \gui{Show Plane} checkbox
-  \includeinlinegraphics{images/ShowPlaneCheckbox} in the object inspector.
-\item Click the \apply button.
-\end{enumerate}
+  If you were showing the results of the contour filter, you cannot see the
+  contour anymore, but do not worry.  It is still in there hidden by the
+  surface.  If you are showing the contour but you did not see any effect
+  after applying the filter, you may have forgotten step one and applied
+  the filter to the wrong object.  If the \gui{ExtractSurface1} object is
+  not connected directly to the \gui{disk\_out\_ref.ex2}, then this is what
+  went wrong.  If so, you can delete the filter and try again.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/CutSurface2}
-\end{inlinefig}
+  Now we will cut away the external surface to expose the internal
+  structure and isosurface underneath (if you have one).
 
-You should now see the isosurface contour within a cutaway of the mesh
-surface.  You will probably have to rotate the mesh to see the contour
-clearly.
+  \begin{enumerate}
+    \restorecounter
+  \item Verify that \gui{ExtractSurface1} is selected in the pipeline
+    browser.
+  \item Create a clip filter \clip from the toolbar or \gui{Filters} menu.
+  \item Uncheck the \gui{Show Plane} checkbox
+    \includeinlinegraphics{images/ShowPlaneCheckbox} in the object inspector.
+  \item Click the \apply button.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/CutSurface2}
+  \end{inlinefig}
+
+  If you have a contour, you should now see the isosurface contour within a
+  cutaway of the mesh surface.  You will probably have to rotate the mesh
+  to see the contour clearly.
+\end{exercise}
 
 \begin{inlinefig}
   \includegraphics[width=\linewidth]{images/PipelineBrowserStructure}
@@ -569,7 +668,10 @@ with the tube filter.
 \begin{enumerate}
   \restorecounter
 \item From the menu bar, select \gui{Filters} \ra \gui{Alphabetical} \ra
-  \gui{Tube}. \index{tube}
+  \gui{Tube}\index{tube}.\footnote{In ParaView 3.6 the name of the tube
+    filter was changed to \gui{Generate Tubes}.  In future versions, the
+    name will change back to \gui{Tube} to make it easier to find in
+    alphabetical filter lists.}
 \item Hit the \apply button.
 \end{enumerate}
 

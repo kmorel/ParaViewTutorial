@@ -4,8 +4,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 INCLUDE(UseLATEX.cmake)
 
-SET(SHORT_TITLE "Large Scale Visualization with ParaView")
-SET(LONG_TITLE "${SHORT_TITLE} \\\\ Supercomputing 2008 Tutorial")
+SET(PARAVIEW_VERSION "3.6")
+
+SET(SHORT_TITLE "The ParaView Tutorial")
+SET(LONG_TITLE "${SHORT_TITLE} \\\\ {\\small Version ${PARAVIEW_VERSION}}")
 
 SET(CHAPTER_FILES
   Introduction.tex

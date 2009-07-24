@@ -22,6 +22,9 @@
 \definecolor{ltcyan}{rgb}{.75,1,1}
 \definecolor{red}{rgb}{1,0,0}
 
+% This package enables us to create the list of exercises.
+\usepackage[titles]{tocloft}
+
 % This wonderful package allows hyphenation in tt fonts and hyphenation of
 % words with underscores in them.
 \usepackage[htt]{hyphenat}
@@ -68,9 +71,42 @@
 % -----------------------------------------------------------------------------
 % Environment, text types, and other common formatting for this document.
 
+% Use in place of the version to have it update to what is defined in
+% CMakeLists.txt
+\newcommand{\pvversion}{@PARAVIEW_VERSION@\xspace}
+
+% This defines \exercise, which is a special version of the section command
+% that defines a section with an exercise.
+\newcommand{\listexercisename}{List of Exercises}
+\newlistof[chapter]{exercise}{loe}{\listexercisename}
+% Note, the above [chapter] resets the counter each chapter.  Do we want that?
+
+% An environment for defining an exercise.  It is best if there is _not_ a
+% paragraph between either the \begin or \end and the text (that is, no
+% blank line after \begin{exercise} or before \end{exercise}).
+\newenvironment{exercise}[1]{%
+  \refstepcounter{exercise}
+  \vspace{3.25ex}
+  \noindent\textbf{\large{}Exercise \theexercise: #1}
+  \addcontentsline{loe}{exercise}{\protect\numberline{\theexercise}#1}
+  \addcontentsline{toc}{subsection}{Exercise \theexercise: #1}
+  \vspace{1.5ex}
+  \par\noindent
+}{%
+  \hspace*{\fill}$\blacklozenge$
+  \vspace{1.5ex}
+}
+
 % An environment for our figures, which we want to keep inline with the
-% text.
-\newenvironment{inlinefig}{\begin{center}}{\end{center}\nopagebreak[3]}
+% text.  The nopagebreak option tries to avoid adding a page break (which
+% can add a lot of space on the previous page).  The raggedbottom option
+% says that if a page break is absolutely necessary, do not try to make the
+% bottom of the previous page to the bottom of the page; it will add a
+% bunch of space in the middle that will look bad.  The flush bottom option
+% restores normal page flush operation.
+\newenvironment{inlinefig}%
+               {\raggedbottom\begin{center}}%
+               {\end{center}\nopagebreak[3]\flushbottom}
 
 % An environment for listing reference materials.
 %%% \newenvironment{reflist}%
@@ -185,6 +221,8 @@ to scripting and extending ParaView.
 
 \tableofcontents
 
+\listofexercise
+
 \mainmatter
 
 \input{Introduction.tex}
@@ -208,6 +246,7 @@ Lockheed Martin Company, for the United States Department of Energy's
 National Nuclear Security Administration under contract DE-AC04-94AL85000.
 
 \clearpage
+\phantomsection
 \addcontentsline{toc}{chapter}{Index}
 \printindex
 
