@@ -832,7 +832,7 @@ filter that will plot the values of the mesh’s fields over a line in space.
   you move the balls some of the fields in the object inspector also
   change.  You can also place the balls by hovering your mouse over the
   target location and hitting the p key.  This will alternatively place
-  each ball at the surface underneath the mouse curser.  This was the
+  each ball at the surface underneath the mouse cursor.  This was the
   purpose of adding the clip filter: It allows us to easily add the
   endpoints to this plane.  Note that placing the endpoints in this manner
   only works when rendering solid surfaces.  It will not work with a volume
@@ -929,10 +929,10 @@ temperature variables.
   are equalized) is three units away from the disk.
 \end{exercise}
 
-The ParaView framework is designed to any number of different types of
-views.  This is to provide researchers and developers a way to deliver new
-ways of looking at data.  To see another example of view, select
-\gui{disk\_out\_ref.ex2} in the pipeline browser, and then select
+The ParaView framework is designed to accommodate any number of different
+types of views.  This is to provide researchers and developers a way to
+deliver new ways of looking at data.  To see another example of view,
+select \gui{disk\_out\_ref.ex2} in the pipeline browser, and then select
 \gui{Filters} \ra \gui{Data Analysis} \ra
 \gui{Histogram}~\icon{pqHistogram24}. \index{histogram} Make the histogram
 for the Temp variable, and then hit the \apply button.
@@ -973,55 +973,88 @@ surface rendering, volume rendering allows you to see features all the way
 through a volume.
 
 Volume rendering is enabled by simply changing the representation of the
-object.  Let us replace the view of the temperature with a volume rendering
-of the data.
+object.  Let us try an example of that now.
 
-\begin{enumerate}
-\item Select the view showing the temperature on the surface of the clipped
-  mesh.
-\item Delete the clip filter that is visible.  First select the filter in
-  the pipeline and then hit the \delete button.  The clipped mesh will be
-  replaced with the full solid mesh (\gui{disk\_out\_ref.ex2}).
-\item Make sure \gui{disk\_out\_ref.ex2} is selected in the pipeline
-  browser.  Change the variable viewed to \gui{Temp} and change the
-  representation to \gui{Volume}.
-\end{enumerate}
+\begin{exercise}{Turning On Volume Rendering}
+  \label{ex:VolumeRendering}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/VolumeRender1}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Open the file disk\_out\_ref.ex2, load all variables, \apply (see
+    Exercise~\ref{ex:OpeningAFile}).
+  \item Make sure \gui{disk\_out\_ref.ex2} is selected in the pipeline
+    browser.  Change the variable viewed to \gui{Temp} and change the
+    representation to \gui{Volume}.
+  \end{enumerate}
 
-The solid opaque mesh is replaced with a translucent volume. You may notice
-that when rotating the image is temporarily replaced with a simpler image
-for performance reasons, we will discuss this feature in more detail later.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/VolumeRender1}
+  \end{inlinefig}
+
+  The solid opaque mesh is replaced with a translucent volume. You may
+  notice that when rotating the image is temporarily replaced with a
+  simpler image for performance reasons, which we will discuss this feature
+  in more detail later in Chapter~\ref{chap:VisualizingLargeModels}.
+\end{exercise}
+
 A useful feature of ParaView’s volume rendering is that it can be mixed
 with the surface rendering of other objects.  This allows you to add
 context to the volume rendering or to mix visualizations for a more
-information-rich view.  For example, we can add a volume rendering of the
-temperature to the view containing the streamlines.
+information-rich view.  For example, we can combine this volume rendering
+with a streamline vector visualization like we did in
+Exercise~\ref{ex:Streamlines}.
 
-\begin{enumerate}
-\item Select the view showing the streamlines.
-\item Click on the \eyeballg next to \gui{disk\_out\_ref.ex2} in the
-  pipeline browser to make it visible and also click on the label
-  \gui{disk\_out\_ref.ex2} itself to select that object.
-\item Change the variable viewed to \gui{Temp} and change the
-  representation to \gui{Volume}.
-\end{enumerate}
+\begin{exercise}{Combining Volume Rendering and Surface-Based Visualization}
+  \label{ex:CombiningVolumeAndSurfaceRendering}%
+  This exercise is a continuation of Exercise~\ref{ex:VolumeRendering}.
+  You will need to finish that exercise before beginning this one.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/VolumeRender2}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Add the stream tracer filter \streamTracer to
+    \gui{disk\_out\_ref.ex2}.
+  \item Click the \apply button to accept the default parameters.
+    \savecounter
+  \end{enumerate}
 
-The streamlines are now shown in context with the temperature throughout
-the volume.
+  You should now be seeing the streamlines embedded within the volume
+  rendering.  The following additional steps add geometry to make the
+  streamlines easier to see much like in
+  Exercise~\ref{ex:MakingStreamlinesFancy}.  They are optional, so you can
+  skip them if you wish.
+
+  \begin{enumerate}
+    \restorecounter
+  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
+    the \gui{Tube}\index{tube} filter and hit \apply.
+  \item If the streamlines are colored by \gui{Temp}, change that to
+    \gui{Solid Color}.
+  \item Select \gui{StreamTracer1} in the pipeline browser.
+  \item Add the glyph filter~\glyph to \gui{StreamTracer1}.
+  \item In the object inspector, change the \gui{Vectors} option (second
+    option from the top) to \gui{V}.
+  \item In the object inspector, change the \gui{Glyph Type} option (third
+    option from the top) to \gui{Cone}.
+  \item Hit the \apply button.
+  \item Color the glyphs with the \gui{Temp} variable.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/VolumeRender2}
+  \end{inlinefig}
+
+  The streamlines are now shown in context with the temperature throughout
+  the volume.
+\end{exercise}
 
 By default, ParaView will render the volume with the same colors as used on
 the surface with the transparency set to 0 for the low end of the range and
 1 for the high end of the range.  ParaView also provides an easy way to
 change the \keyterm{transfer function}, how scalar values are mapped to
-color and transparency.  With the volume rendered object selected in the
-pipeline browser, click on the edit color map~\icon{pqEditColor24} button.
+color and transparency.  You can access the transfer function editor by
+selecting the volume rendered pipeline object and clicking on the edit
+color map~\icon{pqEditColor24} button.
 
 \begin{inlinefig}
   \includegraphics[width=2.5in]{images/ColorScaleEditor}
@@ -1038,7 +1071,7 @@ Clicking on an existing control point will select it.  The selected control
 point can be dragged throughout the box to change its scalar value and
 transparency, and clicking again on the selected control point will bring
 up a dialog box.  The selected control point will be deleted when you hit
-the backspace or delete key.  Try adding and changing control points now.
+the backspace or delete key.
 
 Directly below the color bar are text entry widgets to numerically specify
 the \gui{Scalar Value} or \gui{Opacity} of the selected control point.  The
@@ -1053,20 +1086,35 @@ Setting up a transfer function can be tedious, so you can save it by
 clicking the \includeinlinegraphics{images/ColorMapSave} button.  The
 \includeinlinegraphics{images/ColorMapChoosePreset} button brings up a
 dialog that allows you to manage and apply the color maps that you have
-created as well as several provided by ParaView.  Press
-\includeinlinegraphics{images/ColorMapChoosePreset} now, select
-\gui{Black-Body Radiation} in the dialog box, and then click \gui{OK}.  Now
-your volume rendering looks more representative of heat.
+created as well as several provided by ParaView.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/VolumeRender3}
-\end{inlinefig}
+\begin{exercise}{Modifying Volume Rendering Transfer Functions}
+  \label{ex:ModifyingVolumeRenderingTransferFunctions}%
+  This exercise is a continuation of
+  Exercise~\ref{ex:CombiningVolumeAndSurfaceRendering}.  You will need to
+  finish that exercise (or minimally Exercise~\ref{ex:VolumeRendering})
+  before beginning this one.
 
-Notice that not only did the color mapping in the volume rendering change,
-but the color mapping for \gui{Temp} in all views, including the bar chart,
-changed.  This ensures consistency between the views and avoids any
-confusion from mapping the same variable with different colors or different
-ranges.
+  \begin{enumerate}
+  \item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
+    that the active object.
+  \item Click on the edit color map~\icon{pqEditColor24} button.
+  \item Try adding and changing control points and observe their effect on
+    the volume rendering.
+  \item Change the volume rendering to be more representative of heat.
+    Press \includeinlinegraphics{images/ColorMapChoosePreset}, select
+    \gui{Black-Body Radiation} in the dialog box, and then click \gui{OK}.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/VolumeRender3}
+  \end{inlinefig}
+
+  Notice that not only did the color mapping in the volume rendering
+  change, but all the color mapping for \gui{Temp} changed.  This ensures
+  consistency between the views and avoids any confusion from mapping the
+  same variable with different colors or different ranges.
+\end{exercise}
 
 
 \section{Time}
