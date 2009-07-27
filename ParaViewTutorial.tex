@@ -80,6 +80,8 @@
 \newcommand{\listexercisename}{List of Exercises}
 \newlistof[chapter]{exercise}{loe}{\listexercisename}
 % Note, the above [chapter] resets the counter each chapter.  Do we want that?
+%\setlength{\cftexercisenumwidth}{\cftsectionnumwidth}
+\settowidth{\cftexercisenumwidth}{X.XX}
 
 % An environment for defining an exercise.  It is best if there is _not_ a
 % paragraph between either the \begin or \end and the text (that is, no
@@ -91,7 +93,9 @@
   \addcontentsline{loe}{exercise}{\protect\numberline{\theexercise}#1}
   \addcontentsline{toc}{subsection}{Exercise \theexercise: #1}
   \vspace{1.5ex}
-  \par\noindent
+  %\par\noindent
+  %\par\hspace*{-\parindent}
+  \hspace*{\fill}\\*%
 }{%
   \hspace*{\fill}$\blacklozenge$
   \vspace{1.5ex}

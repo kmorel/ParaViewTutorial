@@ -72,7 +72,7 @@ the \gui{Sources} menu.  Sources can be used to add annotation to a view,
 but they are also very handy when exploring ParaView’s features.
 
 \begin{exercise}{Creating a Source}
-  \label{ex:CreatingASource}
+  \label{ex:CreatingASource}%
   Let us start with a simple one.  Go to the \gui{Sources} menu and select
   \gui{Cylinder}.  Once you select the \gui{Cylinder} item you will notice
   that an item named \gui{Cylinder1} is added to and selected in the
@@ -117,7 +117,7 @@ previous state.  You can even undo back to the point before your data was
 created and redo again.
 
 \begin{exercise}{Undo and Redo}
-  \label{ex:UndoAndRedo}
+  \label{ex:UndoAndRedo}%
   Experiment with the undo~\icon{pqUndo32} and redo~\icon{pqRedo32}
   buttons.  If you have not done so, create and modify a pipeline object
   like what is done in Exercise~\ref{ex:CreatingASource}.  Watch how
@@ -153,7 +153,7 @@ convenience.
 \end{inlinefig}
 
 \begin{exercise}{Modifying Rendering Parameters}
-  \label{ex:ModifyingRenderingParameters}
+  \label{ex:ModifyingRenderingParameters}%
   Click the \icon{pqOptions16} button above the 3D view to bring up the
   \gui{Render View Options} dialog box.  Explore the different panels of
   options.  Try modifying how the view looks in the following ways.
@@ -250,7 +250,7 @@ into the VTK framework but have not been committed back to VTK; someone may
 have a reader readily available that you can use.
 
 \begin{exercise}{Opening a File}
-  \label{ex:OpeningAFile}
+  \label{ex:OpeningAFile}%
   Let us open our first file now.  Click the \gui{Open} toolbar (or menu
   item)~\icon{pqOpen32} and open the file \gui{disk\_out\_ref.ex2}.  Note
   that opening a file is a two step process, so that you do not see any
@@ -282,7 +282,7 @@ representing data are located in a pair of toolbars.
 \end{inlinefig}
 
 \begin{exercise}{Representation and Field Coloring}
-  \label{ex:RepresentationAndFieldColoring}
+  \label{ex:RepresentationAndFieldColoring}%
   Play with the data representation a bit.  Make sure
   \gui{disk\_out\_ref.ex2} is selected in the pipeline browser.  (If you do
   not have the data loaded, repeat Exercise~\ref{ex:OpeningAFile}.)  Use
@@ -378,6 +378,18 @@ These submenus are organized as follows.
   anywhere but in this list.
 \end{description}
 
+\parpic[r]{\includegraphics[width=2.5in]{images/QuickLaunch}}
+
+Searching through these lists of filters, particularly the full
+alphabetical list, can be cumbersome.  To speed up the selection of
+filters, you should use the \keyterm{quick launch} dialog.  When the ctrl
+and space keys together on Windows or Linux or the alt and space keys
+together on Macintosh, ParaView brings up a small, lightweight dialog box
+like the one shown here.  Type in words or word fragments that are
+contained in the filter name, and the box will list only those sources and
+filters that match the terms.  Hit enter to add the object to the pipeline
+browser.
+
 You have probably noticed that some of the filters are grayed out.  Many
 filters only work on a specific types of data and therefore cannot always
 be used.  ParaView disables these filters from the menu and toolbars to
@@ -388,7 +400,7 @@ explore all the filters in this forum.  Consult \emph{The ParaView Guide}
 for more information on each filter.
 
 \begin{exercise}{Apply a Filter}
-  \label{ex:ApplyAFilter}
+  \label{ex:ApplyAFilter}%
   Let us apply our first filter.  If you do not have the disk\_out\_ref.ex2
   data loaded, do so know (Exercise~\ref{ex:OpeningAFile}).  Make sure that
   \gui{disk\_out\_ref.ex2} is selected in the pipeline browser and then
@@ -434,7 +446,7 @@ perform this task.  The first filter will extract the surface, and the
 second filter will cut some away.
 
 \begin{exercise}{Creating a Visualization Pipeline}
-  \label{ex:CreatingAVisualizationPipeline}
+  \label{ex:CreatingAVisualizationPipeline}%
   The images and some of the discussion in this exercise assume you are
   starting with the state right after finishing
   Exercise~\ref{ex:ApplyAFilter}.  If you have had to restart ParaView
@@ -447,7 +459,9 @@ second filter will cut some away.
   \begin{enumerate}
   \item Select \gui{disk\_out\_ref.ex2} in the pipeline browser.
   \item From the menu bar, select \gui{Filters} \ra \gui{Alphabetical} \ra
-    \gui{Extract Surface}. \index{extract surface}
+    \gui{Extract Surface}. \index{extract surface} Or bring up the quick
+    launch (ctrl+space Win/Linux, alt+space Mac), type extract surface, and
+    select that filter.
   \item Hit the \apply button.
     \savecounter
   \end{enumerate}
@@ -535,76 +549,110 @@ splitting an existing view horizontally or vertically with the \splitViewH
 and \splitViewV buttons, respectively.  The \deleteView button deletes a
 view, whose space is consumed by an adjacent view.  The \maximizeView
 temporarily fills view space with the selected view until \restoreView is
-pressed.  Press the \splitViewH button now.
+pressed.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/SplitView1}
-\end{inlinefig}
+\begin{exercise}{Using Multiple Views}
+  \label{ex:UsingMultipleViews}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
+  We will discuss what this does later in more detail in
+  Chapter~\ref{chap:VisualizingLargeModels}, but for now just know that it
+  is roughly the equivalent of restarting ParaView.
 
-The current view is split in half and the right side is blank, ready to be
-filled with a new visualization.  Notice that the view in the right has a
-red border around it.  This means that it is the \keyterm{active view}.
-Widgets that give information about and controls for a single view,
-including the pipeline browser and object inspector, follow the active
-view.  In this new view we will visualize the temperature of the mesh.
+  First, we will look at one variable.  We need to see the variable through
+  the middle of the mesh, so we are going to clip the mesh in half.
 
-\begin{enumerate}
-\item Make sure the red border is still around the new, blank view (to the
-  right).  You can make any view the active view by simply clicking on it.
-\item Turn on the visibility of the original data by clicking the
-  eyeball~\eyeballg next to \gui{disk\_out\_ref.ex2} in the pipeline
-  browser.
-\item Color the surface by temperature by selecting
-  \gui{disk\_out\_ref.ex2} in the pipeline browser and changing the
-  variable chooser (in the toolbar) from \gui{Solid Color} to \gui{Temp}
-  (you may want to turn on the color bar at this point as well).
-  \savecounter
-\end{enumerate}
-We can see the color on the outside of the mesh, but it is not very
-interesting and the boundaries.  We need to clip away the mesh to see the
-temperature on the inside.
-\begin{enumerate}
-  \restorecounter
-\item Add the Clip filter~\clip to \gui{disk\_out\_ref.ex2}.
-\item Uncheck the Show Plane checkbox
-  \includeinlinegraphics{images/ShowPlaneCheckbox} in the object inspector.
-\item Click the \apply button.
-\end{enumerate}
+  \begin{enumerate}
+  \item Open the file disk\_out\_ref.ex2, load all variables, \apply (see
+    Exercise~\ref{ex:OpeningAFile}).
+  \item Add the Clip filter~\clip to \gui{disk\_out\_ref.ex2}.
+  \item Uncheck the Show Plane checkbox
+    \includeinlinegraphics{images/ShowPlaneCheckbox} in the object inspector.
+  \item Click the \apply button.
+  \item Color the surface by pressure by changing the variable chooser (in
+    the toolbar) from \gui{Solid Color} to \gui{Pres}.
+    \savecounter
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/SplitView2}
-\end{inlinefig}
+  Now we can see the pressure in a plane through the middle of the mesh.
+  We want to compare that to the temperature on the same plane.  To do
+  that, we create a new view to build another visualization.
 
-We now have two views: one showing information about pressure and the other
-information about temperature.  We would like to compare these, but it is
-difficult to do because the orientations are different.  How are we to know
-how a location in one correlates to a location in the other.  We can solve
-this problem by adding a \keyterm{camera link} so that the two views will
-always be drawn from the same viewpoint.  Linking cameras is easy.  First
-right click on one of the views and select \gui{Link Camera...} from the
-pop up menu. (If you are on a Mac with no right mouse button, you can
-perform the same operation with the menu option \gui{Tools} \ra \gui{Add
-  Camera Link...})  Now click in a second view.  \emph{Viola}!  The two
-cameras are linked; each will follow the other.
+  \begin{enumerate}
+    \restorecounter
+  \item Press the \splitViewH button.
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/CameraLink}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/SplitView1}
+  \end{inlinefig}
 
-With the cameras linked, we can make some comparisons between the two
-views.  Click the~\xPlus button to get a straight-on view of the cross section.
-Notice that the temperature is highest at the interface with the heated
-disk.  That alone is not surprising.  We expect the air temperature to be
-greatest near the heat source and drop off away from it.  But notice that
-at the same position the pressure is not maximal.  The air pressure is
-maximal at a position above the disk.  Based on this information we can
-draw some interesting hypotheses about the physical phenomenon.  We can
-expect that there are two forces contributing to air pressure.  The first
-force is that of gravity causing the upper air to press down on the lower
-air.  The second force is that of the heated air becoming less dense and
-therefore rising.  We can see based on the maximal pressure where these two
-forces are equal.  Such an observation cannot be drawn without looking at
-both the temperature and pressure in this way.
+  The current view is split in half and the right side is blank, ready to
+  be filled with a new visualization.  Notice that the view in the right
+  has a blue border around it.  This means that it is the \keyterm{active
+    view}.  Widgets that give information about and controls for a single
+  view, including the pipeline browser and object inspector, follow the
+  active view.  In this new view we will visualize the temperature of the
+  mesh.
+
+  \begin{enumerate}
+  \item Make sure the blue border is still around the new, blank view (to
+    the right).  You can make any view the active view by simply clicking
+    on it.
+  \item Turn on the visibility of the clipped data by clicking the
+    eyeball~\eyeballg next to \gui{Clip1} in the pipeline browser.
+  \item Color the surface by temperature by selecting \gui{Clip1} in the
+    pipeline browser and changing the variable chooser (in the toolbar)
+    from \gui{Solid Color} to \gui{Temp} (you may want to turn on the color
+    bar at this point as well).
+    \savecounter
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/SplitView2}
+  \end{inlinefig}
+
+  We now have two views: one showing information about pressure and the
+  other information about temperature.  We would like to compare these, but
+  it is difficult to do because the orientations are different.  How are we
+  to know how a location in one correlates to a location in the other?  We
+  can solve this problem by adding a \keyterm{camera link} so that the two
+  views will always be drawn from the same viewpoint.  Linking cameras is
+  easy.
+
+  \begin{enumerate}
+    \restorecounter
+  \item Right click on one of the views and select \gui{Link Camera...}
+    from the pop up menu. (If you are on a Mac with no right mouse button,
+    you can perform the same operation with the menu option \gui{Tools} \ra
+    \gui{Add Camera Link...}.)
+  \item Click in a second view.
+  \item Try moving the camera in each view.
+  \end{enumerate}
+
+  \emph{Viola}!  The two cameras are linked; each will follow the other.
+  With the cameras linked, we can make some comparisons between the two
+  views.  Click the~\xPlus button to get a straight-on view of the cross
+  section.
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/CameraLink}
+  \end{inlinefig}
+
+  Notice that the temperature is highest at the interface with the heated
+  disk.  That alone is not surprising.  We expect the air temperature to be
+  greatest near the heat source and drop off away from it.  But notice that
+  at the same position the pressure is not maximal.  The air pressure is
+  maximal at a position above the disk.  Based on this information we can
+  draw some interesting hypotheses about the physical phenomenon.  We can
+  expect that there are two forces contributing to air pressure.  The first
+  force is that of gravity causing the upper air to press down on the lower
+  air.  The second force is that of the heated air becoming less dense and
+  therefore rising.  We can see based on the maximal pressure where these
+  two forces are equal.  Such an observation cannot be drawn without
+  looking at both the temperature and pressure in this way.
+\end{exercise}
 
 Multiview in ParaView is of course not limited to simply two windows.  Note
 that each of the views has its own set of multiview buttons.  You can
@@ -612,17 +660,13 @@ create more views by using the split view buttons \splitViewH \splitViewV
 to arbitrarily divide up the working space.  And you can delete views
 \deleteView at any time.
 
-\begin{inlinefig}
-  \includegraphics[width=\linewidth]{images/SwapViews}
-\end{inlinefig}
-
 The location of each view is also not fixed.  You are also able to swap two
 views by clicking on one of the view toolbars (somewhere outside of where
 the buttons are), holding down the mouse button, and dragging onto one of
-the other view toolbars.  This will immediately swap the two views.
+the other views.  This will immediately swap the two views.
 
 \begin{inlinefig}
-  \includegraphics[width=\linewidth]{images/ResizeViews}
+  \includegraphics[width=\linewidth]{images/SwapViews}
 \end{inlinefig}
 
 You can also change the size of the views by clicking on the space in
@@ -630,98 +674,122 @@ between views, holding down the mouse button, and dragging in the direction
 of either one of the views.  The divider will follow the mouse and adjust
 the size of the views as it moves.
 
+\begin{inlinefig}
+  \includegraphics[width=\linewidth]{images/ResizeViews}
+\end{inlinefig}
 
-\section{Further Exploration}
+
+\section{Vector Visualization}
 
 Let us see what else we can learn about this simulation.  The simulation
 has also outputted a velocity field describing the movement of the air over
 the heated rotating disk.  We will use ParaView to determine the currents
 in the air.
 
-Start with a fresh view so that we can preserve the previous views we have
-already created.  Split one of the views vertically~\splitViewV, and then
-maximize~\maximizeView the new view so that we can focus on it.  Make the
-original data set visible by clicking the eyeball~\eyeballg next to
-\gui{disk\_out\_ref.ex2} in the pipeline browser.  Visualize the air
-currents by performing the following.
+A common and effective way to characterize a vector field is with
+\keyterm{streamlines}.  A streamline is a curve through space that at every
+point is tangent to the vector field.  The represent the path a weightless
+particle will take through the vector field (assuming steady-state flow).
+Streamlines are generated by providing a set of
+\index{stream tracer!seed points} \keyterm{seed points}.
 
-\begin{enumerate}
-\item Select \gui{disk\_out\_ref.ex2} in the pipeline browser.
-\item Add the stream tracer filter \streamTracer to
-  \gui{disk\_out\_ref.ex2}.
-\item Click the \apply button to accept the default parameters.
-  \savecounter
-\end{enumerate}
+\begin{exercise}{Streamlines}
+  \label{ex:Streamlines}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
 
-The surface of the mesh is replaced with some swirling lines.  The new
-geometry is off-center from the previous geometry.  We can quickly center
-the view on the new geometry with the \keyterm{reset camera}~\resetCamera
-command.  This command centers and fits the visible geometry within the
-current view and also resets the center of rotation to the middle of the
-visible geometry.
+  \begin{enumerate}
+  \item Open the file disk\_out\_ref.ex2, load all variables, \apply (see
+    Exercise~\ref{ex:OpeningAFile}).
+  \item Add the stream tracer filter \streamTracer to
+    \gui{disk\_out\_ref.ex2}.
+  \item Click the \apply button to accept the default parameters.
+  \end{enumerate}
 
-The lines are difficult to distinguish because there are many close
-together and they have no shading.  Lines are a 1D structure and shading
-requires a 2D surface.  We can create a 2D surface around our stream traces
-with the tube filter.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/StreamTracer0}
+  \end{inlinefig}
 
-\begin{enumerate}
-  \restorecounter
-\item From the menu bar, select \gui{Filters} \ra \gui{Alphabetical} \ra
-  \gui{Tube}\index{tube}.\footnote{In ParaView 3.6 the name of the tube
-    filter was changed to \gui{Generate Tubes}.  In future versions, the
-    name will change back to \gui{Tube} to make it easier to find in
-    alphabetical filter lists.}
-\item Hit the \apply button.
-\end{enumerate}
+  The surface of the mesh is replaced with some swirling lines.  These
+  lines represent the flow through the volume.  Notice that there is a
+  spinning motion around the center line of the cylinder.  There is also a
+  vertical motion in the center and near the edges.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/StreamTracer1}
-\end{inlinefig}
+  The new geometry is off-center from the previous geometry.  We can
+  quickly center the view on the new geometry with the \keyterm{reset
+    camera}~\resetCamera command.  This command centers and fits the
+  visible geometry within the current view and also resets the center of
+  rotation to the middle of the visible geometry.
+\end{exercise}
 
-You can now see the streamlines much more clearly.  As you look at the
-streamlines from the side, you should be able to see circular convection as
-air heats, rises, cools, and falls.  If you rotate the streams to look down
-the Z axis at the bottom near where the heated plate should be, you will
-also see that the air is moving in a circular pattern due to the friction
-of the rotating disk.
+One issue with the streamlines as they stand now is that the lines are
+difficult to distinguish because there are many close together and they
+have no shading.  Lines are a 1D structure and shading requires a 2D
+surface.  Another issue with the streamlines is that we cannot be sure in which
+direction to flow is.
 
-Now we can get a little fancier.  We can add glyphs to the streamlines to
-show the orientation and magnitude.
+In the next exercise, we will modify the streamlines we created in
+Exercise~\ref{ex:Streamlines} to correct these problems.  We can create a
+2D surface around our stream traces with the tube filter.  This surface
+adds shading and depth cues to the lines.  We can also add glyphs to the
+lines that point in the direction of the flow.
 
-\begin{enumerate}
-\item Select \gui{StreamTracer1} in the pipeline browser.
-\item Add the glyph filter~\glyph to \gui{StreamTracer1}.
-\item In the object inspector, change the \gui{Vectors} option (second
-  option from the top) to \gui{V}.
-\item In the object inspector, change the \gui{Glyph Type} option (third
-  option from the top) to \gui{Cone}.
-\item Hit the \apply button.
-\item Color the glyphs with the \gui{Temp} variable.
-\end{enumerate}
+\begin{exercise}{Making Streamlines Fancy}
+  \label{ex:MakingStreamlinesFancy}%
+  \begin{enumerate}
+  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
+    the \gui{Tube}\index{tube} filter.\footnote{In ParaView 3.6 the name of
+      the tube filter was changed to \index{generate tubes}\gui{Generate
+        Tubes}.  In future versions, the name will change back to
+      \gui{Tube} to make it easier to find in alphabetical filter lists.}
+  \item Hit the \apply button.
+    \savecounter
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/StreamTracer2}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/StreamTracer1}
+  \end{inlinefig}
 
-Now the streamlines are augmented with little pointers.  The pointers face
-in the direction of the velocity, and their size is proportional to the
-magnitude of the velocity.  Try using this new information to answer the
-following questions.
+  You can now see the streamlines much more clearly.  As you look at the
+  streamlines from the side, you should be able to see circular convection
+  as air heats, rises, cools, and falls.  If you rotate the streams to look
+  down the Z axis at the bottom near where the heated plate should be, you
+  will also see that the air is moving in a circular pattern due to the
+  friction of the rotating disk.
 
-\begin{itemize}
-\item Where is the air moving the fastest?  Near the disk or away from it?
-  At the center of the disk or near its edges?
-\item Which way is the plate spinning?
-\item At the surface of the disk, is air moving toward the center or away
-  from it?
-\end{itemize}
+  Now we can get a little fancier.  We can add glyphs to the streamlines to
+  show the orientation and magnitude.
 
-When you are done, you can restore all of your views by pressing the
-restore button~\restoreView on the view toolbar.  Right click on the new
-view and select \gui{Link Camera...} and then link the camera with either
-of the other two views.  Now all three views have their cameras linked
-together.
+  \begin{enumerate}
+    \restorecounter
+  \item Select \gui{StreamTracer1} in the pipeline browser.
+  \item Add the glyph filter~\glyph to \gui{StreamTracer1}.
+  \item In the object inspector, change the \gui{Vectors} option (second
+    option from the top) to \gui{V}.
+  \item In the object inspector, change the \gui{Glyph Type} option (third
+    option from the top) to \gui{Cone}.
+  \item Hit the \apply button.
+  \item Color the glyphs with the \gui{Temp} variable.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/StreamTracer2}
+  \end{inlinefig}
+
+  Now the streamlines are augmented with little pointers.  The pointers
+  face in the direction of the velocity, and their size is proportional to
+  the magnitude of the velocity.  Try using this new information to answer
+  the following questions.
+
+  \begin{itemize}
+  \item Where is the air moving the fastest?  Near the disk or away from it?
+    At the center of the disk or near its edges?
+  \item Which way is the plate spinning?
+  \item At the surface of the disk, is air moving toward the center or away
+    from it?
+  \end{itemize}
+\end{exercise}
 
 
 \section{Plotting}
@@ -729,55 +797,72 @@ together.
 ParaView's plotting capabilities provide a mechanism to drill down into
 your data to allow quantitative analysis.  Plots are usually created with
 filters, and all of the plotting filters can be found in the \gui{Data
-  Analysis} submenu of \gui{Filters}.  Let us create a filter that will
-plot the values of the mesh’s fields over a line in space.
+  Analysis} submenu of \gui{Filters}.  In the next exercise, we create a
+filter that will plot the values of the mesh’s fields over a line in space.
 
-\begin{enumerate}
-\item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
-  that the active object.
-\item From the menu bar, select \gui{Filters} \ra \gui{Data Analysis} \ra
-  \gui{Plot Over Line}~\icon{pqPlotLineOverTime24}. \index{plot~over~line}
-  \savecounter
-\end{enumerate}
+\begin{exercise}{Plot Over a Line in Space}
+  \label{ex:PlotOverLine}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/LinePlot1}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Open the file disk\_out\_ref.ex2, load all variables, \apply (see
+    Exercise~\ref{ex:OpeningAFile}).
+  \item Add the Clip filter~\clip to \gui{disk\_out\_ref.ex2}, Uncheck the
+    Show Plane checkbox \includeinlinegraphics{images/ShowPlaneCheckbox} in
+    the object inspector, and click \apply (like in
+    Exercise~\ref{ex:UsingMultipleViews}).  This will make it easier to see
+    and manipulate the line we are plotting over.
+  \item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
+    that the active object.
+  \item From the menu bar, select \gui{Filters} \ra \gui{Data Analysis} \ra
+    \gui{Plot Over Line}~\icon{pqPlotLineOverTime24} or apply the \gui{Plot
+      Over Line} filter using the quick launch (ctrl+space Win/Linux,
+    alt+space Mac). \index{plot~over~line} \savecounter
+  \end{enumerate}
 
-In the active view you will see a line through your data with a ball at
-each end.  If you move your mouse over either of these balls, you can drag
-the balls through the 3D view to place them.  Notice that each time you
-move the balls some of the fields in the object inspector also change.  You
-can also place the balls by moving your mouse over the target location and
-hitting the p key.  This will alternatively place each ball at the surface
-underneath the mouse curser.  Note that placing the endpoints in this
-manner only works when rendering solid surfaces.  It will not work with a
-volume rendered image.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/LinePlot1}
+  \end{inlinefig}
 
-This representation is called a \keyterm{3D widget} because it is a GUI
-component that is manipulated in 3D space.  There are many examples of 3D
-widgets in ParaView.  This particular widget, the line widget, allows you
-to specify a line segment in space.  Other widgets allow you to specify
-points or planes.
+  In the active view you will see a line through your data with a ball at
+  each end.  If you move your mouse over either of these balls, you can
+  drag the balls through the 3D view to place them.  Notice that each time
+  you move the balls some of the fields in the object inspector also
+  change.  You can also place the balls by hovering your mouse over the
+  target location and hitting the p key.  This will alternatively place
+  each ball at the surface underneath the mouse curser.  This was the
+  purpose of adding the clip filter: It allows us to easily add the
+  endpoints to this plane.  Note that placing the endpoints in this manner
+  only works when rendering solid surfaces.  It will not work with a volume
+  rendered image.
 
-\begin{enumerate}
-  \restorecounter
-\item Adjust the line so that it goes from the base of the disk straight up
-  to the top of the mesh using the 3D widget manipulators, the p key
-  shortcut, or the object inspector parameters.
-\item Once you have your line satisfactorily located, click the \apply
-  button.
-\end{enumerate}
+  This representation is called a \keyterm{3D widget} because it is a GUI
+  component that is manipulated in 3D space.  There are many examples of 3D
+  widgets in ParaView.  This particular widget, the line widget, allows you
+  to specify a line segment in space.  Other widgets allow you to specify
+  points or planes.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/LinePlot2}
-\end{inlinefig}
+  \begin{enumerate}
+    \restorecounter
+  \item Adjust the line so that it goes from the base of the disk straight up
+    to the top of the mesh using the 3D widget manipulators, the p key
+    shortcut, or the object inspector parameters.
+  \item Once you have your line satisfactorily located, click the \apply
+    button.
+  \end{enumerate}
 
-There are several interactions you can do with the plot.  Drag with the
-middle button up and down to zoom in and out.  Drag with the right button
-to do a rubber band zoom.  Drag with the left button to scroll the plot
-around.  You can also use the reset camera command~\resetCamera to restore
-the view to the full domain and range of the plot.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/LinePlot2}
+  \end{inlinefig}
+
+  There are several interactions you can do with the plot.  Drag with the
+  middle button up and down to zoom in and out.  Drag with the right button
+  to do a rubber band zoom.  Drag with the left button to scroll the plot
+  around.  You can also use the reset camera command~\resetCamera to restore
+  the view to the full domain and range of the plot.
+\end{exercise}
 
 Plots, like 3D renderings, are considered views.  Both provide a
 representation for your data; they just do it in different ways.  Because
@@ -788,52 +873,61 @@ including colors, line styles, vector components, and legend names.
 \begin{inlinefig}
   \includegraphics[width=1.5in]{images/PlotDisplayTab}
 \end{inlinefig}
+
 Plots also have a \icon{pqOptions16} button that brings up a dialog that
 allows you to change plot-wide options such as labels, legends, and axes
 ranges.
 \begin{inlinefig}
   \includegraphics[width=2in]{images/PlotViewOptions}
 \end{inlinefig}
+
 Like any other views, you can capture the plot with the \gui{File} \ra
 \icon{pqCaptureScreenshot24}~\gui{Save Screenshot}.  As an added bonus, you
 can save can save the plot in a vector PDF format so that it scales well if
-included in reports and other documents.  You can also move around plots
-like you can other views.
+included in reports and other documents.  You can also move around plots in
+the GUI like you can other views.
 
-We can use these features to get more information out of our plot.
-Specifically, we can use the plot to compare the pressure and temperature
-variables.
+In the next exercise, we use these features to get more information out of
+our plot.  Specifically, we use the plot to compare the pressure and
+temperature variables.
 
-\begin{enumerate}
-\item Choose a place in your GUI that you would like the plot to go and try
-  using the split, delete, resize, and swap view features to move it there.
-\item Make the plot view active, go to the \gui{Display} tab, and turn off
-  all variables except \gui{Temp} and \gui{Pres}.
-  \savecounter
-\end{enumerate}
+\begin{exercise}{Plot Series Display Options}
+  \label{ex:PlotSeriesDisplayOptions}%
+  This exercise is a continuation of Exercise~\ref{ex:PlotOverLine}.  You
+  will need to finish that exercise before beginning this one.
 
-The \gui{Temp} and \gui{Pres} variables have different units.  Putting them
-on the same scale is not useful.  We can still compare them in the same
-plot by placing each variable on its own scale.  The line plot in ParaView
-allows for a different scale on the left and right axis, and you can scale
-each variable individually on each axis.
+  \begin{enumerate}
+  \item Choose a place in your GUI that you would like the plot to go and
+    try using the split, delete, resize, and swap view features to move it
+    there.
+  \item Make the plot view active, go to the \gui{Display} tab, and turn
+    off all variables except \gui{Temp} and \gui{Pres}.
+    \savecounter
+  \end{enumerate}
 
-\begin{enumerate}
-  \restorecounter
-\item Select the \gui{Pres} variable in the \gui{Display} tab.
-\item Change the \gui{Chart Axis} to \gui{Bottom - Right}
-\end{enumerate}
+  The \gui{Temp} and \gui{Pres} variables have different units.  Putting
+  them on the same scale is not useful.  We can still compare them in the
+  same plot by placing each variable on its own scale.  The line plot in
+  ParaView allows for a different scale on the left and right axis, and you
+  can scale each variable individually on each axis.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/LinePlot3}
-\end{inlinefig}
+  \begin{enumerate}
+    \restorecounter
+  \item Select the \gui{Pres} variable in the \gui{Display} tab.
+  \item Change the \gui{Chart Axis} to \gui{Bottom - Right}
+  \end{enumerate}
 
-From this plot we can verify some of the observations we made in
-Section~\ref{sec:Multiview}.  We can see that the temperature is maximal at
-the plate surface and falls as we move away from the plate, but the
-pressure goes up and then back down.  In addition, we can observe that the
-maximal pressure (and hence the location where the forces on the air are
-equalized) is three units away from the disk.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/LinePlot3}
+  \end{inlinefig}
+
+  From this plot we can verify some of the observations we made in
+  Section~\ref{sec:Multiview}.  We can see that the temperature is maximal
+  at the plate surface and falls as we move away from the plate, but the
+  pressure goes up and then back down.  In addition, we can observe that
+  the maximal pressure (and hence the location where the forces on the air
+  are equalized) is three units away from the disk.
+\end{exercise}
 
 The ParaView framework is designed to any number of different types of
 views.  This is to provide researchers and developers a way to deliver new
@@ -983,6 +1077,7 @@ clear out all of the data and start fresh.  The easiest way to do this is
 to press the~\disconnect button.  We will discuss what this does later in more
 detail, but for now just know that it is roughly the equivalent of
 restarting ParaView.
+% Remove most of that.
 
 \gui{Open} the file \gui{can.ex2}.  This is another simple simulation, this
 time with data that changes over time.
