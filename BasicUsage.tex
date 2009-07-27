@@ -1120,32 +1120,35 @@ created as well as several provided by ParaView.
 \section{Time}
 
 Now that we have thoroughly analyzed the disk\_out\_ref simulation, we will
-move to a new simulation to see how ParaView handles time.  First let us
-clear out all of the data and start fresh.  The easiest way to do this is
-to press the~\disconnect button.  We will discuss what this does later in more
-detail, but for now just know that it is roughly the equivalent of
-restarting ParaView.
-% Remove most of that.
+move to a new simulation to see how ParaView handles time.  In this section
+we will use a new data set from another simple simulation, this time with
+data that changes over time.
 
-\gui{Open} the file \gui{can.ex2}.  This is another simple simulation, this
-time with data that changes over time.
+\begin{exercise}{Loading Temporal Data}
+  \label{ex:LoadingTemporalData}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
 
-\begin{inlinefig}
-  \includegraphics{images/Variables_can}
-\end{inlinefig}
+  \begin{enumerate}
+    \item \gui{Open} the file \gui{can.ex2}.
+      \begin{inlinefig}
+        \includegraphics{images/Variables_can}
+      \end{inlinefig}
+    \item As before, click the checkbox in the header of the variable list
+      to turn on the loading of all the variables and hit the \apply
+      button.
+    \item Press the~\yPlus button to orient the camera to the mesh.
+    \item Press the play button~\vcrPlay in the toolbars and watch ParaView
+      animate the mesh to crush the can with the falling brick.
+  \end{enumerate}
 
-As before, click the checkbox in the header of the variable list to turn on
-the loading of all the variables and hit the \apply button.
-
-Press the~\yPlus button to orient the camera to the mesh.  Now press the
-play button~\vcrPlay in the toolbars and watch ParaView animate the mesh to
-crush the can with the falling brick.
-
-\begin{inlinefig}
-  \includegraphics[width=.32\linewidth]{images/AnimateCan1}
-  \includegraphics[width=.32\linewidth]{images/AnimateCan2}
-  \includegraphics[width=.32\linewidth]{images/AnimateCan3}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=.32\linewidth]{images/AnimateCan1}
+    \includegraphics[width=.32\linewidth]{images/AnimateCan2}
+    \includegraphics[width=.32\linewidth]{images/AnimateCan3}
+  \end{inlinefig}
+\end{exercise}
 
 That is really all there is to dealing with data that is defined over time.
 ParaView has an internal concept of time and automatically links in the
@@ -1161,28 +1164,46 @@ Saving an animation is equally as easy.  From the menu, select \gui{File}
 want to save the animation, and then automatically iterates and saves the
 animation.
 
-The biggest pitfall users run into is that with mapping a set of colors
-whose range changes over time.  To demonstrate this, go to the first time
-step~\vcrFirst, turn on the \gui{EQPS} variable, and then turn on the color
-legend~\icon{pqScalarBar32}.  Now play~\vcrPlay through the animation (or
-skip to the last time step~\vcrLast).  The coloring is now not very useful.
-To quickly fix the problem, click the Rescale to Data
-Range~\icon{pqResetRange24} button.
+\begin{exercise}{Temporal Data Pitfall}
+  \label{ex:TemporalDataPitfall}%
+  The biggest pitfall users run into is that with mapping a set of colors
+  whose range changes over time.  To demonstrate this, do the following.
 
-Although this seems like a bug, it is not.  It is the consequence of two
-unavoidable behaviors.  First, when you turn on the visibility of a scalar
-field, the range of the field is set to the range of values in the current
-time step.  Ideally, the range would be set to the max and min over all
-time steps in the data.  However, that would require ParaView to load in
-all of the data on the initial read, and that would be prohibitively slow
-for large data.  Second, when you animate over time, it is important to
-hold the color range fixed even if the range in the data changes.  Changing
-the scale of the data as an animation plays causes a misrepresentation of
-the data.  It is far better to let the scalars go out of the original color
-maps range than to imply that they have not.  To get around the problem,
-simply go to a representative time step and hit~\icon{pqResetRange24} or
-open the edit color scale dialog box~\icon{pqEditColor24} and specify a
-range for the data.
+  \begin{enumerate}
+  \item If you are not continuing from
+    Exercise~\ref{ex:LoadingTemporalData}, open the file \gui{can.ex2},
+    load all variables, \apply.
+  \item Go to the first time step~\vcrFirst.
+  \item Turn on the \gui{EQPS} variable.
+  \item Turn on the color legend~\icon{pqScalarBar32}.
+  \item Play~\vcrPlay through the animation (or skip to the last time
+    step~\vcrLast).
+    \savecounter
+  \end{enumerate}
+
+  The coloring is not very useful.  To quickly fix the problem:
+
+  \begin{enumerate}
+    \restorecounter
+  \item While at the last time step, click the Rescale to Data
+    Range~\icon{pqResetRange24} button.
+  \end{enumerate}
+\end{exercise}
+
+Although this behavior seems like a bug, it is not.  It is the consequence
+of two unavoidable behaviors.  First, when you turn on the visibility of a
+scalar field, the range of the field is set to the range of values in the
+current time step.  Ideally, the range would be set to the max and min over
+all time steps in the data.  However, that would require ParaView to load
+in all of the data on the initial read, and that would be prohibitively
+slow for large data.  Second, when you animate over time, it is important
+to hold the color range fixed even if the range in the data changes.
+Changing the scale of the data as an animation plays causes a
+misrepresentation of the data.  It is far better to let the scalars go out
+of the original color maps range than to imply that they have not.  To get
+around the problem, simply go to a representative time step and
+hit~\icon{pqResetRange24} or open the edit color scale dialog
+box~\icon{pqEditColor24} and specify a range for the data.
 
 
 \section{Selection}

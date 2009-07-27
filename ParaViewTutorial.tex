@@ -133,7 +133,7 @@
 \newlength{\fontdrop}		% Set length to drop below baseline so that
 \settodepth{\fontdrop}{()}	% we can drop the image to fill the actual line
 \newcommand*{\includeinlinegraphics}[1]{%
-  \raisebox{-\fontdrop}{\includegraphics[height=\baselineskip]{#1}}
+  \raisebox{-\fontdrop}{\includegraphics[height=\baselineskip]{#1}}%
 }
 \newcommand*{\icon}[1]{\includeinlinegraphics{images/icons/#1}}
 
