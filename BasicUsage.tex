@@ -1617,68 +1617,86 @@ errors.
 
 \section{Text Annotation}
 
+% This section should probably directly follow the material currently
+% covered in the Controlling Time section.  If that material moves, so
+% should this material.
+
 When using ParaView as a communication tool it is often helpful to annotate
 the images you create with text.  With ParaView 3 it is very easy to create
 text annotation wherever you want in a 3D view.  There is a special
-\keyterm{text source} that simply places some text in the view.  Try it
-now.
+\keyterm{text source} that simply places some text in the view.
 
-\begin{enumerate}
-\item From the menu bar, select \gui{Sources} \ra \gui{Text}.
-\item In the text edit box of the object inspector, type a message.
-\item Hit the \apply button.
-\end{enumerate}
+\begin{exercise}{Adding Text Annotation}
+  \label{ex:AddingTextAnnotation}%
+  If you are continuing this exercise after finishing
+  Exercise~\ref{ex:TemporalInterpolation}, feel free to simply continue.
+  If you have had to restart ParaView since or your state does not match up
+  well enough, it is also fine to start with a fresh state.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/TextSource}
-\end{inlinefig}
+  \begin{enumerate}
+  \item From the menu bar, select \gui{Sources} \ra \gui{Text}.
+  \item In the text edit box of the object inspector, type a message.
+  \item Hit the \apply button.
+  \end{enumerate}
 
-The text you entered appears in the 3D view.  You can place this text
-wherever you want by simply dragging it with the mouse.  The \gui{Display}
-tab in the object inspector provides additional options for the size, font,
-and color of the text.  It also has additional controls for placing the
-text in the most common locations.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/TextSource}
+  \end{inlinefig}
 
-\begin{inlinefig}
-  \includegraphics[width=2in]{images/TextPosition}
-\end{inlinefig}
+  The text you entered appears in the 3D view.  You can place this text
+  wherever you want by simply dragging it with the mouse.  The
+  \gui{Display} tab in the object inspector provides additional options for
+  the size, font, and color of the text.  It also has additional controls
+  for placing the text in the most common locations.
+
+  \begin{inlinefig}
+    \includegraphics[width=2in]{images/TextPosition}
+  \end{inlinefig}
+\end{exercise}
 
 Often times you will need to put the current time value into the text
 annotation.  Typing the correct time value can be tedious an error prone
 with the standard text source and impossible when making an animation.
-Therefore, there is a special \keyterm{annotate time} source that will
+Therefore, there is a special \keyterm{annotate time source} that will
 insert the current animation time into the string.
 
-\begin{enumerate}
-\item Add an \gui{Animate Time} source (\gui{Sources} \ra \gui{Annotate
-  Time}).
-\item Move annotation around as necessary.
-\item Play~\vcrPlay and observer how the time annotation changes.
-  \savecounter
-\end{enumerate}
+\begin{exercise}{Adding Time Annotation}
+  \label{ex:AddingTimeAnnotation}%
+  \begin{enumerate}
+  \item If you do not already have it loaded from a previous exercise, open
+    the file \gui{can.ex2}, \apply.
+  \item Add an \gui{Annotate Time} source (\gui{Sources} \ra \gui{Annotate
+    Time} or use the quick launch: ctrl+space Win/Linux, alt+space Mac).
+  \item Move the annotation around as necessary.
+  \item Play~\vcrPlay and observe how the time annotation changes.
+    \savecounter
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/AnnotateTimeSource}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/AnnotateTimeSource}
+  \end{inlinefig}
 
-There are instances when the current animation time is not the same as the
-time step read from a data file.  Often it is important to know what the
-time stored in the data file is, and there is a special version of annotate
-time that acts as a filter.
+  There are instances when the current animation time is not the same as
+  the time step read from a data file.  Often it is important to know what
+  the time stored in the data file is, and there is a special version of
+  annotate time that acts as a filter.
 
-\begin{enumerate}
-  \restorecounter
-\item Select \gui{can.ex2}.
-\item \gui{Filters} \ra \gui{Alphabetical} \ra \gui{Annotate
-  Time}. \index{annotate time}
-\item \apply.
-\item Move annotation around as necessary.
-\item Play~\vcrPlay and observer how the time annotation changes.
-\end{enumerate}
+  \begin{enumerate}
+    \restorecounter
+  \item Select \gui{can.ex2}.
+  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
+    the \gui{Annotate Time Filter}. \index{annotate time filter}
+  \item \apply.
+  \item Move the annotation around as necessary.
+  \item Check the animation mode in the \gui{Animation View}.  If it is set
+    to \gui{Snap to TimeSteps}, change it to \gui{Real Time}.
+  \item Play~\vcrPlay and observe how the time annotation changes.
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/AnnotateTimeFilter}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/AnnotateTimeFilter}
+  \end{inlinefig}
+\end{exercise}
 
 
 \section{Animations}
