@@ -1131,16 +1131,15 @@ data that changes over time.
   ParaView.  The easiest way to do this is to press the~\disconnect button.
 
   \begin{enumerate}
-    \item \gui{Open} the file \gui{can.ex2}.
-      \begin{inlinefig}
-        \includegraphics{images/Variables_can}
-      \end{inlinefig}
-    \item As before, click the checkbox in the header of the variable list
-      to turn on the loading of all the variables and hit the \apply
-      button.
-    \item Press the~\yPlus button to orient the camera to the mesh.
-    \item Press the play button~\vcrPlay in the toolbars and watch ParaView
-      animate the mesh to crush the can with the falling brick.
+  \item \gui{Open} the file \gui{can.ex2}.
+    \begin{inlinefig}
+      \includegraphics{images/Variables_can}
+    \end{inlinefig}
+  \item As before, click the checkbox in the header of the variable list to
+    turn on the loading of all the variables and hit the \apply button.
+  \item Press the~\yPlus button to orient the camera to the mesh.
+  \item Press the play button~\vcrPlay in the toolbars and watch ParaView
+    animate the mesh to crush the can with the falling brick.
   \end{enumerate}
 
   \begin{inlinefig}
@@ -1488,7 +1487,7 @@ using the \gui{Selection Inspector}.  You may close it now if you wish.
 
 % Originally this was in the Time section, but I had to move it due to a
 % strange bug with the spreadsheet view and the temporal interpolator (bug
-% 7701).  If that gets fixe, this section should probably go back up into
+% 7701).  If that gets fixed, this section should probably go back up into
 % the Time section (or at least before Selection).  Might also consider
 % moving annotation before Selection so that you don't have to do that
 % weird delete everything but can.
@@ -1527,31 +1526,93 @@ to one of the other two animation modes.  Another use case is the desire to
 change the playback rate.  Perhaps you would like to speed up or slow down
 the animation.  The other two animation modes allow us to do that.
 
-Try it now.  Change the animation mode to \gui{Real Time}.  By default the
-animation is set up with the time range specified by the data and a
-duration of 10 seconds.  Play~\vcrPlay the animation now.  The result looks
-similar, but the animation is now a linear scaling of the simulation time
-and will complete in 10 seconds.
+\begin{exercise}{Slowing Down an Animation with the Animation Mode}%
+  \label{ex:SlowingDownAnAnimation}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
 
-Now try changing the \gui{Duration} to 60 seconds.  The animation is
-clearly playing back more slowly.  Unless your computer is updating slowly,
-you will also notice that the animation is jerkier than before.  This is
-because we have exceeded the temporal resolution of the data set.  Often
-this is the desired behavior; it is showing you exactly what is present in
-the data.  However, if you wanted to make an animation for a presentation,
-you may want a smoother animation.
+  \begin{enumerate}
+  \item Open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Press the~\yPlus button to orient the camera to the mesh.
+  \item Press the play button~\vcrPlay in the toolbars.
+    \savecounter
+  \end{enumerate}
+
+  During this animation, ParaView is visiting each time step in the
+  original data file exactly once.  Note the speed at which the animation
+  plays.
+
+  \begin{enumerate}
+    \restorecounter
+  \item If you have not done so yet, make the animation view visible:
+    \gui{View} \ra \gui{Animation View}.
+  \item Change the animation mode to \gui{Real Time}.  By default the
+    animation is set up with the time range specified by the data and a
+    duration of 10 seconds.
+  \item Play~\vcrPlay the animation again.
+    \savecounter
+  \end{enumerate}
+
+  The result looks similar to the previous \gui{Snap To TimeSteps}
+  animation, but the animation is now a linear scaling of the simulation
+  time and will complete in 10 seconds.
+
+  \begin{enumerate}
+    \restorecounter
+  \item Change the \gui{Duration} to 60 seconds.
+  \item Play~\vcrPlay the animation again.
+  \end{enumerate}
+
+  The animation is clearly playing back more slowly.  Unless your computer
+  is updating slowly, you will also notice that the animation appears
+  jerkier than before.  This is because we have exceeded the temporal
+  resolution of the data set.
+\end{exercise}
+
+Often showing the jerky time steps from the original data is the desired
+behavior; it is showing you exactly what is present in the data.  However,
+if you wanted to make an animation for a presentation, you may want a
+smoother animation.
 
 There is a special filter in ParaView to make this possible.  It is called
 the \keyterm{temporal interpolator}.  This filter will interpolate the
 positional and field data in between the time steps defined in the original
 data set.  This functionality is made possible by recent advances in the
-ParaView and VTK pipeline structure.  Try the filter now.  With
-\gui{can.ex2} highlighted in the pipeline browser, select \gui{Filters} \ra
-\gui{Temporal} \ra \gui{Temporal Interpolator}.  Hit \apply and change back
-to Real Time mode in the animation view if necessary.  Also split the
-view~\splitViewH, show the \gui{TemporalInterpolator1} in one, show
-\gui{can.ex2} in the other, and link the cameras.  Play~\vcrPlay the
-animation to see the effect.
+ParaView and VTK pipeline structure.
+
+\begin{exercise}{Temporal Interpolation}
+  \label{ex:TemporalInterpolation}%
+  This exercise is a continuation of Exercise~\ref{ex:VolumeRendering}.
+  You will need to finish that exercise before beginning this one.
+
+  \begin{enumerate}
+  \item Make sure \gui{can.ex2} is highlighted in the pipeline browser.
+  \item Select \gui{Filters} \ra \gui{Temporal} \ra \gui{Temporal
+    Interpolator} or apply the \gui{Temporal Interpolator} filter using the
+    quick launch (ctrl+space Win/Linux, alt+space Mac).
+  \item \apply.
+  \item Change back to \gui{Real Time} mode in the \gui{Animation
+    Inspector} if necessary.
+  \item Split the view~\splitViewH, show the \gui{TemporalInterpolator1} in
+    one, show \gui{can.ex2} in the other, and link the cameras.
+  \item Play~\vcrPlay the animation.
+  \end{enumerate}
+
+  You should notice that the output from the temporal interpolator animates
+  much more smoothly than the original data.
+\end{exercise}
+
+It is worth noting that the temporal interpolator can (and often does)
+introduce artifacts in the data.  It is because of this that ParaView will
+never apply this type of interpolation automatically; you will have to
+explicitly add the \gui{Temporal Interpolator}.  In general, mesh
+deformations often interpolate well but moving fields through a static mesh
+do not.  Also be aware that the \gui{Temporal Interpolator} only works if
+the topology remains constant.  If you have an adaptive mesh that changes
+from one time step to the next, the \gui{Temporal Interpolator} will give
+errors.
 
 
 \section{Text Annotation}
