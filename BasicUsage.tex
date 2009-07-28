@@ -1187,7 +1187,10 @@ animation.
     \restorecounter
   \item While at the last time step, click the Rescale to Data
     Range~\icon{pqResetRange24} button.
+  \item Play~\vcrPlay the animation again.
   \end{enumerate}
+
+  The colors are more useful now.
 \end{exercise}
 
 Although this behavior seems like a bug, it is not.  It is the consequence
@@ -1247,7 +1250,7 @@ currently selected 3D view and hitting the appropriate key.  Then click on
 the cell or block you want selected (or drag a rubber band over multiple
 elements).
 
-Experiment with the selections now.
+Feel free to experiment with the selections now.
 
 \begin{inlinefig}
   \includegraphics{images/SelectionInspector}
@@ -1275,149 +1278,210 @@ rotate the 3D view to see the region of the selection.
 
 It should be noted that there is a fundamental difference between
 selections that specify a list of points or cells and a selection that
-specifies a region in space.  To understand the difference, try the
-following.
+specifies a region in space.  The following exercise demonstrates the
+difference.
 
-\begin{enumerate}
-\item Make a selection using the \gui{Select Cells
-  Through}~\selectCellsThrough tool.
-\item Click on the \gui{Show Frustum} checkbox in the \gui{Selection
-  Inspector} and rotate the 3D view.
-  \savecounter
-\end{enumerate}
+\begin{exercise}{Data Element Selections vs. Spatial Selections}
+  \label{ex:DataElementSelectionsVsSpatialSelections}%
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/SelectionFrustum}
-\end{inlinefig}
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Make a selection using the \gui{Select Cells
+    Through}~\selectCellsThrough tool.
+  \item Click on the \gui{Show Frustum} checkbox in the \gui{Selection
+    Inspector} and rotate the 3D view.
 
-\begin{enumerate}
-  \restorecounter
-\item Play~\vcrPlay the animation a bit.  Notice that the region remains
-  fixed and the selection changes based on what cells move in or out of the
-  region.
-\item Change the \gui{Selection Type} to \gui{IDs}.
-\item Play~\vcrPlay again.  Notice that the cells selected are fixed
-  regardless of position.
-\end{enumerate}
+    \begin{inlinefig}
+      \includegraphics[width=3in]{images/SelectionFrustum}
+    \end{inlinefig}
+
+  \item Play~\vcrPlay the animation a bit.  Notice that the region remains
+    fixed and the selection changes based on what cells move in or out of
+    the region.
+  \item If it is not already visible, show the selection inspector
+    with \gui{View} \ra \gui{Selection Inspector}.  You may need to dock
+    the selection inspector elsewhere to see its widgets well.
+  \item Change the \gui{Selection Type} to \gui{IDs}.
+  \item Play~\vcrPlay again.  Notice that the cells selected are fixed
+    regardless of position.
+  \end{enumerate}
+
+  In summary, a spatial selection (created with one of the select through
+  tools) will re-perform the selection at each time step as elements move
+  in and out of the selected region.  In an ID selection, the points or
+  cells selected are fixed and will be followed as they move through an
+  animation.
+\end{exercise}
 
 The \keyterm{spreadsheet view} is an important tool to use in combination
 with selections and drill down.  The spreadsheet view allows you to read
 the actual values of scalar fields and the selection mechanism will help
 you identify the values of interest.
 
-\begin{enumerate}
-\item Split the view (\splitViewH or \splitViewV).
-\item In the new view, click the \gui{Spreadsheet View} button.
-\item Make \gui{can.ex2} visible (by clicking the appropriate \eyeballg) if
-  not already visible.
-  \savecounter
-\end{enumerate}
+\begin{exercise}{The Spreadsheet View and Selection}
+  \label{ex:TheSpreadsheetViewAndSelection}%
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Split the view vertically~\splitViewV.
+  \item In the new view, click the \gui{Spreadsheet View} button.
+  \item Make \gui{can.ex2} visible (by clicking the appropriate \eyeballg)
+    if not already visible.
+    \savecounter
+  \end{enumerate}
 
-As you can see, the spreadsheet view is fairly simple.  Note the two combo
-boxes at the top of the spreadsheet view.  The first, \gui{Showing}, allows
-you to quickly choose the data set being viewed (to avoid having to go to
-the pipeline browser.  The second, \gui{Attribute}, allows you to pick
-between the different types of field data.  Only one type of data
-(e.g. point data or cell data) can be shown at one time because each type
-results in a different number of rows and different set of columns.  The
-spreadsheet view also has its own \gui{Display} panel.
+  As you can see, the spreadsheet view is fairly simple.  It shows the
+  field data in tabular form for one field type (e.g. point or cell data)
+  of one block of one data set.  This constraint is enforced to ensure that
+  every row has the same column data.
 
-\begin{inlinefig}
-  \includegraphics{images/SpreadsheetViewLabeled}
-\end{inlinefig}
+  Note the widgets at the top of the spreadsheet view.  These let you
+  quickly select the pipeline object, choose the type of field to show,
+  choose the precision shown for floating point numbers, and hide
+  everything but the selection.  As with any view, the spreadsheet view has
+  its own \gui{Display} panels.
 
-\begin{enumerate}
-  \restorecounter
-\item In the \gui{Attribute} combo box, select \gui{Cell Data}.
-\item Scroll around the spreadsheet view and find some highlighted rows.
-  (You may have to select a different block in the \gui{Display} panel.)
-  \savecounter
-\end{enumerate}
+  \begin{inlinefig}
+    \includegraphics{images/SpreadsheetViewLabeled}
+  \end{inlinefig}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/SpreadsheetViewExample}
-\end{inlinefig}
+  \begin{enumerate}
+    \restorecounter
+  \item In the \gui{Attribute} combo box, select \gui{Cell Data}.
+  \item Scroll around the spreadsheet view and find some highlighted rows.
+    (You may have to select a different block in the \gui{Display} panel.)
+    \savecounter
+  \end{enumerate}
 
-Those highlighted rows are the ones that are part of the current
-selection.  This coordination of selection between views is an important
-mechanism to link views.  In this example, it can be difficult to identify
-the selected items in the spreadsheet view.  Often, you just want to see
-the data in the selection.
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/SpreadsheetViewExample}
+  \end{inlinefig}
 
-\begin{enumerate}
-  \restorecounter
-\item In the \gui{Display} panel, turn on \gui{Show only selected
-  elements}.
-\end{enumerate}
+  Those highlighted rows are the ones that are part of the current
+  selection.  This coordination of selection between views is an important
+  mechanism to link views.  In this example, it can be difficult to identify
+  the selected items in the spreadsheet view.  Often, you just want to see
+  the data in the selection.
 
-We have now seen a selection made in the 3D view show up in the spreadsheet
-view.  The linking works in reverse as well.  We can make selections in the
-spreadsheet and they will be displayed in the 3D view.  In addition, we can
-label the selection in the 3D view using the \gui{Selection Inspector}
+  \begin{enumerate}
+    \restorecounter
+  \item Click on the \gui{Show only selected elements}~\icon{pqSelect32}
+    button at the top of the spreadsheet view.
+    \savecounter
+  \end{enumerate}
 
-\begin{enumerate}
-\item Uncheck \gui{Show only selected elements}.
-\item Select a few rows in the spreadsheet view.
-\item Find the resulting selection in the 3D view.
-\item Click the \gui{Cell Label} tab in the \gui{Selection Inspector} (at
-  the bottom).
-\item Check \gui{Visible}.
-\item Change the \gui{Label Mode} to \gui{EQPS}.
-\end{enumerate}
+  We have now seen a selection made in the 3D view show up in the
+  spreadsheet view.  The linking works in reverse as well.  We can make
+  selections in the spreadsheet and they will be displayed in the 3D view.
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/SpreadsheetSelection}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Uncheck \gui{Show only selected elements}.
+  \item Select a few rows in the spreadsheet view.
+  \item Find the resulting selection in the 3D view.
+  \end{enumerate}
+\end{exercise}
+
+The spreadsheet provides the most readable way to inspect field data.
+However, sometimes it is helpful to place the field data directly in the 3D
+view.  The next exercise describes how we can do that.
+
+\begin{exercise}{Labeling Selections}
+  \label{ex:LabelingSelections}%
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item If you do not have a few cells selected from the previous exercise,
+    select a few now. (For this exercise it is not a good idea to select a
+    large amount of cells.)
+  \item If it is not already visible, show the selection inspector
+    with \gui{View} \ra \gui{Selection Inspector}.
+  \item Click the \gui{Cell Label} tab in the \gui{Selection Inspector} (at
+    the bottom).
+  \item Check \gui{Visible}.
+  \item Change the \gui{Label Mode} to \gui{EQPS}.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/SpreadsheetSelection}
+  \end{inlinefig}
+
+  ParaView places the values for the \gui{EQPS} field near the selected
+  cell that contains that value.  It is also possible to change the look of
+  the font with respect to type, size, and color through the selection
+  inspector.
+\end{exercise}
 
 ParaView provides the ability to plot field data over time.  Because you
 seldom want to plot everything over all time, these plots work against a
 selection.
 
-\begin{enumerate}
-\item With the selection still added, add the Plot Selection Over Time
-  (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot Selection Over
-  Time}~\icon{pqPlotCellOverTime24}). \index{plot~selection~over~time}
-\item Click \gui{Copy Active Selection} in the \gui{Object Inspector}.
-\item \apply.
-\item Go to the \gui{Display} panel and select different blocks to plot
-  (which correspond to each of the selected elements).
-\end{enumerate}
+\begin{exercise}{Plot Over Time}
+  \label{ex:PlotOverTime}
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item If you do not have a few cells selected from the previous exercise,
+    select a few now. (For this exercise it is not a good idea to select a
+    large amount of cells.)
+  \item With the selection still active, add the Plot Selection Over Time
+    (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot Selection Over
+    Time}~\icon{pqPlotCellOverTime24} or use the quick launch: ctrl+space
+    Win/Linux, alt+space Mac). \index{plot~selection~over~time}
+  \item \apply.
+  \item Go to the \gui{Display} panel and select different blocks to plot
+    (which correspond to each of the selected elements).
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/PlotSelectionOverTime}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/PlotSelectionOverTime}
+  \end{inlinefig}
+
+  Note that the selection you had was automatically added as the selection
+  to use in the \gui{Object Inspector}.  If you want to change the
+  selection, simply make a new one and click \gui{Copy Active Selection} in
+  the \gui{Object Inspector}.
+\end{exercise}
 
 You can also extract a selection in order to view the selected points or
 cells separately or perform some independent processing on them.  This is
 done through the \gui{Extract Selection}~\icon{pqExtractSelection24}
-filter.  Try this.
+filter.
 
-\begin{enumerate}
-\item Turn off cell labels.
-\item Make a sizable cell selection for example, with Select Cells
-  Through~\selectCellsThrough.
-\item Create an \gui{Extract Selection}~\icon{pqExtractSelection24} filter
-  (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Extract Selection}).
-  \index{extract selection}
-\item Click the \gui{Copy Active Selection} button in the object inspector.
-\item Hit the \apply button.
-\end{enumerate}
+\begin{exercise}{Extracting a Selection}
+  \label{ex:ExtractingASelection}%
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Turn off cell labels if they are still showing (check the
+    \gui{Selection Inspector}).
+  \item Make a sizable cell selection for example, with Select Cells
+    Through~\selectCellsThrough.
+  \item Create an \gui{Extract Selection}~\icon{pqExtractSelection24}
+    filter (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Extract
+      Selection} or use the quick launch: ctrl+space Win/Linux, alt+space
+    Mac).  \index{extract selection}
+  \item \apply.
+  \end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=3in]{images/ExtractSelection}
-\end{inlinefig}
+  \begin{inlinefig}
+    \includegraphics[width=3in]{images/ExtractSelection}
+  \end{inlinefig}
 
-The object in the view is replaced with the cells that you just
-selected. (Note that in this image I added a translucent surface and a
-second view with the original selection to show the extracted cells in
-relation to the full data.) You can perform computations on the
-extracted cells by simply adding filters to the extract selection pipeline
-object.
+  The object in the view is replaced with the cells that you just
+  selected. (Note that in this image I added a translucent surface and a
+  second view with the original selection to show the extracted cells in
+  relation to the full data.) You can perform computations on the extracted
+  cells by simply adding filters to the extract selection pipeline object.
+\end{exercise}
 
-We are done with the extracted cells, so delete them (i.e. \delete the
-\gui{ExtractSelection1} filter).  You can also close the \gui{Selection
-  Inspector} and delete the plot and spreadsheet views; we are done with
-them.  You can also \delete the \gui{PlotSelectionOverTime1} filter.
+Now that we have finished the selection exercises, we will no longer be
+using the \gui{Selection Inspector}.  You may close it now if you wish.
 
 
 \section{Controlling Time}
