@@ -1704,28 +1704,42 @@ insert the current animation time into the string.
 We have already seen how to animate a data set with time in it
 (hit~\vcrPlay).  However, ParaView’s animation capabilities go far beyond
 that.  With ParaView you can animate nearly any property of any pipeline
-object.  We will demonstrate that now, but first press the \disconnect
-button to clear out the current ParaView state.  Now we are ready to make a
-simple animation.
+object.
 
-\begin{enumerate}
-\item Create a sphere source (\gui{Sources} \ra \gui{Sphere}) and \apply it.
-\item Now make sure the animation view panel is visible (\gui{View} \ra
-  \gui{Animation View} if it is not).
-\item Change the \gui{No. Frames} option to 50 (10 will go far too quickly).
-\item Find the property selection widgets at the bottom of the animation
-  view and select \gui{Sphere1} in the first box and \gui{Start Theta} in
-  the second box.
+\begin{exercise}{Animating Properties}
+  \label{ex:AnimatingProperties}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
+
+  \begin{enumerate}
+  \item Create a sphere source (\gui{Sources} \ra \gui{Sphere}) and \apply it.
+  \item Now make sure the animation view panel is visible (\gui{View} \ra
+    \gui{Animation View} if it is not).
+  \item Change the \gui{No. Frames} option to 50 (10 will go far too quickly).
+  \item Find the property selection widgets at the bottom of the animation
+    view and select \gui{Sphere1} in the first box and \gui{Start Theta} in
+    the second box.
+    \begin{inlinefig}
+      \includegraphics[height=1.5\baselineskip]{images/AddStartThetaTrack}
+    \end{inlinefig}
+    Hit the \icon{pqPlus16} button.
+  \end{enumerate}
+
   \begin{inlinefig}
-    \includegraphics[height=1.5\baselineskip]{images/AddStartThetaTrack}
+    \includegraphics[width=4in]{images/BuildAnimation1}
   \end{inlinefig}
-  Hit the \icon{pqPlus16} button.
-  \savecounter
-\end{enumerate}
 
-\begin{inlinefig}
-  \includegraphics[width=4in]{images/BuildAnimation1}
-\end{inlinefig}
+  If you play~\vcrPlay the animation, you will see the sphere open up then
+  eventually wrap around itself and disappear.
+
+  \begin{inlinefig}
+    \includegraphics[width=1in]{images/AnimateSphere0}
+    \includegraphics[width=1in]{images/AnimateSphere1}
+    \includegraphics[width=1in]{images/AnimateSphere2}
+    \includegraphics[width=1in]{images/AnimateSphere3}
+  \end{inlinefig}
+\end{exercise}
 
 What you have done is created a \keyterm{track} for the \gui{Start Theta}
 property of the \gui{Sphere1} object.  A track is represented as horizontal
@@ -1735,15 +1749,6 @@ property is interpolated between the key frames.  When you created a track
 two key frames were created automatically: a key frame at the start time
 with the minimal value and a key frame at the end time with the maximal
 value.  The property you set here defines the start range of the sphere.
-If you play~\vcrPlay the animation, you will see the sphere open up then
-eventually wrap around itself and disappear.
-
-\begin{inlinefig}
-  \includegraphics[width=1in]{images/AnimateSphere0}
-  \includegraphics[width=1in]{images/AnimateSphere1}
-  \includegraphics[width=1in]{images/AnimateSphere2}
-  \includegraphics[width=1in]{images/AnimateSphere3}
-\end{inlinefig}
 
 You can modify a track by double clicking on it.  That will bring up a
 dialog box that you can use to add, delete, and modify key frames.
@@ -1754,45 +1759,60 @@ dialog box that you can use to add, delete, and modify key frames.
 
 Use this feature to create a new key frame in the animation.
 
-\begin{enumerate}
-  \restorecounter
-\item Double-click on the \gui{Sphere1 -- Start Theta} track.
-\item In the \gui{Animation Keyframes} dialog, click the \gui{New} button.
-  This will create a new key frame at time 0.5.
-\item Modify the first key frame value to be 360 and the second key frame
-  value to be 0.
-\item Click \gui{OK}.
-\end{enumerate}
+\begin{exercise}{Modifying Animation Track Keyframes}
+  \label{ex:ModifyingAnimationTrackKeyframes}%
+  This exercise is a continuation of Exercise~\ref{ex:AnimatingProperties}.
+  You will need to finish that exercise before beginning this one.
 
-\begin{inlinefig}
-  \includegraphics[width=4in]{images/BuildAnimation2}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Double-click on the \gui{Sphere1 -- Start Theta} track.
+  \item In the \gui{Animation Keyframes} dialog, click the \gui{New}
+    button.  This will create a new key frame.
+  \item Modify the first key frame value to be 360.
+  \item Modify the second key frame time to be 0.5 and value to be 0.
+  \item Click \gui{OK}.
+  \end{enumerate}
 
-When you play the animation, the sphere will first get bigger and then get
-smaller again.
+  \begin{inlinefig}
+    \includegraphics[width=4in]{images/BuildAnimation2}
+  \end{inlinefig}
+
+  When you play the animation, the sphere will first get bigger and then get
+  smaller again.\footnote{There is a bug in ParaView 3.6.1 where the track
+    changes are not always getting updated.  If you are not seeing the
+    changes to the \gui{Start Theta} track, try clicking the \vcrFirst
+    button and try again.}
+\end{exercise}
 
 You are not limited to animating just one property.  You can animate any
 number of properties you wish.  Now we will create an animation that
 depends on modifying two properties.
 
-\begin{enumerate}
-\item Double-click on the \gui{Sphere1 -- Start Theta} track.
-\item In the \gui{Animation Keyframes} dialog, \gui{Delete} the first track
-  (at time step 0).
-\item Click \gui{OK}.
-\item In the animation view, create a track for the \gui{Sphere1} object,
-  \gui{End Theta} property.
-\item Double-click on the \gui{Sphere1 -- End Theta} track.
-\item Change the time for the second key frame to be 0.5.
-\end{enumerate}
+\begin{exercise}{Multiple Animation Tracks}
+  \label{ex:MultipleAnimationTracks}%
+  This exercise is a continuation of Exercises \ref{ex:AnimatingProperties}
+  and \ref{ex:ModifyingAnimationTrackKeyframes}.  You will need to finish
+  those exercises before beginning this one.
 
-\begin{inlinefig}
-  \includegraphics[width=4in]{images/BuildAnimation3}
-\end{inlinefig}
+  \begin{enumerate}
+  \item Double-click on the \gui{Sphere1 -- Start Theta} track.
+  \item In the \gui{Animation Keyframes} dialog, \gui{Delete} the first
+    track (at time step 0).
+  \item Click \gui{OK}.
+  \item In the animation view, create a track for the \gui{Sphere1} object,
+    \gui{End Theta} property.
+  \item Double-click on the \gui{Sphere1 -- End Theta} track.
+  \item Change the time for the second key frame to be 0.5.
+  \end{enumerate}
 
-The animation will show the sphere creating and destroying itself, but this
-time the range front rotates in the same direction.  It makes for a very
-satisfying animation when you loop~\vcrLoop the animation.
+  \begin{inlinefig}
+    \includegraphics[width=4in]{images/BuildAnimation3}
+  \end{inlinefig}
+
+  The animation will show the sphere creating and destroying itself, but this
+  time the range front rotates in the same direction.  It makes for a very
+  satisfying animation when you loop~\vcrLoop the animation.
+\end{exercise}
 
 
 \section{Scripting}
