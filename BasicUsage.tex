@@ -1814,6 +1814,50 @@ depends on modifying two properties.
   satisfying animation when you loop~\vcrLoop the animation.
 \end{exercise}
 
+In addition to animating properties for pipeline objects, you can animate
+the camera.  ParaView provides methods for animating the camera along
+curves that you specify.  The most common animation is to rotate the camera
+around an object, always facing the object, and ParaView provides a means
+to automatically generate such an animation.
+
+\begin{exercise}{Camera Orbit Animations}
+  \label{ex:CameraOrbitAnimations}%
+  For this exercise, we will orbit the camera around whatever data you have
+  loaded.  If you are continuing from the previous exercise, you are set
+  up.  If not, simply load or create some data.  To see the effects, it is
+  best to have asymmetry in the geometry you load.  \gui{can.ex2} is a good
+  data set to load for this exercise.
+
+  \begin{enumerate}
+  \item Place the camera where you want the orbit to start.  The camera
+    will move to the right around the viewpoint.
+  \item Now make sure the animation view panel is visible (\gui{View} \ra
+    \gui{Animation View} if it is not).
+  \item In the property selection widgets, select \gui{Camera} in the first
+    box and \gui{Orbit} in the second box.
+    \begin{inlinefig}
+      \includegraphics[height=1.5\baselineskip]{images/AddCameraOrbit}
+    \end{inlinefig}
+    Hit the \icon{pqPlus16} button.
+    \savecounter
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=2in]{images/CreateOrbitDialog}
+  \end{inlinefig}
+
+  Before the new track is created, you will be presented with a dialog box
+  that specifies the parameters of the orbit.  The default values come from
+  the current camera position, which is usually what you want.
+
+  \begin{enumerate}
+  \item Click \gui{OK}.
+  \item Play~\vcrPlay.
+  \end{enumerate}
+
+  The camera will now animate around the object.
+\end{exercise}
+
 
 \section{Scripting}
 
