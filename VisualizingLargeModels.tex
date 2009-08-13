@@ -63,7 +63,7 @@ ParaView.
 The first mode, which you are already familiar with, is
 \keyterm{standalone} mode.  In standalone mode, the client, data server,
 and render server are all combined into a single serial application.  When
-you run the \texttt{paraview} application, you are automatically connected
+you run the \commandline{paraview} application, you are automatically connected
 to a \keyterm{builtin} server so that you are ready to use the full
 features of ParaView.
 
@@ -72,12 +72,13 @@ features of ParaView.
 \end{inlinefig}
 
 The second mode is \keyterm{client-server} mode.  In client-server mode,
-you execute the \texttt{pvserver} program on a parallel machine and connect
-to it with the \texttt{paraview} client application.  The \texttt{pvserver}
-program has both the data server and render server embedded in it, so both
-data processing and rendering take place there.  The client and server are
-connected via a socket, which is assumed to be a relatively slow mode of
-communication, so data transfer over this socket is minimized.
+you execute the \commandline{pvserver} program on a parallel machine and
+connect to it with the \commandline{paraview} client application.  The
+\commandline{pvserver} program has both the data server and render server
+embedded in it, so both data processing and rendering take place there.
+The client and server are connected via a socket, which is assumed to be a
+relatively slow mode of communication, so data transfer over this socket is
+minimized.
 
 \begin{inlinefig}
   \includegraphics{images/RunModeClientRenderDataServer}

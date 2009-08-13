@@ -8,7 +8,7 @@ off of ParaView version \pvversion.  If you do not already have ParaView
 \href{http://www.paraview.org}{www.paraview.org} (click on the download
 link).  ParaView launches like most other applications.  On Windows, the
 launcher is located in the start menu.  On Macintosh, open the application
-bundle that you installed.  On Linux, execute \texttt{paraview} from a
+bundle that you installed.  On Linux, execute \commandline{paraview} from a
 command prompt (you may need to set your path).
 
 The examples in this tutorial also rely on some data that is available at
@@ -1858,50 +1858,6 @@ to automatically generate such an animation.
 
   The camera will now animate around the object.
 \end{exercise}
-
-
-\section{Scripting}
-
-There are many ways to modify and automate ParaView.  One of the most
-convenient ways to do so is to use the Python scripting that is built into
-ParaView.  Although the Python bindings are beyond the scope of this
-tutorial, we discuss the ways in which you can use them.  You can get more
-information about the Python bindings from the ParaView Wiki
-(\href{http://www.paraview.org/Wiki/images/2/26/Servermanager.pdf}{http://www.paraview.org/Wiki/images/2/26/Servermanager.pdf}).
-
-The most straightforward way to bring up Python in ParaView is to bring up
-the embedded Python shell.  In the menu, select \gui{Tools} \ra \gui{Python
-  Shell}.  This brings up a dialog box with a Python shell that you can use
-to issue arbitrary commands like run previously written scripts, load a
-saved state, manipulate pipeline objects, and load plugins.
-
-\begin{inlinefig}
-  \includegraphics[width=2.5in]{images/PythonShell}
-\end{inlinefig}
-
-There is also a mechanism to use Python to manipulate data from within the
-pipeline.  There is a special filter called the \keyterm{programmable
-  filter} (accessible from \gui{Filters} \ra \gui{Data Analysis} \ra
-\gui{Programmable Filter}).  This filter allows you to define a Python
-script in the object inspector.  This script will be executed every time
-the pipeline is updated.  The scripts have direct access to your data and
-allow you to manipulate them in any way you like.  The truly great thing
-about the programmable filter is that it even works in parallel mode.  If
-the data is on a distributed parallel machine, the Python script is also
-distributed on the machine and executes on the data in the same way it
-would as if it was running in serial.  Thus, you can have parallel
-scripting of your data with no further effort on your part.
-
-Sometimes it is convenient to automate your post-processing and
-visualization with a Python script that completely bypasses the ParaView
-GUI (and therefore any need for user intervention).  You can do this with
-the \texttt{pvpython} application that comes with ParaView.  The
-\texttt{pvpython} application is simply a Python interpreter with all of
-the ParaView bindings already loaded into it.  You can execute that program
-with a script to completely automate ParaView.  ParaView also comes with a
-similar program called \texttt{pvbatch}.  Unlike \texttt{pvpython},
-\texttt{pvbatch} can run in parallel without having to establish a
-client/server connection, but some of the GUI library will be unavailable.
 
 
 % Chapter Basic Usage

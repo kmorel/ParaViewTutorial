@@ -13,6 +13,7 @@ SET(CHAPTER_FILES
   Introduction.tex
   BasicUsage.tex
   VisualizingLargeModels.tex
+  BatchPythonScripting.tex
   FurtherReading.tex
   )
 
