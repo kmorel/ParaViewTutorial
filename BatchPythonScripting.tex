@@ -1,9 +1,6 @@
 \chapter{Batch Python Scripting}
 \label{chap:BatchPythonScripting}
 
-% Set up lstlisting environment
-\lstset{language=Python}
-
 Python scripting can be leveraged in two ways within ParaView.  First,
 Python scripts can automate the setup and execution of visualizations by
 performing the same actions as a user at the GUI.  Second, Python scripts
@@ -77,9 +74,9 @@ your environment, consult the ParaView Wiki.
 
 The first thing any ParaView Python script must do is load the
 \textpy{paraview.simple} module.  This is done by invoking
-\begin{lstlisting}
+\begin{python}
 from paraview.simple import *
-\end{lstlisting}
+\end{python}
 In general, this command needs to be invoked at the beginning of any
 ParaView batch Python script.  This command is automatically invoked for
 you when you bring up the scripting dialog in ParaView, but you must add it
@@ -108,18 +105,18 @@ function causes a view to be redrawn.
   If you have not already done so, open the Python shell in the ParaView
   GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the menu.  You
   will notice that
-  \begin{lstlisting}
+  \begin{python}
 from paraview.simple import *
-  \end{lstlisting}
+  \end{python}
   has been added for you.
 
   Create and show a \gui{Sphere} source by typing the following in the
   Python shell.
-  \begin{lstlisting}
+  \begin{python}
 sphere = Sphere()
 Show()
 Render()
-  \end{lstlisting}
+  \end{python}
 
   The \pyfunc{Sphere} command creates a sphere pipeline object.  Once it is
   executed you will see an item in the pipeline browser created.  We save a

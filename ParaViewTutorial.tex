@@ -6,8 +6,8 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{fancyhdr}
+\usepackage{fancyvrb}
 \usepackage{graphicx}
-\usepackage{listings}
 \usepackage{multicol}
 \usepackage{picins}
 \usepackage{tabularx}
@@ -146,7 +146,7 @@
 \newcommand*{\pyfunc}[1]{\pyfuncindex{#1}\textpy{#1}}
 
 % Set up environment for python scripts.
-\lstloadlanguages{Python}
+\CustomVerbatimEnvironment{python}{Verbatim}{}
 
 % Insert an icon image.
 \newlength{\fontdrop}		% Set length to drop below baseline so that
