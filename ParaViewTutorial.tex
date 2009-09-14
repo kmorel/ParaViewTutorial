@@ -136,6 +136,15 @@
 % Font for things intered in python.
 \newcommand*{\textpy}[1]{\texttt{#1}}
 
+% Add a Python function to the index.  This is helpful to announce
+% functions that are in a Python script but might not be mentioned
+% elsewhere in the text.
+\newcommand*{\pyfuncindex}[1]{\index{#1}}
+
+% Placeholder for a Python function.  Sets the right font and creates an
+% index entry.
+\newcommand*{\pyfunc}[1]{\pyfuncindex{#1}\textpy{#1}}
+
 % Set up environment for python scripts.
 \lstloadlanguages{Python}
 

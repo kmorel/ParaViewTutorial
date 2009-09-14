@@ -80,6 +80,56 @@ The first thing any ParaView Python script must do is load the
 \begin{lstlisting}
 from paraview.simple import *
 \end{lstlisting}
+In general, this command needs to be invoked at the beginning of any
+ParaView batch Python script.  This command is automatically invoked for
+you when you bring up the scripting dialog in ParaView, but you must add it
+yourself when using the Python interpreter in other programs (including
+\commandline{pvpython} and \commandline{pvbatch}).
+
+The \textpy{paraview.simple} module defines a function for every source,
+reader, filter, and writer defined in ParaView.  The function will be the
+same name as shown in the GUI menus with spaces and special characters
+removed.  For example, the \pyfunc{Sphere} function corresponds to
+\gui{Sources} \ra \gui{Sphere} in the GUI and the \pyfunc{PlotOverLine}
+function corresponds to \gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot
+  Over Line}.  Each function creates a pipeline object, which will show up
+in the pipeline browser (with the exception of writers), and returns an
+object that is a proxy that can be used to query and manipulate the
+parameters of that pipeline object.
+
+There are also several other functions in the \textpy{paraview.simple}
+module that perform other manipulations.  For example, the pair of
+functions \pyfunc{Show} and \pyfunc{Hide} turn on and off, respectively,
+the visibility of a pipeline object in a view.  The \pyfunc{Render}
+function causes a view to be redrawn.
+
+\begin{exercise}{Creating and Showing a Source}
+  \label{ex:CreatingAndShowingASource}%
+  If you have not already done so, open the Python shell in the ParaView
+  GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the menu.  You
+  will notice that
+  \begin{lstlisting}
+from paraview.simple import *
+  \end{lstlisting}
+  has been added for you.
+
+  Create and show a \gui{Sphere} source by typing the following in the
+  Python shell.
+  \begin{lstlisting}
+sphere = Sphere()
+Show()
+Render()
+  \end{lstlisting}
+
+  The \pyfunc{Sphere} command creates a sphere pipeline object.  Once it is
+  executed you will see an item in the pipeline browser created.  We save a
+  handle to the pipeline object in the variable \textpy{sphere}.  We are
+  not using this variable (yet), but it is good practice to save references
+  to your pipeline objects.
+
+  The following \pyfunc{Show} command turns on visibility of this object in
+  the view, and the subsequent \pyfunc{Render} causes the results to be seen.
+\end{exercise}
 
 
 % Chapter Batch Python Scripting
