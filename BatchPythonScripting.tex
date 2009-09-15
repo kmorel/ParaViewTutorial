@@ -120,7 +120,7 @@ Render()
 
   The \pyfunc{Sphere} command creates a sphere pipeline object.  Once it is
   executed you will see an item in the pipeline browser created.  We save a
-  handle to the pipeline object in the variable \textpy{sphere}.  We are
+  proxy to the pipeline object in the variable \textpy{sphere}.  We are
   not using this variable (yet), but it is good practice to save references
   to your pipeline objects.
 
@@ -161,8 +161,8 @@ for the pipeline objects.  As we have seen in the exercises of
 Chapter~\ref{chap:BasicUsage}, it is common to have to modify the
 parameters of the objects using the object inspector.
 
-In Python scripting, we use the handle returned from the creation functions
-to manipulate the pipeline objects.  These handles are in fact Python
+In Python scripting, we use the proxy returned from the creation functions
+to manipulate the pipeline objects.  These proxies are in fact Python
 objects with class attributes that correspond to the same properties you
 set in the Object Inspector.  They have the same names as those in the
 object inspector with spaces and other illegal characters removed.  You can
@@ -176,7 +176,7 @@ set them by simply assigning them a value.
   exercises before beginning this one.
 
   Recall that we have so far created two Python variables, \textpy{sphere}
-  and \textpy{shrink}, that are handles to the corresponding pipeline
+  and \textpy{shrink}, that are proxies to the corresponding pipeline
   objects.  First, enter the following command into the Python shell to get
   the current value of the \gui{Theta Resolution} property of the sphere.
 
@@ -229,7 +229,7 @@ inputs.
   (Exercise~\ref{ex:ChangingPipelineObjectProperties} is optional).
 
   Recall that we have so far created two Python variables, \textpy{sphere}
-  and \textpy{shrink}, that are handles to the corresponding pipeline
+  and \textpy{shrink}, that are proxies to the corresponding pipeline
   objects.  We will now add a second filter to the sphere source that will
   extract the wireframe from it.  Enter the following in the Python shell.
 
@@ -286,6 +286,18 @@ Render()
   \end{python}
 \end{exercise}
 
+In the previous exercise, we saw that we could set the \textpy{Input}
+property by placing \textpy{Input=\argdesc{input object}} in the arguments
+of the creator function.  In general we can set any of the properties at
+object construction by specifying \textpy{\argdesc{property
+    name}=\argdesc{property value}}.  For example, we can set both the
+\gui{Theta Resolution} and \gui{Phi Resolution} when we create a sphere
+with a line like this.
+
+\begin{python}
+sphere = Sphere(ThetaResolution=360, PhiResolution=180)
+\end{python}
+
 
 \section{Online Help}
 \label{sec:OnlineHelp}
@@ -315,7 +327,7 @@ does.  For example
 \end{python}
 will first give help on the \pyfunc{Sphere} function, then use it to create
 an object, and then give help on the object that was returned (including a
-list of all the properties for the handle).
+list of all the properties for the proxy).
 
 Most of the panels displayed in the object inspector's \gui{Properties} tab
 are automatically generated from the same introspection that builds the
@@ -337,6 +349,45 @@ within Python.
 \begin{inlinefig}
   \includegraphics[width=3in]{images/ObjectHelp}
 \end{inlinefig}
+
+
+\section{Reading from Files}
+\label{sec:ReadingFromFiles}
+
+The equivalent to opening a file in the ParaView GUI is to create a reader
+in Python scripting.  Reader objects are created in much the same way as
+sources and filters; \textpy{paraview.simple} has a function for each
+reader type that creates the pipeline object and returns a proxy object.
+
+All reader objects have at least one property (hidden in the GUI) that
+specifies the file name.  This property is conventionally called either
+\textpy{FileName} or \textpy{FileNames}.  You should always specify a valid
+filename when creating a reader by placing something like
+\textpy{FileName=\argdesc{full path}} in the arguments of the construction
+object.
+
+\begin{exercise}{Creating a Reader}
+  \label{ex:CreatingAReader}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
+  You will also need the Python shell.  If you have not already done so,
+  open it with \gui{Tools} \ra \gui{Python Shell} from the menu.
+
+  In this exercise we are loading the \gui{disk\_out\_ref.ex2} file from
+  the Python shell.  Locate this file on your computer and be ready to type
+  or copy it into the Python shell.  We will reference it as
+  \textpy{\argdesc{path}/disk\_out\_ref.ex2}.
+
+  Create the reader while specifying the filename by entering the following
+  in the Python shell.
+
+  \begin{pythonpluscommands}
+reader = ExodusIIReader(FileName='\argdesc{path}/disk_out_ref.ex2')
+Show()
+Render()
+  \end{pythonpluscommands}
+\end{exercise}
 
 
 % Chapter Batch Python Scripting

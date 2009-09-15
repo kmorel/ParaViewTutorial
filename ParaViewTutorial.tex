@@ -147,6 +147,11 @@
 
 % Set up environment for python scripts.
 \CustomVerbatimEnvironment{python}{Verbatim}{}
+\CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}{commandchars=\\\{\}}
+
+% Used to insert a placeholder for something in a Python script that the
+% user replaces with a system-specific value.
+\newcommand*{\argdesc}[1]{\textrm{$\langle$\emph{#1}$\rangle$}}
 
 % Insert an icon image.
 \newlength{\fontdrop}		% Set length to drop below baseline so that
