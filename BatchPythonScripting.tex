@@ -92,7 +92,7 @@ function corresponds to \gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot
   Over Line}.  Each function creates a pipeline object, which will show up
 in the pipeline browser (with the exception of writers), and returns an
 object that is a proxy that can be used to query and manipulate the
-parameters of that pipeline object.
+properties of that pipeline object.
 
 There are also several other functions in the \textpy{paraview.simple}
 module that perform other manipulations.  For example, the pair of
@@ -168,8 +168,8 @@ set in the Object Inspector.  They have the same names as those in the
 object inspector with spaces and other illegal characters removed.  You can
 set them by simply assigning them a value.
 
-\begin{exercise}{Changing Pipeline Object Parameters}
-  \label{ex:ChangingPipelineObjectParameters}%
+\begin{exercise}{Changing Pipeline Object Properties}
+  \label{ex:ChangingPipelineObjectProperties}%
   This exercise is a continuation of Exercises
   \ref{ex:CreatingAndShowingASource} and
   \ref{ex:CreatingAndShowingAFilter}.  You will need to finish those
@@ -178,7 +178,7 @@ set them by simply assigning them a value.
   Recall that we have so far created two Python variables, \textpy{sphere}
   and \textpy{shrink}, that are handles to the corresponding pipeline
   objects.  First, enter the following command into the Python shell to get
-  the current value of the \gui{Theta Resolution} parameter of the sphere.
+  the current value of the \gui{Theta Resolution} property of the sphere.
 
   \begin{python}
 print sphere.ThetaResolution
@@ -188,14 +188,14 @@ print sphere.ThetaResolution
   that using the \textpy{print} keyword, which instructs Python to output
   the arguments to standard out, is superfluous here as the Python shell
   will output the result of any command anyway.)  Let us double the number
-  of polygons around the equator of the sphere by changing this parameter.
+  of polygons around the equator of the sphere by changing this property.
 
   \begin{python}
 sphere.ThetaResolution = 16
 Render()
   \end{python}
 
-  The shrink filter has only one parameter, \gui{Shrink Factor}.  We can
+  The shrink filter has only one property, \gui{Shrink Factor}.  We can
   adjust this factor to make the size of the polygons larger or smaller.
   Let us change the factor to make the polygons smaller.
 
@@ -205,7 +205,7 @@ Render()
   \end{python}
 
   You may have noticed that as you type in Python commands to change the
-  pipeline object parameters, the GUI in the object inspector updates
+  pipeline object properties, the GUI in the object inspector updates
   accordingly.
 \end{exercise}
 
@@ -223,10 +223,10 @@ inputs.
   \label{ex:BranchingPipelines}%
   This exercise is a continuation of Exercises
   \ref{ex:CreatingAndShowingASource} through
-  \ref{ex:ChangingPipelineObjectParameters}.  You will need to finish
+  \ref{ex:ChangingPipelineObjectProperties}.  You will need to finish
   Exercises \ref{ex:CreatingAndShowingASource} and
   \ref{ex:CreatingAndShowingAFilter} before beginning this one
-  (Exercise~\ref{ex:ChangingPipelineObjectParameters} is optional).
+  (Exercise~\ref{ex:ChangingPipelineObjectProperties} is optional).
 
   Recall that we have so far created two Python variables, \textpy{sphere}
   and \textpy{shrink}, that are handles to the corresponding pipeline
@@ -285,6 +285,58 @@ Hide(wireframe)
 Render()
   \end{python}
 \end{exercise}
+
+
+\section{Online Help}
+\label{sec:OnlineHelp}
+
+This tutorial, as well as similar instructions in the ParaView book and
+Wiki, is designed to give the key concepts necessary to understand and
+create batch Python scripts.  The documentation detail such as lists of
+functions, classes, and properties available is maintained by the ParaView
+build process and provided as online help from within the ParaView
+application.  In this way we can ensure that the documentation is up to
+date for whatever version of ParaView you are using and that it is easily
+accessible.
+
+The ParaView Python bindings make use of the \pyfunc{help} built-in
+function.  This function takes as an argument any Python object and returns
+some documentation on it.  For example, typing
+\begin{python}
+  help(paraview.simple)
+\end{python}
+returns a brief description of the module and then a list of all the
+functions included in the module with a brief synopsis of what each one
+does.  For example
+\begin{python}
+  help(Sphere)
+  sphere = Sphere()
+  help(sphere)
+\end{python}
+will first give help on the \pyfunc{Sphere} function, then use it to create
+an object, and then give help on the object that was returned (including a
+list of all the properties for the handle).
+
+Most of the panels displayed in the object inspector's \gui{Properties} tab
+are automatically generated from the same introspection that builds the
+Python classes. (There are a small number of exceptions where a custom
+panel was created for better usability.) Thus, if you see a labeled widget
+in the object inspector, there is a good chance that there is a
+corresponding property in the Python object with the same name.
+
+Regardless of whether the GUI contains a custom panel for a pipeline
+object, you can still get information about that object's properties from
+the GUI's online help.  As always, bring up the help with the
+\icon{pqHelp32} toolbar button.  You can find documentation for all the
+available pipeline objects under the \gui{Sources Menu}, \gui{Filters
+  Menu}, \gui{Readers}, and \gui{Writers} entries in the help
+\gui{Contents}.  Each entry gives a list of objects of that type.  Clicking
+on any one of the objects gives a list of the properties you can set from
+within Python.
+
+\begin{inlinefig}
+  \includegraphics[width=3in]{images/ObjectHelp}
+\end{inlinefig}
 
 
 % Chapter Batch Python Scripting
