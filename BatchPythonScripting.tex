@@ -125,7 +125,165 @@ Render()
   to your pipeline objects.
 
   The following \pyfunc{Show} command turns on visibility of this object in
-  the view, and the subsequent \pyfunc{Render} causes the results to be seen.
+  the view, and the subsequent \pyfunc{Render} causes the results to be
+  seen.  At this point you can interact directly with the GUI again.  Try
+  changing the camera angle in the view with the mouse.
+\end{exercise}
+
+\begin{exercise}{Creating and Showing a Filter}
+  \label{ex:CreatingAndShowingAFilter}%
+  Creating filters is almost identical to creating sources.  By default,
+  the last created pipeline object will be set as the input to the newly
+  created filter, much like when creating filters in the GUI.
+
+  This exercise is a continuation of
+  Exercise~\ref{ex:CreatingAndShowingASource}.  You will need to finish
+  that exercise before beginning this one.
+
+  Type in the following script in the Python shell that hides the sphere
+  and then adds the shrink filter to the sphere and shows that.
+
+  \pyfuncindex{Hide}\pyfuncindex{Show}\pyfuncindex{Shrink}\pyfuncindex{Render}
+  \begin{python}
+Hide()
+shrink = Shrink()
+Show()
+Render()
+  \end{python}
+
+  The sphere should be replaced with the output of the \pyfunc{Shrink}
+  filter, which makes all of the polygons smaller to give the mesh an
+  exploded type of appearance.
+\end{exercise}
+
+So far as we have built pipelines we have accepted the default parameters
+for the pipeline objects.  As we have seen in the exercises of
+Chapter~\ref{chap:BasicUsage}, it is common to have to modify the
+parameters of the objects using the object inspector.
+
+In Python scripting, we use the handle returned from the creation functions
+to manipulate the pipeline objects.  These handles are in fact Python
+objects with class attributes that correspond to the same properties you
+set in the Object Inspector.  They have the same names as those in the
+object inspector with spaces and other illegal characters removed.  You can
+set them by simply assigning them a value.
+
+\begin{exercise}{Changing Pipeline Object Parameters}
+  \label{ex:ChangingPipelineObjectParameters}%
+  This exercise is a continuation of Exercises
+  \ref{ex:CreatingAndShowingASource} and
+  \ref{ex:CreatingAndShowingAFilter}.  You will need to finish those
+  exercises before beginning this one.
+
+  Recall that we have so far created two Python variables, \textpy{sphere}
+  and \textpy{shrink}, that are handles to the corresponding pipeline
+  objects.  First, enter the following command into the Python shell to get
+  the current value of the \gui{Theta Resolution} parameter of the sphere.
+
+  \begin{python}
+print sphere.ThetaResolution
+  \end{python}
+
+  The Python interpreter should respond with the result \textpy{8}.  (Note
+  that using the \textpy{print} keyword, which instructs Python to output
+  the arguments to standard out, is superfluous here as the Python shell
+  will output the result of any command anyway.)  Let us double the number
+  of polygons around the equator of the sphere by changing this parameter.
+
+  \begin{python}
+sphere.ThetaResolution = 16
+Render()
+  \end{python}
+
+  The shrink filter has only one parameter, \gui{Shrink Factor}.  We can
+  adjust this factor to make the size of the polygons larger or smaller.
+  Let us change the factor to make the polygons smaller.
+
+  \begin{python}
+shrink.ShrinkFactor = 0.25
+Render()
+  \end{python}
+
+  You may have noticed that as you type in Python commands to change the
+  pipeline object parameters, the GUI in the object inspector updates
+  accordingly.
+\end{exercise}
+
+So far we have created only non-branching pipelines.  This is a simple and
+common case and, like many other things in the \textpy{paraview.simple}
+module, is designed to minimize the amount of work for the simple and
+common case but also provide a clear path to the more complicated cases.
+As we have built the non-branching pipeline, ParaView has automatically
+connected the filter input to the previously created object so that the
+script reads like the sequence of operations it is.  However, if the
+pipeline has branching, we need to be more specific about the filter
+inputs.
+
+\begin{exercise}{Branching Pipelines}
+  \label{ex:BranchingPipelines}%
+  This exercise is a continuation of Exercises
+  \ref{ex:CreatingAndShowingASource} through
+  \ref{ex:ChangingPipelineObjectParameters}.  You will need to finish
+  Exercises \ref{ex:CreatingAndShowingASource} and
+  \ref{ex:CreatingAndShowingAFilter} before beginning this one
+  (Exercise~\ref{ex:ChangingPipelineObjectParameters} is optional).
+
+  Recall that we have so far created two Python variables, \textpy{sphere}
+  and \textpy{shrink}, that are handles to the corresponding pipeline
+  objects.  We will now add a second filter to the sphere source that will
+  extract the wireframe from it.  Enter the following in the Python shell.
+
+  \pyfuncindex{ExtractEdges}
+  \begin{python}
+wireframe = ExtractEdges(Input=sphere)
+Show()
+Render()
+  \end{python}
+
+  An \gui{Extract Edges} filter is added to the sphere source.  You should
+  now see both the wireframe of the original sphere and the shrunken
+  polygons.
+
+  Notice that we explicitly set the input for the \gui{Extract Edges}
+  filter by providing \textpy{Input=sphere} as an argument to the
+  \pyfunc{ExtractEdges} function.  What we are really doing is setting the
+  \textpy{Input} property upon construction of the object.  Although it
+  would be possible to create the object with the default input, and then
+  set the input later, it is not recommended.  The problem is that not all
+  filters accept all input.  If you initially create a filter with the
+  wrong input, you could get error messages before you get a chance to
+  change the \textpy{Input} property to the correct input.
+
+  The sphere source having two filters connected to its output is an
+  example of \keyterm{fan out} in the pipeline.  It is always possible to
+  have multiple filters attached to a single output.  Some filters, but not
+  all, also support having multiple filters connected to their input.
+  Multiple filters are attached to an input is known as \keyterm{fan in}.
+  In ParaView's Python scripting, fan in is handled much like fan out, by
+  explicitly defining a filter's inputs.  When setting multiple inputs (on
+  a single port), simply set the input to a list of pipeline objects rather
+  than a single one.  For example, let us group the results of the shrink
+  and extract edges filters using the \gui{Group Datasets} filter.  Type
+  the following line in the Python shell.
+
+  \pyfuncindex{GroupDatasets}
+  \begin{python}
+group = GroupDatasets(Input=[shrink,wireframe])
+Show()
+  \end{python}
+
+  There is now no longer any reason for showing the shrink and extract
+  edges filters, so let us hide them.  By default, the \pyfunc{Show} and
+  \pyfunc{Hide} functions operate on the last pipeline object created (much
+  like the default input when creating a filter), but you can explicitly
+  choose the object by giving it as an argument.  To hide the shrink and
+  extract edges filters, type the following in the Python shell.
+
+  \begin{python}
+Hide(shrink)
+Hide(wireframe)
+Render()
+  \end{python}
 \end{exercise}
 
 
