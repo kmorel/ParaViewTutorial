@@ -299,6 +299,61 @@ sphere = Sphere(ThetaResolution=360, PhiResolution=180)
 \end{python}
 
 
+\section{Active Objects}
+\label{sec:ActiveObjects}
+
+If you have any experience with the ParaView GUI, then you should already
+be familiar with the concept of an active object.  As you build and
+manipulate visualizations within the GUI, you first have to select an
+object in the pipeline browser.  Other GUI panels such as the object
+inspector will change based on what the active object is.  The active
+object is also used as the default object to use for some operations such
+as adding the filter.
+
+The batch Python scripting also understands the concept of the active
+object.  In fact, when running together the GUI and the Python interpreter
+share the same active object.  When you created filters in the previous
+section, the default input they were given was actually the active object.
+When you created a new pipeline object, that new object became the active
+one (just like when you create an object in the GUI).
+
+You can get and set the active object with the \pyfunc{GetActiveSource} and
+\pyfunc{SetActiveSource} functions, respectively.  You can also get a list
+of all pipeline objects with the \pyfunc{GetSources} function.  When you
+click on a new object in the GUI pipeline browser, the active object in
+Python will change.  Likewise, if you call \pyfunc{SetActiveSource} in
+python, you will see the corresponding entry become highlighted in the
+pipeline browser.
+
+\begin{exercise}{Experiment with Active Pipeline Objects}
+  \label{ex:ExperimentWithActivePipelineObjects}%
+  This exercise is a continuation of the exercises in the previous
+  section.  However, if you prefer you can create any pipeline you want and
+  follow along.
+
+  Play with active objects by trying the following.
+  \begin{itemize}
+  \item Get a list of objects by calling
+    \pyfuncindex{GetSources}\textpy{GetSources()}.  Find the sources and
+    filters you created in that list.
+  \item Get the active object by calling
+    \pyfuncindex{GetActiveSource}\textpy{GetActiveSource()}.  Compare that
+    to what is selected in the pipeline browser.
+  \item Select something new in the pipeline browser and call
+    \textpy{GetActiveSource()} again.
+  \item Change the active object with the \pyfunc{SetActiveSource}
+    function.  Observe the change in the pipeline browser.
+  \end{itemize}
+\end{exercise}
+
+As a ParaView user, you should also already be familiar with multiple views
+and the active view.  The active view is marked in the GUI with a blue
+border.  The Python functions \pyfunc{GetActiveView} and
+\pyfunc{SetActiveView} allow you to query and change the active view.  As
+with pipeline objects, the active view is synchronized between the GUI and
+the Python interpreter.
+
+
 \section{Online Help}
 \label{sec:OnlineHelp}
 
@@ -362,7 +417,7 @@ reader type that creates the pipeline object and returns a proxy object.
 All reader objects have at least one property (hidden in the GUI) that
 specifies the file name.  This property is conventionally called either
 \textpy{FileName} or \textpy{FileNames}.  You should always specify a valid
-filename when creating a reader by placing something like
+file name when creating a reader by placing something like
 \textpy{FileName=\argdesc{full path}} in the arguments of the construction
 object.
 
@@ -379,7 +434,7 @@ object.
   or copy it into the Python shell.  We will reference it as
   \textpy{\argdesc{path}/disk\_out\_ref.ex2}.
 
-  Create the reader while specifying the filename by entering the following
+  Create the reader while specifying the file name by entering the following
   in the Python shell.
 
   \begin{pythonpluscommands}
