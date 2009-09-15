@@ -445,4 +445,51 @@ Render()
 \end{exercise}
 
 
+\section{Querying Field Attributes}
+\label{sec:QueryingFieldAttributes}
+
+In addition to having properties specific to the class, all proxies for
+pipeline objects share a set of common properties and methods.  Two very
+important such properties are the \pyattrib{PointData} and
+\pyattrib{CellData} properties.  These properties act like
+\keyterm{dictionaries}, an associative array type in Python, that maps
+variable names (in strings) to \pyattrib{ArrayInformation} objects that
+hold some characteristics of the fields.  Of particular note are the
+\pyattrib{ArrayInformation} methods \pyfunc{GetName}, which returns the
+name of the field, \pyfunc{GetNumberOfComponents}, which returns the size
+of each field value (1 for scalars, more for vectors), and
+\pyfunc{GetRange}, which returns the minimum and maximum values for a
+particular component.
+
+\begin{exercise}{Getting Field Information}
+  \label{ex:GettingFieldInformation}%
+  This exercise is a continuation of Exercise~\ref{ex:CreatingAReader}.
+  You will need to finish that exercise before beginning this one.
+
+  To start with, get a handle to the point data and print out all of the
+  point fields available.
+  \begin{python}
+pd = reader.PointData
+print pd.keys()
+  \end{python}
+
+  Get some information about the ``Pres'' and ``V'' fields.
+  \begin{python}
+print pd['Pres'].GetNumberOfComponents()
+print pd['Pres'].GetRange()
+print pd['V'].GetNumberOfComponents()
+  \end{python}
+
+  Now let us get fancy.  Use the Python \pyattrib{for} construct to iterate
+  over all of the arrays and print the ranges for all the components.
+  \begin{python}
+for ai in pd.values():
+    print ai.GetName(), ai.GetNumberOfComponents(),
+    for i in xrange(ai.GetNumberOfComponents()):
+        print ai.GetRange(i),
+    print
+  \end{python}
+\end{exercise}
+
+
 % Chapter Batch Python Scripting
