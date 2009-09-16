@@ -492,4 +492,58 @@ for ai in pd.values():
 \end{exercise}
 
 
+\section{Representations}
+\label{sec:Representations}
+\index{representation}
+
+Representations are the ``glue'' between the data in a pipeline object and
+a view.  The representation is responsible for managing how a data set is
+drawn in the view.  The representation defines and manages the underlying
+rendering objects used to draw the data as well as other rendering
+properties such as coloring and lighting.  Parameters made available in the
+\gui{Display} panel of the GUI are managed by representations.  There is a
+separate representation object instance for every pipeline-object--view
+pair.  This is so that each view can display the data differently.
+
+Representations are created automatically.  You can get the proxy to the
+representation objects with the \pyfunc{GetRepresentation} function.  With
+no arguments, this function will return the representation for the active
+pipeline object and the active view.  You can also specify a pipeline
+object or view or both.
+
+\begin{exercise}{Coloring Data}
+  \label{ex:ColoringData}%
+  This exercise is a continuation of Exercise~\ref{ex:CreatingAReader}.  If
+  you do not have the exodus file open, you will need to finish that
+  exercise before beginning this one.
+
+  Let us change the color of the geometry to blue and give it a very
+  pronounced specular highlight (that is, make it really shiny).  Type in
+  the following into the Python shell to get the representation and change
+  the material properties.
+
+  \begin{python}
+readerRep = GetRepresentation()
+readerRep.DiffuseColor = [0, 0, 1]
+readerRep.SpecularColor = [1, 1, 1]
+readerRep.SpecularPower = 200
+readerRep.Specular = 1
+Render()
+  \end{python}
+
+  Now rotate the camera with the mouse in the GUI to see the effect of the
+  specular highlighting.
+
+  We can also use the representation to color by a field variable.  Enter
+  the following into the Python shell to color the mesh by the ``Pres''
+  field variable.
+
+  \begin{python}
+readerRep.ColorArrayName = 'Pres'
+readerRep.LookupTable = MakeBlueToRedLT(0, 0.03)
+Render()
+  \end{python}
+\end{exercise}
+
+
 % Chapter Batch Python Scripting
