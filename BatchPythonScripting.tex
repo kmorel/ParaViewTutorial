@@ -27,7 +27,7 @@ most recent and complete documentation is kept on the ParaView Wiki.
 
 There are many ways to invoke the Python interpreter.  The method you use
 depends on how you are using the scripting.  The easiest way to get a
-python interpreter, and the method we use in this tutorial is to select
+python interpreter, and the method we use in this tutorial, is to select
 \gui{Tools} \ra \gui{Python Shell} from the menu.  This will bring up a
 dialog box containing most principally a text area where you can interact
 with the Python interpreter.
@@ -54,7 +54,7 @@ interpreter.  It is a serial application that connects to a ParaView server
 (which can be either builtin or remote).  \commandline{pvbatch} is roughly
 equivalent to \commandline{pvserver} except that commands are taken from a
 Python script rather than from a socket connection to a client.  It is a
-parallel application that can be launch with \commandline{mpirun} (assuming
+parallel application that can be launched with \commandline{mpirun} (assuming
 it was compiled with MPI), but it cannot connect to another server; it is
 its own server.  In general, you should use \commandline{pvpython} if you
 will be using the interpreter interactively and \commandline{pvbatch} if
@@ -308,10 +308,10 @@ manipulate visualizations within the GUI, you first have to select an
 object in the pipeline browser.  Other GUI panels such as the object
 inspector will change based on what the active object is.  The active
 object is also used as the default object to use for some operations such
-as adding the filter.
+as adding a filter.
 
 The batch Python scripting also understands the concept of the active
-object.  In fact, when running together the GUI and the Python interpreter
+object.  In fact, when running together, the GUI and the Python interpreter
 share the same active object.  When you created filters in the previous
 section, the default input they were given was actually the active object.
 When you created a new pipeline object, that new object became the active
@@ -346,12 +346,13 @@ pipeline browser.
   \end{itemize}
 \end{exercise}
 
-As a ParaView user, you should also already be familiar with multiple views
-and the active view.  The active view is marked in the GUI with a blue
-border.  The Python functions \pyfunc{GetActiveView} and
-\pyfunc{SetActiveView} allow you to query and change the active view.  As
-with pipeline objects, the active view is synchronized between the GUI and
-the Python interpreter.
+In addition to maintaining an active pipeline object, ParaView Python
+scripting also maintains an active view.  As a ParaView user, you should
+also already be familiar with multiple views and the active view.  The
+active view is marked in the GUI with a blue border.  The Python functions
+\pyfunc{GetActiveView} and \pyfunc{SetActiveView} allow you to query and
+change the active view.  As with pipeline objects, the active view is
+synchronized between the GUI and the Python interpreter.
 
 
 \section{Online Help}
@@ -419,7 +420,8 @@ specifies the file name.  This property is conventionally called either
 \textpy{FileName} or \textpy{FileNames}.  You should always specify a valid
 file name when creating a reader by placing something like
 \textpy{FileName=\argdesc{full path}} in the arguments of the construction
-object.
+object.  Readers often do not initialize correctly if not given a valid
+file name.
 
 \begin{exercise}{Creating a Reader}
   \label{ex:CreatingAReader}%
