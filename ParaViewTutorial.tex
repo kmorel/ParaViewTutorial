@@ -44,17 +44,18 @@
 %
 % Set the title, author, and date
 %
+% Commented out because I am now making my own title page.
 
-\newcommand{\authorinfo}[3]{#1\thanks{\href{mailto:#2}{#2}} \\ #3}
+%%% \newcommand{\authorinfo}[3]{#1\thanks{\href{mailto:#2}{#2}} \\ #3}
 
-\title{@LONG_TITLE@}
-\author{%
-  \authorinfo{Kenneth~Moreland}{kmorel@sandia.gov}{Sandia~National~Laboratories}
-  %\and
-  %\authorinfo{John~Doe}{john.doe@kitware.com}{Kitware~inc.}
-  }
+%%% \title{@LONG_TITLE@}
+%%% \author{%
+%%%   \authorinfo{Kenneth~Moreland}{kmorel@sandia.gov}{Sandia~National~Laboratories}
+%%%   %\and
+%%%   %\authorinfo{John~Doe}{john.doe@kitware.com}{Kitware~inc.}
+%%%   }
 
-\date{}
+%%% \date{}
 
 
 %-----------------------------------------------------------------------------
@@ -68,6 +69,12 @@
 \fancyhead[OR]{\thepage}
 \renewcommand\headrulewidth{0.25pt}
 \setlength{\headheight}{14.5pt}
+
+%-----------------------------------------------------------------------------
+% Sizes
+% The width to use for screen captures (Screen Capture Width)
+\newlength{\scw}
+\setlength{\scw}{3in}
 
 % -----------------------------------------------------------------------------
 % Environment, text types, and other common formatting for this document.
@@ -232,7 +239,42 @@
 \frontmatter
 
 \sloppy
-\maketitle
+
+\begin{titlepage}
+  %\sffamily
+
+  %\vspace*{\stretch{2}}
+
+  \noindent\rule{\linewidth}{1.5pt}
+  \begin{centering}
+    \Huge \bfseries
+    @LONG_TITLE@
+
+  \end{centering}
+  \noindent\rule{\linewidth}{1.5pt}
+
+  \vspace*{\stretch{1}}
+
+  \begin{centering}
+    \Large
+    Kenneth~Moreland \\
+    \small
+    Sandia National Laboratories \\
+    \href{mailto:kmorel@sandia.gov}{kmorel@sandia.gov} \\
+  \end{centering}
+
+  \vspace*{\stretch{6}}
+
+  \begin{centering}
+    \rmfamily\tiny
+
+    Sandia is a multiprogram laboratory operated by Sandia Corporation, a
+    Lockheed Martin Company, for the United States Department of Energy's
+    National Nuclear Security Administration under contract
+    DE-AC04-94AL85000.
+
+  \end{centering}
+\end{titlepage}
 
 \chapter*{Abstract}
 
