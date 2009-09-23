@@ -472,8 +472,10 @@ copied.  These filters are usually safe to use on all data.
   \item \gui{Block Scalars}
   \item \gui{Calculator}~\calculator
   \item \gui{Cell Data to Point Data}
+  \item \gui{Compute Derivatives}
   \item \gui{Curvature}
   \item \gui{Elevation}
+  \item \gui{Generate Ids}
   \item \gui{Generate Surface Normals}
   \item \gui{Gradient}
   \item \gui{Level Scalars}
@@ -633,7 +635,7 @@ The interactive render is a compromise between speed and accuracy.  As
 such, many of the rendering parameters concern when and how lower levels of
 detail are used.
 
-\subsection{Basic Parameter Settings}
+\subsection{Geometric Level of Detail}
 
 Some of the most important rendering options are the LOD parameters.
 During interactive rendering, the geometry may be replaced with a lower
@@ -651,6 +653,8 @@ decimation algorithm strives to place the polygons in a coarse grid.  In
 the proceeding images, the left image is the full resolution; the middle
 image is decimation on a $50^3$ grid, and the right image is decimation on
 a $10^3$ grid.
+
+\subsection{Basic Parameter Settings}
 
 The 3D rendering parameters are located in the settings dialog box which is
 accessed in the menu from \gui{Edit} \ra \gui{Settings} (\gui{ParaView} \ra
@@ -675,7 +679,7 @@ meanings.
   rendered as defined in the poly data.  When checked, the data is first
   converted to triangle strips.  Triangle strips can be pushed to a
   graphics card more efficiently and can sometimes be rendered faster, but
-  not usually..
+  not usually.
 \item[LOD Threshold] \index{LOD Threshold}Controls when to replace the
   geometry with a decimated version of the geometry.  The checkbox turns
   the feature on or off.  When on, the slider gives a threshold for the
@@ -685,6 +689,21 @@ meanings.
 \item[Allow Rendering Interrupts] \index{rendering interrupts} When
   checked, a still render may be interrupted by a request to perform an
   interactive render.
+\item[Enable Depth Peeling] \index{depth peeling} ParaView uses an
+  algorithm called depth peeling to properly render translucent surfaces.
+  With it, the top surface is rendered and then ``peeled away'' so that the
+  next lower surface can be rendered and so on.  If you find that making
+  surfaces transparent really slows things down or renders completely
+  incorrectly, then your graphics hardware may not be implementing the
+  depth peeling extensions well; try shutting off depth peeling.  You can
+  also adjust the number of depth peels used.  Using more peels allows more
+  depth complexity but allowing less peels runs faster.
+\item[Use Offscreen Rendering for Screenshots] \index{offscreen rendering}
+  ParaView usually uses offscreen rendering when creating screenshots to
+  avoid having other windows on your desktop affect the images.  However,
+  some hardware places restrictions on offscreen rendering that can cause
+  artifacts.  If you find that your saved images look different then the
+  ones on screen (for example, more dark), try disabling this feature.
 \end{description}
 
 \subsection{Basic Parallel Rendering}
@@ -734,6 +753,34 @@ has the ability to turn off parallel rendering at any time.  When parallel
 rendering is turned off, the geometry is shipped to the location where
 display occurs.  Obviously, this should only happen when the data being
 rendered is small.
+
+\subsection{Image Level of Detail}
+
+The overhead incurred by the parallel rendering algorithms is proportional
+to the size of the images being generated.  Also, images generated on a
+server must be transfered to the client, a cost that is also proportional
+to the image size.  To help increase the frame rate during interaction,
+ParaView introduces a new LOD parameter that controls the size of the
+images.
+
+During interaction while parallel rendering, ParaView can optionally
+\index{subsample}subsample the image.  That is, ParaView will reduce the
+resolution of the image in each dimension by a factor during interaction.
+Reduced images will be rendered, composited, and transfered.  On the
+client, the image is inflated to the size of the available space in the
+GUI.
+
+\begin{inlinefig}
+  \includegraphics[width=1in]{images/ImageLODFull}
+  \includegraphics[width=1in]{images/ImageLOD2}
+  \includegraphics[width=1in]{images/ImageLOD4}
+  \includegraphics[width=1in]{images/ImageLOD8}
+\end{inlinefig}
+
+The resolution of the reduced images is controlled by the factor with which
+the dimensions are divided.  In the proceeding images, the left image has
+the full resolution.  The following images were rendered with the
+resolution reduced by a factor of 2, 4, and 8, respectively.
 
 \subsection{Parallel Render Parameters}
 
