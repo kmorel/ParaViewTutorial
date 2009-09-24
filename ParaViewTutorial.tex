@@ -1,6 +1,6 @@
 % -*- latex -*-
 
-\documentclass[12pt]{book}
+\documentclass[@GLOBAL_OPTIONS@]{book}
 
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -8,6 +8,7 @@
 \usepackage{fancyhdr}
 \usepackage{fancyvrb}
 \usepackage{graphicx}
+\usepackage{ifthen}
 \usepackage{multicol}
 \usepackage{picins}
 \usepackage{tabularx}
@@ -57,6 +58,16 @@
 
 %%% \date{}
 
+%-----------------------------------------------------------------------------
+% Set up boolean that handles the ``save trees'' mode which crams more
+% stuff on each page.  This is to help keep the cost down of printing the
+% document.
+\newboolean{savetrees}
+\setboolean{savetrees}{@SAVE_TREES_FLAG@}
+
+\ifthenelse{\boolean{savetrees}}{
+  \usepackage[normalsections]{savetrees}
+}{}
 
 %-----------------------------------------------------------------------------
 % Set up headers and footers with the fancyhdr package.
@@ -243,7 +254,7 @@
 \begin{titlepage}
   %\sffamily
 
-  %\vspace*{\stretch{2}}
+  \vspace*{\stretch{1}}
 
   \noindent\rule{\linewidth}{1.5pt}
   \begin{centering}
@@ -276,20 +287,23 @@
   \end{centering}
 \end{titlepage}
 
-\chapter*{Abstract}
+% I probably don't really need this.  If I want to bring it back, I should
+% still disable it from the savetrees mode.  It wastes space and looks
+% funny.
+%%% \chapter*{Abstract}
 
-ParaView is a powerful open-source turnkey application for analyzing and
-visualizing large data sets in parallel.  ParaView is regularly used by
-Sandia National Laboratories analysts to visualize simulations run on the
-Red Storm and ASC Purple supercomputers and by thousands of other users in
-worldwide.  Designed to be configurable, extendible, and scalable, ParaView
-is built upon the Visualization Toolkit (VTK) to allow rapid deployment of
-visualization components.  This tutorial presents the architecture of
-ParaView and the fundamentals of parallel visualization.  Attendees will
-learn the basics of using ParaView for scientific visualization with
-hands-on lessons.  The tutorial features detailed guidance in visualizing
-the massive simulations run on today’s supercomputers and an introduction
-to scripting and extending ParaView.
+%%% ParaView is a powerful open-source turnkey application for analyzing and
+%%% visualizing large data sets in parallel.  ParaView is regularly used by
+%%% Sandia National Laboratories analysts to visualize simulations run on the
+%%% Red Storm and ASC Purple supercomputers and by thousands of other users in
+%%% worldwide.  Designed to be configurable, extendible, and scalable, ParaView
+%%% is built upon the Visualization Toolkit (VTK) to allow rapid deployment of
+%%% visualization components.  This tutorial presents the architecture of
+%%% ParaView and the fundamentals of parallel visualization.  Attendees will
+%%% learn the basics of using ParaView for scientific visualization with
+%%% hands-on lessons.  The tutorial features detailed guidance in visualizing
+%%% the massive simulations run on today’s supercomputers and an introduction
+%%% to scripting and extending ParaView.
 
 \tableofcontents
 
