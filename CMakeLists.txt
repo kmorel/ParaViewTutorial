@@ -12,7 +12,7 @@ SET(LONG_TITLE "${SHORT_TITLE} \\\\ {\\small Version ${PARAVIEW_VERSION}}")
 OPTION(SAVE_TREES "When on, tries to squeeze more on each page to reduce the number of pages needed to print the document." OFF)
 
 IF (SAVE_TREES)
-  SET(GLOBAL_OPTIONS "10pt,twocolumn")
+  SET(GLOBAL_OPTIONS "10pt,twocolumn,openany")
   SET(SAVE_TREES_FLAG true)
 ELSE (SAVE_TREES)
   SET(GLOBAL_OPTIONS "12pt")

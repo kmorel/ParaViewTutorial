@@ -85,7 +85,17 @@
 % Sizes
 % The width to use for screen captures (Screen Capture Width)
 \newlength{\scw}
-\setlength{\scw}{3in}
+% The scaling to use for images with boundaries scaled for inclusing in
+% single column mode.
+%\newlength{\bbscale}
+
+\ifthenelse{\boolean{savetrees}}{
+  \setlength{\scw}{2in}
+  \newcommand{\bbscale}{0.6}
+}{
+  \setlength{\scw}{3in}
+  \newcommand{\bbscale}{1}
+}
 
 % -----------------------------------------------------------------------------
 % Environment, text types, and other common formatting for this document.
@@ -166,8 +176,16 @@
 \newcommand*{\pyattrib}[1]{\pyattribindex{#1}\textpy{#1}}
 
 % Set up environment for python scripts.
-\CustomVerbatimEnvironment{python}{Verbatim}{}
-\CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}{commandchars=\\\{\}}
+\ifthenelse{\boolean{savetrees}}{
+  \CustomVerbatimEnvironment{python}{Verbatim}
+                            {fontsize=\small}
+  \CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}
+                            {fontsize=\small,commandchars=\\\{\}}
+}{
+  \CustomVerbatimEnvironment{python}{Verbatim}{}
+  \CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}
+                            {commandchars=\\\{\}}
+}
 
 % Used to insert a placeholder for something in a Python script that the
 % user replaces with a system-specific value.

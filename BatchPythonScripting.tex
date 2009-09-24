@@ -19,6 +19,7 @@ This tutorial gives only a brief introduction to Python scripting.  The
 most recent and complete documentation is kept on the ParaView Wiki.
 
 \begin{quote}
+  \ifthenelse{\boolean{savetrees}}{\scriptsize}{}
   \href{http://www.paraview.org/Wiki/ParaView/Python_Scripting}{http://www.paraview.org/Wiki/ParaView/Python\_Scripting}
 \end{quote}
 
@@ -440,7 +441,7 @@ file name.
   in the Python shell.
 
   \begin{pythonpluscommands}
-reader = ExodusIIReader(FileName='\argdesc{path}/disk_out_ref.ex2')
+reader=ExodusIIReader(FileName='\argdesc{path}/disk_out_ref.ex2')
 Show()
 Render()
   \end{pythonpluscommands}

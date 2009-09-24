@@ -21,7 +21,7 @@ load a file it will be from the directory you installed this data in.
 \section{User Interface}
 
 \begin{inlinefig}
-  \includegraphics{images/UserInterface}
+  \includegraphics[scale=\bbscale]{images/UserInterface}
 \end{inlinefig}
 
 The ParaView GUI conforms to the platform on which it is running, but on
@@ -149,7 +149,7 @@ object display options are repeated elsewhere in the ParaView GUI for
 convenience.
 
 \begin{inlinefig}
-  \includegraphics[width=1.6in]{images/DisplayTab}
+  \includegraphics[width=0.53\scw]{images/DisplayTab}
 \end{inlinefig}
 
 \begin{exercise}{Modifying Rendering Parameters}
@@ -200,7 +200,13 @@ button~\icon{pqOpen32} for opening a file.  ParaView supports many file
 types, and the list grows as more types get added.  The following is a list
 of currently available readers.
 
-\begin{multicols}{2}
+% Multicols does not work correctly when in twocolumn mode and it breaks
+% across page boundaries.  That's too bad since it saves space and looks
+% nice.
+\ifthenelse{\boolean{savetrees}}{
+}{
+  \begin{multicols}{2}
+}
   \begin{itemize}
   \item ParaView Data (.pvd)
   \item VTK (.vtp, .vtu, .vti, .vts, .vtr)
@@ -237,7 +243,10 @@ of currently available readers.
   \item Raw Image Files
   \item Comma Separated Values (.csv)
   \end{itemize}
-\end{multicols}
+\ifthenelse{\boolean{savetrees}}{
+}{
+  \end{multicols}
+}
 
 ParaView’s modular design allows for easy integration of new VTK readers
 into ParaView.  Thus, check back often for new file formats.  If you are
@@ -258,7 +267,7 @@ have a reader readily available that you can use.
   several options about how we want to read the data.
 
   \begin{inlinefig}
-    \includegraphics{images/Variables_disk_out_ref}
+    \includegraphics[scale=\bbscale]{images/Variables_disk_out_ref}
   \end{inlinefig}
 
   Click the checkbox in the header of the variable list to turn on the
@@ -293,10 +302,10 @@ representing data are located in a pair of toolbars.
   mesh with the \gui{Wireframe} representation.
 
   \begin{inlinefig}
-    \includegraphics[width=2.25in]{images/DataRepresentation1}
-    \includegraphics[width=2.25in]{images/DataRepresentation2} \\
-    \includegraphics[width=2.25in]{images/DataRepresentation3}
-    \includegraphics[width=2.25in]{images/DataRepresentation4}
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation1}
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation2} \\
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation3}
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation4}
   \end{inlinefig}
 \end{exercise}
 
@@ -351,7 +360,7 @@ by clicking on the respective icon in the filters toolbar.
   more items from a multi block data set.
 \end{description}
 
-\parpic[r]{\includegraphics[width=2in]{images/FiltersMenu}}
+\parpic[r]{\includegraphics[width=0.37\linewidth]{images/FiltersMenu}}
 
 These eleven filters are a small sampling of what is available in ParaView.
 In the \gui{Filters} menu are a great many more filters that you can use to
@@ -378,7 +387,7 @@ These submenus are organized as follows.
   anywhere but in this list.
 \end{description}
 
-\parpic[r]{\includegraphics[width=2.5in]{images/QuickLaunch}}
+\parpic[r]{\includegraphics[width=.5\linewidth]{images/QuickLaunch}}
 
 Searching through these lists of filters, particularly the full
 alphabetical list, can be cumbersome.  To speed up the selection of
@@ -413,7 +422,7 @@ for more information on each filter.
   the filter.
 
   \begin{inlinefig}
-    \includegraphics{images/ContourOptions}
+    \includegraphics[scale=\bbscale]{images/ContourOptions}
   \end{inlinefig}
 
   We will use the contour filter to create an isosurface where the
@@ -1133,7 +1142,7 @@ data that changes over time.
   \begin{enumerate}
   \item \gui{Open} the file \gui{can.ex2}.
     \begin{inlinefig}
-      \includegraphics{images/Variables_can}
+      \includegraphics[scale=\bbscale]{images/Variables_can}
     \end{inlinefig}
   \item As before, click the checkbox in the header of the variable list to
     turn on the loading of all the variables and hit the \apply button.
@@ -1252,7 +1261,7 @@ elements).
 Feel free to experiment with the selections now.
 
 \begin{inlinefig}
-  \includegraphics{images/SelectionInspector}
+  \includegraphics[scale=\bbscale]{images/SelectionInspector}
 \end{inlinefig}
 
 You can manage your selection with the \keyterm{selection inspector}.  You
@@ -1344,7 +1353,7 @@ you identify the values of interest.
   its own \gui{Display} panels.
 
   \begin{inlinefig}
-    \includegraphics{images/SpreadsheetViewLabeled}
+    \includegraphics[scale=\bbscale]{images/SpreadsheetViewLabeled}
   \end{inlinefig}
 
   \begin{enumerate}
@@ -1727,17 +1736,17 @@ object.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=\linewidth]{images/BuildAnimation1}
+    \includegraphics[width=.9\linewidth]{images/BuildAnimation1}
   \end{inlinefig}
 
   If you play~\vcrPlay the animation, you will see the sphere open up then
   eventually wrap around itself and disappear.
 
   \begin{inlinefig}
-    \includegraphics[width=1in]{images/AnimateSphere0}
-    \includegraphics[width=1in]{images/AnimateSphere1}
-    \includegraphics[width=1in]{images/AnimateSphere2}
-    \includegraphics[width=1in]{images/AnimateSphere3}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere0}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere1}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere2}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere3}
   \end{inlinefig}
 \end{exercise}
 
@@ -1774,7 +1783,7 @@ Use this feature to create a new key frame in the animation.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=\linewidth]{images/BuildAnimation2}
+    \includegraphics[width=.9\linewidth]{images/BuildAnimation2}
   \end{inlinefig}
 
   When you play the animation, the sphere will first get bigger and then get
@@ -1806,7 +1815,7 @@ depends on modifying two properties.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=\linewidth]{images/BuildAnimation3}
+    \includegraphics[width=.9\linewidth]{images/BuildAnimation3}
   \end{inlinefig}
 
   The animation will show the sphere creating and destroying itself, but this
