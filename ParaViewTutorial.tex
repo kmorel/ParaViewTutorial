@@ -40,6 +40,9 @@
 \hypersetup{breaklinks}
 \hypersetup{pagebackref}
 \hypersetup{pdfstartpage=3}
+% These should fix a problem with indices pointing to frontmatter instead
+% of mainmatter.
+\hypersetup{plainpages=false,pdfpagelabels=true}
 
 % -----------------------------------------------------------------------------
 %
@@ -260,6 +263,9 @@
 \newcounter{saveenumi}
 \newcommand{\savecounter}{\setcounter{saveenumi}{\theenumi}}
 \newcommand{\restorecounter}{\setcounter{enumi}{\thesaveenumi}}
+
+% Hyphenation of words that do not follow standard English rules.
+\hyphenation{Para-View}
 
 
 % -----------------------------------------------------------------------------
