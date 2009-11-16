@@ -864,12 +864,17 @@ ParaView is running on, but here are several pieces of advice that you
 should follow.
 
 \begin{enumerate}
-\item Turn \gui{Use Immediate Mode Rendering} on and turn \gui{Use Triangle
-  Strips} off.  Both of these options are intending to convert your data
-  into structures that are more efficiently rendered.  However, the
-  processing and memory overhead are often not worth it when data is large.
-  In fact, when the memory limits are stretched, this can actually reduce
-  performance.
+\item If your rendering cluster does not have special rendering hardware,
+  turn \gui{Use Immediate Mode Rendering} on.  Turning this option on will
+  prevent the graphics system from building special rendering structures.
+  If you have graphics hardware, these rendering structures are important
+  for feeding the GPUs fast enough.  However, if you do not have GPUs,
+  these rendering structures do not help much.
+\item Turn \gui{Use Triangle Strips} off.  This option is intended to
+  convert your data into structures that are more efficiently rendered.
+  However, the processing and memory overhead are often not worth it when
+  data is large.  In fact, when the memory limits are stretched, this can
+  actually reduce performance.
 \item Try turning the \gui{LOD Threshold} \emph{off}.  The geometry
   decimation can take a long time with large data, and it sometimes does a
   poor job if your data has high curvatures or strange connectivity.  If
