@@ -1,6 +1,6 @@
 % -*- latex -*-
 
-\documentclass[@GLOBAL_OPTIONS@]{book}
+\documentclass[12pt]{book}
 
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -8,7 +8,6 @@
 \usepackage{fancyhdr}
 \usepackage{fancyvrb}
 \usepackage{graphicx}
-\usepackage{ifthen}
 \usepackage{multicol}
 \usepackage{picins}
 \usepackage{tabularx}
@@ -40,37 +39,23 @@
 \hypersetup{breaklinks}
 \hypersetup{pagebackref}
 \hypersetup{pdfstartpage=3}
-% These should fix a problem with indices pointing to frontmatter instead
-% of mainmatter.
-\hypersetup{plainpages=false,pdfpagelabels=true}
 
 % -----------------------------------------------------------------------------
 %
 % Set the title, author, and date
 %
-% Commented out because I am now making my own title page.
 
-%%% \newcommand{\authorinfo}[3]{#1\thanks{\href{mailto:#2}{#2}} \\ #3}
+\newcommand{\authorinfo}[3]{#1\thanks{\href{mailto:#2}{#2}} \\ #3}
 
-%%% \title{@LONG_TITLE@}
-%%% \author{%
-%%%   \authorinfo{Kenneth~Moreland}{kmorel@sandia.gov}{Sandia~National~Laboratories}
-%%%   %\and
-%%%   %\authorinfo{John~Doe}{john.doe@kitware.com}{Kitware~inc.}
-%%%   }
+\title{@LONG_TITLE@}
+\author{%
+  \authorinfo{Kenneth~Moreland}{kmorel@sandia.gov}{Sandia~National~Laboratories}
+  %\and
+  %\authorinfo{John~Doe}{john.doe@kitware.com}{Kitware~inc.}
+  }
 
-%%% \date{}
+\date{}
 
-%-----------------------------------------------------------------------------
-% Set up boolean that handles the ``save trees'' mode which crams more
-% stuff on each page.  This is to help keep the cost down of printing the
-% document.
-\newboolean{savetrees}
-\setboolean{savetrees}{@SAVE_TREES_FLAG@}
-
-\ifthenelse{\boolean{savetrees}}{
-  \usepackage[normalsections]{savetrees}
-}{}
 
 %-----------------------------------------------------------------------------
 % Set up headers and footers with the fancyhdr package.
@@ -83,22 +68,6 @@
 \fancyhead[OR]{\thepage}
 \renewcommand\headrulewidth{0.25pt}
 \setlength{\headheight}{14.5pt}
-
-%-----------------------------------------------------------------------------
-% Sizes
-% The width to use for screen captures (Screen Capture Width)
-\newlength{\scw}
-% The scaling to use for images with boundaries scaled for inclusing in
-% single column mode.
-%\newlength{\bbscale}
-
-\ifthenelse{\boolean{savetrees}}{
-  \setlength{\scw}{2in}
-  \newcommand{\bbscale}{0.6}
-}{
-  \setlength{\scw}{3in}
-  \newcommand{\bbscale}{1}
-}
 
 % -----------------------------------------------------------------------------
 % Environment, text types, and other common formatting for this document.
@@ -179,16 +148,8 @@
 \newcommand*{\pyattrib}[1]{\pyattribindex{#1}\textpy{#1}}
 
 % Set up environment for python scripts.
-\ifthenelse{\boolean{savetrees}}{
-  \CustomVerbatimEnvironment{python}{Verbatim}
-                            {fontsize=\small}
-  \CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}
-                            {fontsize=\small,commandchars=\\\{\}}
-}{
-  \CustomVerbatimEnvironment{python}{Verbatim}{}
-  \CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}
-                            {commandchars=\\\{\}}
-}
+\CustomVerbatimEnvironment{python}{Verbatim}{}
+\CustomVerbatimEnvironment{pythonpluscommands}{Verbatim}{commandchars=\\\{\}}
 
 % Used to insert a placeholder for something in a Python script that the
 % user replaces with a system-specific value.
@@ -221,12 +182,12 @@
 \newcommand{\extractGroup}{\index{extract group}\icon{pqGroupExtract24}\xspace}
 
 % Camera view icons
-\newcommand{\xPlus}{\icon{pqXPlus24}\xspace}
-\newcommand{\xMinus}{\icon{pqXMinus24}\xspace}
-\newcommand{\yPlus}{\icon{pqYPlus24}\xspace}
-\newcommand{\yMinus}{\icon{pqYMinus24}\xspace}
-\newcommand{\zPlus}{\icon{pqZPlus24}\xspace}
-\newcommand{\zMinus}{\icon{pqZMinus24}\xspace}
+\newcommand{\xPlus}{\icon{pqXPlus32}\xspace}
+\newcommand{\xMinus}{\icon{pqXMinus32}\xspace}
+\newcommand{\yPlus}{\icon{pqYPlus32}\xspace}
+\newcommand{\yMinus}{\icon{pqYMinus32}\xspace}
+\newcommand{\zPlus}{\icon{pqZPlus32}\xspace}
+\newcommand{\zMinus}{\icon{pqZMinus32}\xspace}
 \newcommand{\resetCamera}{\icon{pqResetCamera24}\xspace}
 
 % Animation buttons
@@ -264,9 +225,6 @@
 \newcommand{\savecounter}{\setcounter{saveenumi}{\theenumi}}
 \newcommand{\restorecounter}{\setcounter{enumi}{\thesaveenumi}}
 
-% Hyphenation of words that do not follow standard English rules.
-\hyphenation{Para-View}
-
 
 % -----------------------------------------------------------------------------
 \begin{document}
@@ -274,60 +232,22 @@
 \frontmatter
 
 \sloppy
+\maketitle
 
-\begin{titlepage}
-  %\sffamily
+\chapter*{Abstract}
 
-  \vspace*{\stretch{1}}
-
-  \noindent\rule{\linewidth}{1.5pt}
-  \begin{centering}
-    \Huge \bfseries
-    @LONG_TITLE@
-
-  \end{centering}
-  \noindent\rule{\linewidth}{1.5pt}
-
-  \vspace*{\stretch{1}}
-
-  \begin{centering}
-    \Large
-    Kenneth~Moreland \\
-    \small
-    Sandia National Laboratories \\
-    \href{mailto:kmorel@sandia.gov}{kmorel@sandia.gov} \\
-  \end{centering}
-
-  \vspace*{\stretch{6}}
-
-  \begin{centering}
-    \rmfamily\tiny
-
-    Sandia is a multiprogram laboratory operated by Sandia Corporation, a
-    Lockheed Martin Company, for the United States Department of Energy's
-    National Nuclear Security Administration under contract
-    DE-AC04-94AL85000.
-
-  \end{centering}
-\end{titlepage}
-
-% I probably don't really need this.  If I want to bring it back, I should
-% still disable it from the savetrees mode.  It wastes space and looks
-% funny.
-%%% \chapter*{Abstract}
-
-%%% ParaView is a powerful open-source turnkey application for analyzing and
-%%% visualizing large data sets in parallel.  ParaView is regularly used by
-%%% Sandia National Laboratories analysts to visualize simulations run on the
-%%% Red Storm and ASC Purple supercomputers and by thousands of other users in
-%%% worldwide.  Designed to be configurable, extendible, and scalable, ParaView
-%%% is built upon the Visualization Toolkit (VTK) to allow rapid deployment of
-%%% visualization components.  This tutorial presents the architecture of
-%%% ParaView and the fundamentals of parallel visualization.  Attendees will
-%%% learn the basics of using ParaView for scientific visualization with
-%%% hands-on lessons.  The tutorial features detailed guidance in visualizing
-%%% the massive simulations run on today’s supercomputers and an introduction
-%%% to scripting and extending ParaView.
+ParaView is a powerful open-source turnkey application for analyzing and
+visualizing large data sets in parallel.  ParaView is regularly used by
+Sandia National Laboratories analysts to visualize simulations run on the
+Red Storm and ASC Purple supercomputers and by thousands of other users in
+worldwide.  Designed to be configurable, extendible, and scalable, ParaView
+is built upon the Visualization Toolkit (VTK) to allow rapid deployment of
+visualization components.  This tutorial presents the architecture of
+ParaView and the fundamentals of parallel visualization.  Attendees will
+learn the basics of using ParaView for scientific visualization with
+hands-on lessons.  The tutorial features detailed guidance in visualizing
+the massive simulations run on today’s supercomputers and an introduction
+to scripting and extending ParaView.
 
 \tableofcontents
 

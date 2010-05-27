@@ -19,7 +19,6 @@ This tutorial gives only a brief introduction to Python scripting.  The
 most recent and complete documentation is kept on the ParaView Wiki.
 
 \begin{quote}
-  \ifthenelse{\boolean{savetrees}}{\scriptsize}{}
   \href{http://www.paraview.org/Wiki/ParaView/Python_Scripting}{http://www.paraview.org/Wiki/ParaView/Python\_Scripting}
 \end{quote}
 
@@ -30,11 +29,17 @@ There are many ways to invoke the Python interpreter.  The method you use
 depends on how you are using the scripting.  The easiest way to get a
 python interpreter, and the method we use in this tutorial, is to select
 \gui{Tools} \ra \gui{Python Shell} from the menu.  This will bring up a
-dialog box containing most principally a text area where you can interact
-with the Python interpreter.
+dialog box containing controls for ParaView's python shell. The left
+hand side of the dialog is a Python interpreter, where you directly control
+ParaView via the interface described below. On the right hand side are
+controls for saving and loading python scripts on disk, for managing
+\keyterm{macros} which are scripts that are accesible directly from
+ParaView's main menu bar, and for recording \keyterm{traces}, which
+are scripts that reproduce the actions initiated via ParaView's
+normal GUI interface.
 
 \begin{inlinefig}
-  \includegraphics[width=.83\scw]{images/PythonShellDialog}
+  \includegraphics[width=4in]{images/PythonShellDialog}
 \end{inlinefig}
 
 If you are right now most interested in getting started on writing scripts,
@@ -72,6 +77,18 @@ your environment, consult the ParaView Wiki.
 
 \section{Creating a Pipeline}
 \label{sec:CreatingAPipeline}
+
+We should first note that the ParaView GUI's python \gui{Trace} feature
+allows one to very easily create Python scripts for many common
+tasks. To use \gui{Trace}, one simply begins a trace recording via the GUI's
+\gui{Python Shell} dialog, uses the ParaView GUI to construct a
+visualization, and then stops the trace recording. This produces a
+python script that reconstructs the actions taken in the GUI. That
+script contains exactly the same set of operations that we are
+about to describe. As such, \gui{Trace} recordings are a good resource when
+you are trying to figure out how to do some action via the python
+interface, and conversely the following descriptions will help in
+understanding the contents of any given \gui{Trace} script.
 
 The first thing any ParaView Python script must do is load the
 \textpy{paraview.simple} module.  This is done by invoking
@@ -361,7 +378,7 @@ synchronized between the GUI and the Python interpreter.
 
 This tutorial, as well as similar instructions in the ParaView book and
 Wiki, is designed to give the key concepts necessary to understand and
-create batch Python scripts.  The documentation detail such as lists of
+create batch Python scripts.  The detailed documentation including complete lists of
 functions, classes, and properties available is maintained by the ParaView
 build process and provided as online help from within the ParaView
 application.  In this way we can ensure that the documentation is up to
@@ -404,7 +421,7 @@ on any one of the objects gives a list of the properties you can set from
 within Python.
 
 \begin{inlinefig}
-  \includegraphics[width=\scw]{images/ObjectHelp}
+  \includegraphics[width=3in]{images/ObjectHelp}
 \end{inlinefig}
 
 
@@ -414,7 +431,9 @@ within Python.
 The equivalent to opening a file in the ParaView GUI is to create a reader
 in Python scripting.  Reader objects are created in much the same way as
 sources and filters; \textpy{paraview.simple} has a function for each
-reader type that creates the pipeline object and returns a proxy object.
+reader type that creates the pipeline object and returns a proxy
+object. One can instantatiate any given reader directly as described
+below, or more simply call \textpy{reader = OpenDataFile(\argdesc{filename})}
 
 All reader objects have at least one property (hidden in the GUI) that
 specifies the file name.  This property is conventionally called either
@@ -441,7 +460,7 @@ file name.
   in the Python shell.
 
   \begin{pythonpluscommands}
-reader=ExodusIIReader(FileName='\argdesc{path}/disk_out_ref.ex2')
+reader = ExodusIIReader(FileName='\argdesc{path}/disk_out_ref.ex2')
 Show()
 Render()
   \end{pythonpluscommands}
@@ -547,6 +566,5 @@ readerRep.LookupTable = MakeBlueToRedLT(0, 0.03)
 Render()
   \end{python}
 \end{exercise}
-
 
 % Chapter Batch Python Scripting
