@@ -240,13 +240,13 @@ of currently available readers.
   \item Spy Plot (.case)
   \item Enzo boundary and hierarchy
   \item Flash multiblock files
-  \item raw image files (.nrrd)
+  \item Raw NRRD image files (.nrrd)
   \item LANL cosmology data (.cosmo)
-  \item netcdf POP Ocean files
   \item VPIC (.vpc)
-  \item SLAC netcdf particle data
+  \item SLAC netCDF mesh and mode data
+  \item SLAC netCDF particle data
   \item LANL windbade (.wind)
-  \item tecplot Ascii (.tec, .tp)
+  \item Tecplot ASCII (.tec, .tp)
   \end{itemize}
 \end{multicols}
 
@@ -358,7 +358,7 @@ by clicking on the respective icon in the filters toolbar.
   mesh by a given vector field.
 \item[\group Group Datasets] \index{group datasets} Combines the output of
   several pipeline objects into a single multi block data set.
-\item[\extractGroup Extract Group] \index{extract group} Extract one or
+\item[\extractGroup Extract Level] \index{extract level} Extract one or
   more items from a multi block data set.
 \end{description}
 
@@ -1226,18 +1226,37 @@ all time steps in the data.
 
 However, this requires ParaView to load
 in all of the data on the initial read, and that is prohibitively
-slow for large data. \footnote{If you are willing to wait, enable the
-\gui{Rescale to Temporal Range} button on the edit color scale dialog
-box~\icon{pqEditColor24} and ParaView will compute this overall temporal
-range automatically.}
-Second, when you animate over time, it is important
+slow for large data.  Second, when you animate over time, it is important
 to hold the color range fixed even if the range in the data changes.
 Changing the scale of the data as an animation plays causes a
 misrepresentation of the data.  It is far better to let the scalars go out
-of the original color maps range than to imply that they have not.  To get
-around the problem, simply go to a representative time step and
-hit~\icon{pqResetRange24} or open the edit color scale dialog
-box~\icon{pqEditColor24} and specify a range for the data.
+of the original color maps range than to imply that they have not.  There
+are several workarounds to this problem:
+
+\begin{itemize}
+\item Open the settings dialog box accessed in the menu from \gui{Edit} \ra
+  \gui{Settings} (\gui{ParaView} \ra \gui{Preferences} on the Mac).  Under
+  the \gui{General} tab, change the \gui{On File Open} setting to \gui{Goto
+    last timestep}.  When this is selected, ParaView will automatically go
+  to the last time step when loading any data set with time.  For many data
+  (such as in can), the field ranges are more representative at the last
+  time step than at the beginning.  Thus, as long as you color by a field
+  before changing the time, the color range will be adequate.
+\item If for whatever reason your animation gets stuck on a poor color
+  range, simply go to a representative time step and
+  hit~\icon{pqResetRange24}.
+\item Alternatively, you can open the edit color scale dialog
+  box~\icon{pqEditColor24} and specify a range for the data.  This is a
+  good choice if you cannot find, or do not know, a ``representative'' time
+  step or if you already know a good range to use.
+\item If you are willing to wait, you can use the \gui{Rescale to Temporal
+  Range} button on the edit color scale dialog box~\icon{pqEditColor24} and
+  ParaView will compute this overall temporal range automatically.  Keep in
+  mind that this option will require ParaView to load your entire data set
+  over all time steps whenever you load a data set.  Although ParaView will
+  not hold more than one time step in memory at a time, it will take a long
+  time to pull all that memory off of disk for large data sets.
+\end{itemize}
 
 
 \section{Selection}
@@ -1264,7 +1283,7 @@ shown in all other views that display the same object.
 The most direct means to create a selection is via the \gui{Find Data}
 dialog. Launch this dialog from the \gui{Edit} menu. From the dialog,
 enter the characteristics of the data that you are searching for. For
-example, points whose velocity ``VEL`` magnitude is between 1500
+example, points whose velocity ``VEL'' magnitude is between 1500
 and 1600.  Click the \gui{Run Selection Query} and ParaView will
 create the selection for you and display the results, annotated with
 the color and optionally labels chosen via the dialog box.
@@ -1341,6 +1360,9 @@ difference.
     Exercise~\ref{ex:LoadingTemporalData}).
   \item Make a selection using the \gui{Select Cells
     Through}~\selectCellsThrough tool.
+  \item If it is not already visible, show the selection inspector
+    with \gui{View} \ra \gui{Selection Inspector}.  You may need to dock
+    the selection inspector elsewhere to see its widgets well.
   \item Click on the \gui{Show Frustum} checkbox in the \gui{Selection
     Inspector} and rotate the 3D view.
 
@@ -1351,19 +1373,18 @@ difference.
   \item Play~\vcrPlay the animation a bit.  Notice that the region remains
     fixed and the selection changes based on what cells move in or out of
     the region.
-  \item If it is not already visible, show the selection inspector
-    with \gui{View} \ra \gui{Selection Inspector}.  You may need to dock
-    the selection inspector elsewhere to see its widgets well.
-  \item Change the \gui{Selection Type} to \gui{IDs}.
+  \item Change the \gui{Selection Type} to \gui{IDs} in the \gui{Selection
+    Inspector}.
   \item Play~\vcrPlay again.  Notice that the cells selected are fixed
     regardless of position.
   \end{enumerate}
 
   In summary, a spatial selection (created with one of the select through
   tools) will re-perform the selection at each time step as elements move
-  in and out of the selected region.  In an ID selection, the points or
-  cells selected are fixed and will be followed as they move through an
-  animation.
+  in and out of the selected region.  Likewise, other queries such as field
+  range queries will also reexecute as the data changes.  In contrast, in
+  an ID selection, the points or cells selected are fixed and will be
+  followed as they move through an animation.
 \end{exercise}
 
 The \keyterm{spreadsheet view} is an important tool to use in combination
@@ -1674,7 +1695,7 @@ errors.
 % should this material.
 
 When using ParaView as a communication tool it is often helpful to annotate
-the images you create with text.  With ParaView 3 it is very easy to create
+the images you create with text.  With ParaView it is very easy to create
 text annotation wherever you want in a 3D view.  There is a special
 \keyterm{text source} that simply places some text in the view.
 
