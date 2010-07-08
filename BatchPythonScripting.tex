@@ -48,7 +48,8 @@ feel free to skip to the next section past the discussion of the other ways
 to invoke scripting.
 
 ParaView comes with two command line programs that execute Python scripts:
-\commandline{pvpython} and \commandline{pvbatch}.  They are similar to the
+\commandline{pvpython}\index{pvpython} and
+\commandline{pvbatch}\index{pvbatch}.  They are similar to the
 \commandline{python} executable that comes with Python distributions in
 that they accept Python scripts either from the command line or from a file
 and they feed the scripts to the Python interpreter.
@@ -75,6 +76,101 @@ modules and pointing the \texttt{LD\_LIBRARY\_PATH} (on Unix/Linux/Mac) or
 Running the Python script this way allows you to take advantage of
 third-party applications such as IDLE.  For more information on setting up
 your environment, consult the ParaView Wiki.
+
+\section{Tracing ParaView State}
+\label{sec:TracingParaViewState}
+
+Before diving into the depths of the Python scripting features, let us take
+a moment to explore the automated facilities for creating Python scripts.
+The ParaView GUI's Python \gui{Trace}\index{trace} feature
+allows one to very easily create Python scripts for many common
+tasks. To use \gui{Trace}, one simply begins a trace recording via the GUI's
+\gui{Python Shell} dialog, uses the ParaView GUI to construct a
+visualization, and then stops the trace recording. This produces a
+python script that reconstructs the actions taken in the GUI. That
+script contains exactly the same set of operations that we are
+about to describe. As such, \gui{Trace} recordings are a good resource when
+you are trying to figure out how to do some action via the Python
+interface, and conversely the following descriptions will help in
+understanding the contents of any given \gui{Trace} script.
+
+\begin{exercise}{Creating a Python Script Trace}
+  \label{ex:CreatingAPythonScriptTrace}%
+  If you have been following an exercise in a previous section, now is a
+  good time to reset ParaView.  The easiest way to do this is to press
+  the~\disconnect button.
+
+  \begin{enumerate}
+  \item If you have not already done so, open the Python shell in the
+    ParaView GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the
+    menu.
+  \item Click the \gui{Trace} tab in the Python shell.
+  \item Click \gui{Start Trace}.
+  \item Minimize the Python shell and build a simple pipeline in the main
+    ParaView GUI.  For example, create a sphere source and then clip it.
+  \item Restore the Python shell and click \gui{Stop Trace}.
+  \item Click \gui{Show Trace}.  The current traced Python script will
+    appear in the interactive Python shell.
+  \item Click \gui{Save Trace}.  Save the Python script to somewhere on
+    your hard drive.
+  \end{enumerate}
+
+  Even if you have not been exposed to ParaView's Python bindings, the
+  commands being performed in the traced script should be familiar.  Once
+  saved to your hard drive, you can of course edit the script with your
+  favorite editor.  The final script can be interpreted by the
+  \commandline{pvpython} or \commandline{pvbatch} program for totally
+  automated visualization.  It is also possible to run this script in the
+  GUI by clicking the \gui{Run Script} button in the Python shell dialog,
+  but you can also assign the script to a macro to allow you to run it
+  whenever at the click of a button.
+\end{exercise}
+
+\section{Macros}
+\label{sec:Macros}
+
+A simple but powerful way to customize the behavior of ParaView is to
+create a \keyterm{macro}.  A macro is simply an automated script that can
+be invoked through its button in a toolbar or its entry in the menu bar.
+Any Python script can be assigned to a macro through the Python shell.
+
+\begin{exercise}{Adding a Macro}
+  \label{ex:AddingAMacro}%
+  This exercise is a continuation of
+  Exercise~\ref{ex:CreatingAPythonScriptTrace}.  You will need to finish
+  that exercise before beginning this one.
+
+  \begin{enumerate}
+  \item If it is not currently open, open the Python shell in the ParaView
+    GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the menu.
+  \item Click the \gui{Directory View} tab in the Python shell.
+  \item Click on the \gui{...} button and open the directory where you
+    saved your script in Exercise~\ref{ex:CreatingAPythonScriptTrace}.
+  \item Click on your script and then click \gui{Add to macros}.
+    \savecounter
+  \end{enumerate}
+
+  At this point, you should now see your macro added to the toolbars.  By
+  default, macro toolbar buttons are placed in the middle row all the way
+  to the left.  If you are short on space in your GUI, you may need to move
+  toolbars around to see it.  You will also see that your macro has been
+  added to the \gui{Macros} menu.
+
+  \begin{enumerate}
+    \restorecounter
+  \item Close the Python shell.
+  \item Delete the pipeline you have created by either selecting \gui{Edit}
+    \ra \gui{Delete All} from the menu or pressing the~\disconnect button.
+  \item Activate your macro by clicking on the toolbar button or selecting
+    it in the \gui{Macros} menu.
+  \end{enumerate}
+
+  In this example our macro created something from scratch.  This is
+  helpful if you often load some data in the same way every time.  You can
+  also trace the creation of filters that are applied to existing data.  A
+  macro from a trace of this nature allows you to automate the same
+  visualization on different data.
+\end{exercise}
 
 \section{Creating a Pipeline}
 \label{sec:CreatingAPipeline}
