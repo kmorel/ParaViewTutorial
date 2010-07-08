@@ -35,6 +35,7 @@ demonstrate how to apply this knowledge.
 ParaView is designed as a three-tier client-server architecture.  The three
 logical units of ParaView are as follows.
 
+\index{ParaView Server}
 \begin{description}
 \item[Data Server] \index{data server} The unit responsible for data
   reading, filtering, and writing.  All of the pipeline objects seen in the
@@ -63,7 +64,7 @@ ParaView.
 The first mode, which you are already familiar with, is
 \keyterm{standalone} mode.  In standalone mode, the client, data server,
 and render server are all combined into a single serial application.  When
-you run the \commandline{paraview} application, you are automatically connected
+you run the \progname{paraview} application, you are automatically connected
 to a \keyterm{builtin} server so that you are ready to use the full
 features of ParaView.
 
@@ -72,9 +73,9 @@ features of ParaView.
 \end{inlinefig}
 
 The second mode is \keyterm{client-server} mode.  In client-server mode,
-you execute the \commandline{pvserver} program on a parallel machine and
-connect to it with the \commandline{paraview} client application.  The
-\commandline{pvserver} program has both the data server and render server
+you execute the \progname{pvserver} program on a parallel machine and
+connect to it with the \progname{paraview} client application.  The
+\progname{pvserver} program has both the data server and render server
 embedded in it, so both data processing and rendering take place there.
 The client and server are connected via a socket, which is assumed to be a
 relatively slow mode of communication, so data transfer over this socket is

@@ -48,24 +48,23 @@ feel free to skip to the next section past the discussion of the other ways
 to invoke scripting.
 
 ParaView comes with two command line programs that execute Python scripts:
-\commandline{pvpython}\index{pvpython} and
-\commandline{pvbatch}\index{pvbatch}.  They are similar to the
-\commandline{python} executable that comes with Python distributions in
+\progname{pvpython} and \progname{pvbatch}.  They are similar to the
+\progname{python} executable that comes with Python distributions in
 that they accept Python scripts either from the command line or from a file
 and they feed the scripts to the Python interpreter.
 
-The difference between \commandline{pvpython} and \commandline{pvbatch} is
+The difference between \progname{pvpython} and \progname{pvbatch} is
 subtle and has to do with the way they establish the visualization
-service.  \commandline{pvpython} is roughly equivalent to the
-\commandline{paraview} client GUI with the GUI replaced with the Python
+service.  \progname{pvpython} is roughly equivalent to the
+\progname{paraview} client GUI with the GUI replaced with the Python
 interpreter.  It is a serial application that connects to a ParaView server
-(which can be either builtin or remote).  \commandline{pvbatch} is roughly
-equivalent to \commandline{pvserver} except that commands are taken from a
+(which can be either builtin or remote).  \progname{pvbatch} is roughly
+equivalent to \progname{pvserver} except that commands are taken from a
 Python script rather than from a socket connection to a client.  It is a
-parallel application that can be launched with \commandline{mpirun} (assuming
+parallel application that can be launched with \progname{mpirun} (assuming
 it was compiled with MPI), but it cannot connect to another server; it is
-its own server.  In general, you should use \commandline{pvpython} if you
-will be using the interpreter interactively and \commandline{pvbatch} if
+its own server.  In general, you should use \progname{pvpython} if you
+will be using the interpreter interactively and \progname{pvbatch} if
 you are running in parallel.
 
 It is also possible to use the ParaView Python modules from programs
@@ -119,7 +118,7 @@ understanding the contents of any given \gui{Trace} script.
   commands being performed in the traced script should be familiar.  Once
   saved to your hard drive, you can of course edit the script with your
   favorite editor.  The final script can be interpreted by the
-  \commandline{pvpython} or \commandline{pvbatch} program for totally
+  \progname{pvpython} or \progname{pvbatch} program for totally
   automated visualization.  It is also possible to run this script in the
   GUI by clicking the \gui{Run Script} button in the Python shell dialog,
   but you can also assign the script to a macro to allow you to run it
@@ -196,7 +195,7 @@ In general, this command needs to be invoked at the beginning of any
 ParaView batch Python script.  This command is automatically invoked for
 you when you bring up the scripting dialog in ParaView, but you must add it
 yourself when using the Python interpreter in other programs (including
-\commandline{pvpython} and \commandline{pvbatch}).
+\progname{pvpython} and \progname{pvbatch}).
 
 The \textpy{paraview.simple} module defines a function for every source,
 reader, filter, and writer defined in ParaView.  The function will be the
@@ -603,7 +602,7 @@ print pd['Pres'].GetRange()
 print pd['V'].GetNumberOfComponents()
   \end{python}
 
-  Now let us get fancy.  Use the Python \pyattrib{for} construct to iterate
+  Now let us get fancy.  Use the Python \textpy{for} construct to iterate
   over all of the arrays and print the ranges for all the components.
   \begin{python}
 for ai in pd.values():
