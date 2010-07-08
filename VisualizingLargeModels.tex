@@ -2,10 +2,10 @@
 \label{chap:VisualizingLargeModels}
 
 \begin{inlinefig}
-  \includegraphics[height=1.8in]{images/Asteroid}
-  \includegraphics[height=1.8in]{images/PolarVortex} \\ \vspace{.5ex}
-  \includegraphics[height=1.8in]{images/Fire}
-  \includegraphics[height=1.8in]{images/LargeAMR}
+  \includegraphics[height=.33\linewidth]{images/Asteroid}
+  \includegraphics[height=.33\linewidth]{images/PolarVortex} \\ \vspace{.5ex}
+  \includegraphics[height=.33\linewidth]{images/Fire}
+  \includegraphics[height=.33\linewidth]{images/LargeAMR}
 \end{inlinefig}
 
 ParaView is used frequently at Sandia National Laboratories for visualizing
@@ -57,7 +57,7 @@ communication between them.  There are three modes in which you can run
 ParaView.
 
 \begin{inlinefig}
-  \includegraphics{images/RunModeStandalone}
+  \includegraphics[scale=\bbscale]{images/RunModeStandalone}
 \end{inlinefig}
 
 The first mode, which you are already familiar with, is
@@ -68,7 +68,7 @@ to a \keyterm{builtin} server so that you are ready to use the full
 features of ParaView.
 
 \begin{inlinefig}
-  \includegraphics{images/RunModeClientServer}
+  \includegraphics[scale=\bbscale]{images/RunModeClientServer}
 \end{inlinefig}
 
 The second mode is \keyterm{client-server} mode.  In client-server mode,
@@ -81,7 +81,7 @@ relatively slow mode of communication, so data transfer over this socket is
 minimized.
 
 \begin{inlinefig}
-  \includegraphics{images/RunModeClientRenderDataServer}
+  \includegraphics[scale=\bbscale]{images/RunModeClientRenderDataServer}
 \end{inlinefig}
 
 The third mode is \keyterm{client-render server-data server} mode.  In this
@@ -158,7 +158,7 @@ containing a list of known servers you may connect to.  This list of
 servers can be both site- and user-specific.
 
 \begin{inlinefig}
-  \includegraphics[width=2in]{images/ChooseServer}
+  \includegraphics[width=.66\scw]{images/ChooseServer}
 \end{inlinefig}
 
 You can specify how to connect to a server either through the GUI by
@@ -184,7 +184,7 @@ machine by first dividing the cells amongst the processes.  For
 demonstrative purposes, consider this very simplified mesh.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleMesh}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleMesh}
 \end{inlinefig}
 
 Now let us say we want to perform visualizations on this mesh using three
@@ -192,7 +192,7 @@ processes.  We can divide the cells of the mesh as shown below with the
 blue, yellow, and pink regions.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExamplePartitions}
+  \includegraphics[scale=\bbscale]{images/ParallelExamplePartitions}
 \end{inlinefig}
 
 Once partitioned, some visualization algorithms will work by simply
@@ -201,7 +201,7 @@ collection of cells.  For example, take clipping.  Let us say that we
 define a clipping plane and give that same plane to each of the processes.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleClip1}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleClip1}
 \end{inlinefig}
 
 Each process can independently clip its cells with this plane.  The end
@@ -211,7 +211,7 @@ for obvious reasons) we would see that the clipping operation took place
 correctly.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleClip2}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleClip2}
 \end{inlinefig}
 
 
@@ -224,7 +224,7 @@ algorithm finds all cell faces that belong to only one cell, thereby
 identifying the boundaries of the mesh.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleExternalFaces1}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleExternalFaces1}
 \end{inlinefig}
 
 Oops.  We see that when all the processes ran the external faces algorithm
@@ -241,7 +241,7 @@ these neighboring cells to the partition and mark them as ghost cells, as
 indicated with the gray colored cells in the following example.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleExternalFaces2}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleExternalFaces2}
 \end{inlinefig}
 
 When we run the external faces algorithm with the ghost cells, we see that
@@ -269,7 +269,7 @@ space.  There are other ways to partition data.  For example, you could
 have a random partitioning.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleRandomPartition1}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleRandomPartition1}
 \end{inlinefig}
 
 Random partitioning has some nice features.  It is easy to create and is
@@ -277,7 +277,7 @@ friendly to load balancing.  However, a serious problem exists with respect
 to ghost cells.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelExampleRandomPartition2}
+  \includegraphics[scale=\bbscale]{images/ParallelExampleRandomPartition2}
 \end{inlinefig}
 
 In this example, we see that a single level of ghost cells nearly
@@ -312,8 +312,8 @@ distributed data decomposition.  Using D3 is easy; simply attach the filter
 data you wish to repartition.
 
 \begin{inlinefig}
-  \includegraphics[height=1.65in]{images/D3ExampleBefore}
-  \includegraphics[height=1.65in]{images/D3ExampleAfter}
+  \includegraphics[height=.3\linewidth]{images/D3ExampleBefore}
+  \includegraphics[height=.3\linewidth]{images/D3ExampleAfter}
 \end{inlinefig}
 
 The most common use case for D3 is to attach it directly to your
@@ -391,6 +391,7 @@ unstructured data.
 
 %TODO: there are surely more filters in each category now
 
+\ifthenelse{\boolean{savetrees}}{\noindent\begin{minipage}{\linewidth}}{}
 \begin{multicols}{2}
   \begin{itemize}
   \item \gui{Append Datasets}
@@ -414,6 +415,7 @@ unstructured data.
   \item \gui{Triangulate}
   \end{itemize}
 \end{multicols}
+\ifthenelse{\boolean{savetrees}}{\end{minipage}}{}
 
 Technically, the \gui{Ribbon} and \gui{Tube} filters should fall into this
 list.  However, as they only work on 1D cells in poly data, the input data
@@ -427,6 +429,7 @@ Also note that the reduction is often not well balanced.  It is possible
 filters should be used with caution on unstructured data and extreme
 caution on structured data.
 
+\ifthenelse{\boolean{savetrees}}{\noindent\begin{minipage}{\linewidth}}{}
 \begin{multicols}{2}
   \begin{itemize}
   \item \gui{Clip}~\clip
@@ -437,6 +440,7 @@ caution on structured data.
   \item \gui{Threshold}~\threshold
   \end{itemize}
 \end{multicols}
+\ifthenelse{\boolean{savetrees}}{\end{minipage}}{}
 
 Similar to the items in the preceding list, \gui{Extract
   Subset}~\extractSubset performs data
@@ -450,6 +454,7 @@ which results in a much smaller output.  Thus, these filters are usually
 safe to use with unstructured data and require only mild caution with
 structured data.
 
+\ifthenelse{\boolean{savetrees}}{\noindent\begin{minipage}{\linewidth}}{}
 \begin{multicols}{2}
   \begin{itemize}
   \item \gui{Cell Centers}
@@ -464,11 +469,13 @@ structured data.
   \item \gui{Stream Tracer}~\streamTracer
   \end{itemize}
 \end{multicols}
+\ifthenelse{\boolean{savetrees}}{\end{minipage}}{}
 
 These filters do not change the connectivity of the data at all.  Instead,
 they only add field arrays to the data.  All the existing data is shallow
 copied.  These filters are usually safe to use on all data.
 
+\ifthenelse{\boolean{savetrees}}{\noindent\begin{minipage}{\linewidth}}{}
 \begin{multicols}{2}
   \begin{itemize}
   \item \gui{Block Scalars}
@@ -495,12 +502,14 @@ copied.  These filters are usually safe to use on all data.
   \item \gui{Warp (vector)}~\warp
   \end{itemize}
 \end{multicols}
+\ifthenelse{\boolean{savetrees}}{\end{minipage}}{}
 
 This final set of filters are those that either add no data to the output
 (all data of consequence is shallow copied) or the data they add is
 generally independent of the size of the input.  These are almost always
 safe to add under any circumstances (although they may take a lot of time).
 
+\ifthenelse{\boolean{savetrees}}{\noindent\begin{minipage}{\linewidth}}{}
 \begin{multicols}{2}
   \begin{itemize}
   \item \gui{Annotate Time}
@@ -524,6 +533,7 @@ safe to add under any circumstances (although they may take a lot of time).
   \item \gui{Temporal Statistics}
   \end{itemize}
 \end{multicols}
+\ifthenelse{\boolean{savetrees}}{\end{minipage}}{}
 
 There are a few special case filters that do not fit well into any of the
 previous classes.  Some of the filters, currently \gui{Temporal
@@ -643,9 +653,9 @@ During interactive rendering, the geometry may be replaced with a lower
 fewer polygons.
 
 \begin{inlinefig}
-  \includegraphics[width=1.5in]{images/GeometricLODFull}
-  \includegraphics[width=1.5in]{images/GeometricLOD50}
-  \includegraphics[width=1.5in]{images/GeometricLOD10}
+  \includegraphics[width=.28\linewidth]{images/GeometricLODFull}
+  \includegraphics[width=.28\linewidth]{images/GeometricLOD50}
+  \includegraphics[width=.28\linewidth]{images/GeometricLOD10}
 \end{inlinefig}
 
 The resolution of the geometric approximation can be controlled.  The
@@ -660,7 +670,7 @@ accessed in the menu from \gui{Edit} \ra \gui{Settings} (\gui{ParaView} \ra
 are in the \gui{Render View} \ra \gui{General} section.
 
 \begin{inlinefig}
-  \includegraphics[width=3in]{images/SettingsRendering}
+  \includegraphics[width=\scw]{images/SettingsRendering}
 \end{inlinefig}
 
 The options pertaining to rendering performance have the following
@@ -687,6 +697,21 @@ meanings.
 \item[Allow Rendering Interrupts] \index{rendering interrupts} When
   checked, a still render may be interrupted by a request to perform an
   interactive render.
+\item[Enable Depth Peeling] \index{depth peeling} ParaView uses an
+  algorithm called depth peeling to properly render translucent surfaces.
+  With it, the top surface is rendered and then ``peeled away'' so that the
+  next lower surface can be rendered and so on.  If you find that making
+  surfaces transparent really slows things down or renders completely
+  incorrectly, then your graphics hardware may not be implementing the
+  depth peeling extensions well; try shutting off depth peeling.  You can
+  also adjust the number of depth peels used.  Using more peels allows more
+  depth complexity but allowing less peels runs faster.
+\item[Use Offscreen Rendering for Screenshots] \index{offscreen rendering}
+  ParaView usually uses offscreen rendering when creating screenshots to
+  avoid having other windows on your desktop affect the images.  However,
+  some hardware places restrictions on offscreen rendering that can cause
+  artifacts.  If you find that your saved images look different then the
+  ones on screen (for example, more dark), try disabling this feature.
 \end{description}
 
 \subsection{Basic Parallel Rendering}
@@ -700,7 +725,7 @@ independently render its partition of the geometry and then
 \keyterm{composites} the partial images together to form the final image.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelRendering}
+  \includegraphics[scale=\bbscale]{images/ParallelRendering}
 \end{inlinefig}
 
 The preceding diagram is an oversimplification.  IceT contains multiple
@@ -709,7 +734,7 @@ parallel image compositing algorithms such as \keyterm{binary tree} and
 multiple phases.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelRenderingDetail}
+  \includegraphics[scale=\bbscale]{images/ParallelRenderingDetail}
 \end{inlinefig}
 
 The wonderful thing about sort-last parallel rendering is that its
@@ -720,7 +745,7 @@ number of pixels in the image.  Consequently, some of the rendering
 parameters deal with the image size.
 
 \begin{inlinefig}
-  \includegraphics{images/ParallelRenderingTiles}
+  \includegraphics[scale=\bbscale]{images/ParallelRenderingTiles}
 \end{inlinefig}
 
 IceT also has the ability to drive tiled displays, large, high-resolution
@@ -737,10 +762,38 @@ rendering is turned off, the geometry is shipped to the location where
 display occurs.  Obviously, this should only happen when the data being
 rendered is small.
 
+\subsection{Image Level of Detail}
+
+The overhead incurred by the parallel rendering algorithms is proportional
+to the size of the images being generated.  Also, images generated on a
+server must be transfered to the client, a cost that is also proportional
+to the image size.  To help increase the frame rate during interaction,
+ParaView introduces a new LOD parameter that controls the size of the
+images.
+
+During interaction while parallel rendering, ParaView can optionally
+\index{subsample}subsample the image.  That is, ParaView will reduce the
+resolution of the image in each dimension by a factor during interaction.
+Reduced images will be rendered, composited, and transfered.  On the
+client, the image is inflated to the size of the available space in the
+GUI.
+
+\begin{inlinefig}
+  \includegraphics[width=.2\linewidth]{images/ImageLODFull}
+  \includegraphics[width=.2\linewidth]{images/ImageLOD2}
+  \includegraphics[width=.2\linewidth]{images/ImageLOD4}
+  \includegraphics[width=.2\linewidth]{images/ImageLOD8}
+\end{inlinefig}
+
+The resolution of the reduced images is controlled by the factor with which
+the dimensions are divided.  In the proceeding images, the left image has
+the full resolution.  The following images were rendered with the
+resolution reduced by a factor of 2, 4, and 8, respectively.
+
 \subsection{Parallel Render Parameters}
 
 \begin{inlinefig}
-  \includegraphics[width=3in]{images/SettingsServer}
+  \includegraphics[width=\scw]{images/SettingsServer}
 \end{inlinefig}
 
 Like the other 3D rendering parameters, the parallel rendering parameters
@@ -807,12 +860,17 @@ ParaView is running on, but here are several pieces of advice that you
 should follow.
 
 \begin{enumerate}
-\item Turn \gui{Use Immediate Mode Rendering} on and turn \gui{Use Triangle
-  Strips} off.  Both of these options are intending to convert your data
-  into structures that are more efficiently rendered.  However, the
-  processing and memory overhead are often not worth it when data is large.
-  In fact, when the memory limits are stretched, this can actually reduce
-  performance.
+\item If your rendering cluster does not have special rendering hardware,
+  turn \gui{Use Immediate Mode Rendering} on.  Turning this option on will
+  prevent the graphics system from building special rendering structures.
+  If you have graphics hardware, these rendering structures are important
+  for feeding the GPUs fast enough.  However, if you do not have GPUs,
+  these rendering structures do not help much.
+\item Turn \gui{Use Triangle Strips} off.  This option is intended to
+  convert your data into structures that are more efficiently rendered.
+  However, the processing and memory overhead are often not worth it when
+  data is large.  In fact, when the memory limits are stretched, this can
+  actually reduce performance.
 \item Try turning the \gui{LOD Threshold} \emph{off}.  The geometry
   decimation can take a long time with large data, and it sometimes does a
   poor job if your data has high curvatures or strange connectivity.  If

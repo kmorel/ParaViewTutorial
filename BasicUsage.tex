@@ -21,7 +21,7 @@ load a file it will be from the directory you installed this data in.
 \section{User Interface}
 
 \begin{inlinefig}
-  \includegraphics{images/UserInterface}
+  \includegraphics[scale=\bbscale]{images/UserInterface}
 \end{inlinefig}
 
 The ParaView GUI conforms to the platform on which it is running, but on
@@ -95,7 +95,7 @@ but they are also very handy when exploring ParaView’s features.
   we can create one by increasing the \gui{Resolution} parameter.
 
   \begin{inlinefig}
-    \includegraphics[width=2.5in]{images/ResolutionParameter}
+    \includegraphics[width=.83\scw]{images/ResolutionParameter}
   \end{inlinefig}
 
   Using either the slider or text edit, increase the resolution to 50 or
@@ -138,7 +138,7 @@ rendering options.  Clicking this brings up a dialog box that allows you to
 change things like the background color, the lighting, and annotation.
 
 \begin{inlinefig}
-  \includegraphics[width=3in]{images/RenderViewOptions}
+  \includegraphics[width=\scw]{images/RenderViewOptions}
 \end{inlinefig}
 
 Another location for rendering options is the \gui{Display} tab in the
@@ -149,7 +149,7 @@ object display options are repeated elsewhere in the ParaView GUI for
 convenience.
 
 \begin{inlinefig}
-  \includegraphics[width=1.6in]{images/DisplayTab}
+  \includegraphics[width=0.53\scw]{images/DisplayTab}
 \end{inlinefig}
 
 \begin{exercise}{Modifying Rendering Parameters}
@@ -200,7 +200,13 @@ button~\icon{pqOpen32} for opening a file.  ParaView supports many file
 types, and the list grows as more types get added.  The following is a list
 of currently available readers.
 
-\begin{multicols}{2}
+% Multicols does not work correctly when in twocolumn mode and it breaks
+% across page boundaries.  That's too bad since it saves space and looks
+% nice.
+\ifthenelse{\boolean{savetrees}}{
+}{
+  \begin{multicols}{2}
+}
   \begin{itemize}
   \item ParaView Data (.pvd)
   \item VTK (.vtp, .vtu, .vti, .vts, .vtr)
@@ -248,7 +254,10 @@ of currently available readers.
   \item LANL windbade (.wind)
   \item Tecplot ASCII (.tec, .tp)
   \end{itemize}
-\end{multicols}
+\ifthenelse{\boolean{savetrees}}{
+}{
+  \end{multicols}
+}
 
 ParaView's modular design allows for easy integration of new VTK readers
 into ParaView.  Thus, check back often for new file formats.  If you are
@@ -269,7 +278,7 @@ have a reader readily available that you can use.
   several options about how we want to read the data.
 
   \begin{inlinefig}
-    \includegraphics{images/Variables_disk_out_ref}
+    \includegraphics[scale=\bbscale]{images/Variables_disk_out_ref}
   \end{inlinefig}
 
   Click the checkbox in the header of the variable list to turn on the
@@ -304,10 +313,10 @@ representing data are located in a pair of toolbars.
   mesh with the \gui{Wireframe} representation.
 
   \begin{inlinefig}
-    \includegraphics[width=2.25in]{images/DataRepresentation1}
-    \includegraphics[width=2.25in]{images/DataRepresentation2} \\
-    \includegraphics[width=2.25in]{images/DataRepresentation3}
-    \includegraphics[width=2.25in]{images/DataRepresentation4}
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation1}
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation2} \\
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation3}
+    \includegraphics[width=.42\linewidth]{images/DataRepresentation4}
   \end{inlinefig}
 \end{exercise}
 
@@ -362,7 +371,7 @@ by clicking on the respective icon in the filters toolbar.
   more items from a multi block data set.
 \end{description}
 
-\parpic[r]{\includegraphics[width=1in]{images/FiltersMenu}}
+\parpic[r]{\includegraphics[width=0.37\linewidth]{images/FiltersMenu}}
 
 These eleven filters are a small sampling of what is available in ParaView.
 In the \gui{Filters} menu are a great many more filters that you can use to
@@ -392,7 +401,7 @@ These submenus are organized as follows.
   anywhere but in this list.
 \end{description}
 
-\parpic[r]{\includegraphics[width=2.5in]{images/QuickLaunch}}
+\parpic[r]{\includegraphics[width=.5\linewidth]{images/QuickLaunch}}
 
 Searching through these lists of filters, particularly the full
 alphabetical list, can be cumbersome.  To speed up the selection of
@@ -427,7 +436,7 @@ chapter of ParaView's on-line or in-built help for more information on each filt
   the filter.
 
   \begin{inlinefig}
-    \includegraphics{images/ContourOptions}
+    \includegraphics[scale=\bbscale]{images/ContourOptions}
   \end{inlinefig}
 
   We will use the contour filter to create an isosurface where the
@@ -439,7 +448,7 @@ chapter of ParaView's on-line or in-built help for more information on each filt
   surface is colored by pressure to match.
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/ContourResults}
+    \includegraphics[width=\scw]{images/ContourResults}
   \end{inlinefig}
 \end{exercise}
 
@@ -481,7 +490,7 @@ second filter will cut some away.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/CutSurface1}
+    \includegraphics[width=\scw]{images/CutSurface1}
   \end{inlinefig}
 
   When you apply the \gui{Extract Surface} filter, you will once again see
@@ -511,7 +520,7 @@ second filter will cut some away.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/CutSurface2}
+    \includegraphics[width=\scw]{images/CutSurface2}
   \end{inlinefig}
 
   If you have a contour, you should now see the isosurface contour within a
@@ -599,7 +608,7 @@ pressed.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/SplitView1}
+    \includegraphics[width=\scw]{images/SplitView1}
   \end{inlinefig}
 
   The current view is split in half and the right side is blank, ready to
@@ -624,7 +633,7 @@ pressed.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/SplitView2}
+    \includegraphics[width=\scw]{images/SplitView2}
   \end{inlinefig}
 
   We now have two views: one showing information about pressure and the
@@ -645,13 +654,13 @@ pressed.
   \item Try moving the camera in each view.
   \end{enumerate}
 
-  \emph{Viola}!  The two cameras are linked; each will follow the other.
+  \emph{Voil\`{a}}!  The two cameras are linked; each will follow the other.
   With the cameras linked, we can make some comparisons between the two
   views.  Click the~\xPlus button to get a straight-on view of the cross
   section.
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/CameraLink}
+    \includegraphics[width=\scw]{images/CameraLink}
   \end{inlinefig}
 
   Notice that the temperature is highest at the interface with the heated
@@ -702,7 +711,7 @@ in the air.
 
 A common and effective way to characterize a vector field is with
 \keyterm{streamlines}.  A streamline is a curve through space that at every
-point is tangent to the vector field.  The represent the path a weightless
+point is tangent to the vector field.  It represents the path a weightless
 particle will take through the vector field (assuming steady-state flow).
 Streamlines are generated by providing a set of
 \index{stream tracer!seed points} \keyterm{seed points}.
@@ -722,7 +731,7 @@ Streamlines are generated by providing a set of
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/StreamTracer0}
+    \includegraphics[width=\scw]{images/StreamTracer0}
   \end{inlinefig}
 
   The surface of the mesh is replaced with some swirling lines.  These
@@ -741,7 +750,7 @@ One issue with the streamlines as they stand now is that the lines are
 difficult to distinguish because there are many close together and they
 have no shading.  Lines are a 1D structure and shading requires a 2D
 surface.  Another issue with the streamlines is that we cannot be sure in which
-direction to flow is.
+direction the flow is.
 
 In the next exercise, we will modify the streamlines we created in
 Exercise~\ref{ex:Streamlines} to correct these problems.  We can create a
@@ -759,7 +768,7 @@ lines that point in the direction of the flow.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/StreamTracer1}
+    \includegraphics[width=\scw]{images/StreamTracer1}
   \end{inlinefig}
 
   You can now see the streamlines much more clearly.  As you look at the
@@ -785,7 +794,7 @@ lines that point in the direction of the flow.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/StreamTracer2}
+    \includegraphics[width=\scw]{images/StreamTracer2}
   \end{inlinefig}
 
   Now the streamlines are augmented with little pointers.  The pointers
@@ -834,7 +843,7 @@ filter that will plot the values of the mesh’s fields over a line in space.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/LinePlot1}
+    \includegraphics[width=\scw]{images/LinePlot1}
   \end{inlinefig}
 
   In the active view you will see a line through your data with a ball at
@@ -865,7 +874,7 @@ filter that will plot the values of the mesh’s fields over a line in space.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/LinePlot2}
+    \includegraphics[width=\scw]{images/LinePlot2}
   \end{inlinefig}
 
   There are several interactions you can do with the plot.  Drag with the
@@ -882,14 +891,14 @@ view.  If you look in the \gui{Display} tab of the object inspector, you
 will see many options on the representation for each line of the plot
 including colors, line styles, vector components, and legend names.
 \begin{inlinefig}
-  \includegraphics[width=1.5in]{images/PlotDisplayTab}
+  \includegraphics[width=.5\scw]{images/PlotDisplayTab}
 \end{inlinefig}
 
 Plots also have a \icon{pqOptions16} button that brings up a dialog that
 allows you to change plot-wide options such as labels, legends, and axes
 ranges.
 \begin{inlinefig}
-  \includegraphics[width=2in]{images/PlotViewOptions}
+  \includegraphics[width=.66\scw]{images/PlotViewOptions}
 \end{inlinefig}
 
 Like any other views, you can capture the plot with the \gui{File} \ra
@@ -924,7 +933,7 @@ temperature variables.
   %ParaView allows for a different scale on the left and right axis, and you
   %can scale each variable individually on each axis.
   We will use two plot views to compare the variation in the two
-  quantities over the same line.
+  quantities over the same line.%
   \footnote{The 2D plotting infrastructure in ParaView underwent a major
     restructuring for version 3.8. Unfortunately, the ability to plot
     two variables on the same plot with different scales was lost. We
@@ -944,7 +953,7 @@ temperature variables.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/LinePlot4}
+    \includegraphics[width=\scw]{images/LinePlot4}
   \end{inlinefig}
 
   From this plot we can verify some of the observations we made in
@@ -964,7 +973,7 @@ select \gui{disk\_out\_ref.ex2} in the pipeline browser, and then select
 for the Temp variable, and then hit the \apply button.
 
 \begin{inlinefig}
-  \includegraphics[width=3in]{images/HistogramPlot}
+  \includegraphics[width=\scw]{images/HistogramPlot}
 \end{inlinefig}
 
 
@@ -1016,7 +1025,7 @@ object.  Let us try an example of that now.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/VolumeRender1}
+    \includegraphics[width=\scw]{images/VolumeRender1}
   \end{inlinefig}
 
   The solid opaque mesh is replaced with a translucent volume. You may
@@ -1067,7 +1076,7 @@ Exercise~\ref{ex:Streamlines}.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/VolumeRender2}
+    \includegraphics[width=\scw]{images/VolumeRender2}
   \end{inlinefig}
 
   The streamlines are now shown in context with the temperature throughout
@@ -1083,7 +1092,7 @@ selecting the volume rendered pipeline object and clicking on the edit
 color map~\icon{pqEditColor24} button.
 
 \begin{inlinefig}
-  \includegraphics[width=2.5in]{images/ColorScaleEditor}
+  \includegraphics[width=.83\scw]{images/ColorScaleEditor}
 \end{inlinefig}
 
 The resulting dialog box provides options for editing the transfer
@@ -1133,7 +1142,7 @@ created as well as several provided by ParaView.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/VolumeRender3}
+    \includegraphics[width=\scw]{images/VolumeRender3}
   \end{inlinefig}
 
   Notice that not only did the color mapping in the volume rendering
@@ -1159,7 +1168,7 @@ data that changes over time.
   \begin{enumerate}
   \item \gui{Open} the file \gui{can.ex2}.
     \begin{inlinefig}
-      \includegraphics{images/Variables_can}
+      \includegraphics[scale=\bbscale]{images/Variables_can}
     \end{inlinefig}
   \item As before, click the checkbox in the header of the variable list to
     turn on the loading of all the variables and hit the \apply button.
@@ -1289,7 +1298,7 @@ create the selection for you and display the results, annotated with
 the color and optionally labels chosen via the dialog box.
 
 \begin{inlinefig}
-  \includegraphics[width=4in]{images/FindData}
+  \includegraphics[width=\scw]{images/FindData}
 \end{inlinefig}
 
 One of the easiest ways of creating a selection is to pick elements right
@@ -1323,7 +1332,7 @@ elements).
 Feel free to experiment with the selections now.
 
 \begin{inlinefig}
-  \includegraphics{images/SelectionInspector}
+  \includegraphics[scale=\bbscale]{images/SelectionInspector}
 \end{inlinefig}
 
 You can manage your selection with the \keyterm{selection inspector}.  You
@@ -1342,7 +1351,7 @@ altering the selection by changing ids or inverting selections with the
 You will notice that the select-on tools, \selectCellsOn/\selectPointsOn,
 show a list of points/cells and the select blocks tool,~\selectBlocks,
 shows a list of blocks, but the select-through tools,
-\selectCellsThrough/\selectPointsThrough show neither.  That is because it
+\selectCellsThrough/\selectPointsThrough, show neither.  That is because it
 is selecting a region in space.  If you click on the \gui{Show Frustum} and
 rotate the 3D view to see the region of the selection.
 
@@ -1367,7 +1376,7 @@ difference.
     Inspector} and rotate the 3D view.
 
     \begin{inlinefig}
-      \includegraphics[width=3in]{images/SelectionFrustum}
+      \includegraphics[width=\scw]{images/SelectionFrustum}
     \end{inlinefig}
 
   \item Play~\vcrPlay the animation a bit.  Notice that the region remains
@@ -1417,7 +1426,7 @@ selection mechanism will help you identify the values of interest.
   its own \gui{Display} panels.
 
   \begin{inlinefig}
-    \includegraphics{images/SpreadsheetViewLabeled}
+    \includegraphics[scale=\bbscale]{images/SpreadsheetViewLabeled}
   \end{inlinefig}
 
   \begin{enumerate}
@@ -1429,7 +1438,7 @@ selection mechanism will help you identify the values of interest.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/SpreadsheetViewExample}
+    \includegraphics[width=\scw]{images/SpreadsheetViewExample}
   \end{inlinefig}
 
   Those highlighted rows are the ones that are part of the current
@@ -1478,7 +1487,7 @@ view.  The next exercise describes how we can do that.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/SpreadsheetSelection}
+    \includegraphics[width=\scw]{images/SpreadsheetSelection}
   \end{inlinefig}
 
   ParaView places the values for the \gui{EQPS} field near the selected
@@ -1510,7 +1519,7 @@ selection.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/PlotSelectionOverTime}
+    \includegraphics[width=\scw]{images/PlotSelectionOverTime}
   \end{inlinefig}
 
   Note that the selection you had was automatically added as the selection
@@ -1542,7 +1551,7 @@ filter.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/ExtractSelection}
+    \includegraphics[width=\scw]{images/ExtractSelection}
   \end{inlinefig}
 
   The object in the view is replaced with the cells that you just
@@ -1570,7 +1579,7 @@ majority of these are accessed through the \keyterm{animation view}.  From
 the menu, click on \gui{View} \ra \gui{Animation View}.
 
 \begin{inlinefig}
-  \includegraphics[width=3in]{images/AnimationView}
+  \includegraphics[width=\scw]{images/AnimationView}
 \end{inlinefig}
 
 For now we will examine the controls at the top of the animation view.  The
@@ -1713,7 +1722,7 @@ text annotation wherever you want in a 3D view.  There is a special
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/TextSource}
+    \includegraphics[width=\scw]{images/TextSource}
   \end{inlinefig}
 
   The text you entered appears in the 3D view.  You can place this text
@@ -1723,7 +1732,7 @@ text annotation wherever you want in a 3D view.  There is a special
   for placing the text in the most common locations.
 
   \begin{inlinefig}
-    \includegraphics[width=2in]{images/TextPosition}
+    \includegraphics[width=.66\scw]{images/TextPosition}
   \end{inlinefig}
 \end{exercise}
 
@@ -1746,7 +1755,7 @@ insert the current animation time into the string.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/AnnotateTimeSource}
+    \includegraphics[width=\scw]{images/AnnotateTimeSource}
   \end{inlinefig}
 
   There are instances when the current animation time is not the same as
@@ -1767,7 +1776,7 @@ insert the current animation time into the string.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=3in]{images/AnnotateTimeFilter}
+    \includegraphics[width=\scw]{images/AnnotateTimeFilter}
   \end{inlinefig}
 \end{exercise}
 
@@ -1800,24 +1809,24 @@ object.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=4in]{images/BuildAnimation1}
+    \includegraphics[width=.9\linewidth]{images/BuildAnimation1}
   \end{inlinefig}
 
   If you play~\vcrPlay the animation, you will see the sphere open up then
   eventually wrap around itself and disappear.
 
   \begin{inlinefig}
-    \includegraphics[width=1in]{images/AnimateSphere0}
-    \includegraphics[width=1in]{images/AnimateSphere1}
-    \includegraphics[width=1in]{images/AnimateSphere2}
-    \includegraphics[width=1in]{images/AnimateSphere3}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere0}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere1}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere2}
+    \includegraphics[width=.2\linewidth]{images/AnimateSphere3}
   \end{inlinefig}
 \end{exercise}
 
 What you have done is created a \keyterm{track} for the \gui{Start Theta}
 property of the \gui{Sphere1} object.  A track is represented as horizontal
 bars in the animation view.  They hold \keyterm{key frames} that specify
-values for the property a specific time instance.  The value for the
+values for the property at a specific time instance.  The value for the
 property is interpolated between the key frames.  When you created a track
 two key frames were created automatically: a key frame at the start time
 with the minimal value and a key frame at the end time with the maximal
@@ -1827,7 +1836,7 @@ You can modify a track by double clicking on it.  That will bring up a
 dialog box that you can use to add, delete, and modify key frames.
 
 \begin{inlinefig}
-  \includegraphics[width=3in]{images/AnimationKeyframesDialog}
+  \includegraphics[width=\scw]{images/AnimationKeyframesDialog}
 \end{inlinefig}
 
 Use this feature to create a new key frame in the animation.
@@ -1847,7 +1856,7 @@ Use this feature to create a new key frame in the animation.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=4in]{images/BuildAnimation2}
+    \includegraphics[width=.9\linewidth]{images/BuildAnimation2}
   \end{inlinefig}
 
   When you play the animation, the sphere will first get bigger and then get
@@ -1876,7 +1885,7 @@ depends on modifying two properties.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=4in]{images/BuildAnimation3}
+    \includegraphics[width=.9\linewidth]{images/BuildAnimation3}
   \end{inlinefig}
 
   The animation will show the sphere creating and destroying itself, but this
@@ -1913,7 +1922,7 @@ to automatically generate such an animation.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=2in]{images/CreateOrbitDialog}
+    \includegraphics[width=.66\scw]{images/CreateOrbitDialog}
   \end{inlinefig}
 
   Before the new track is created, you will be presented with a dialog box
