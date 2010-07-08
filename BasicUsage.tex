@@ -1290,16 +1290,45 @@ That is, if you select something in one view, that selection is also
 shown in all other views that display the same object.
 
 The most direct means to create a selection is via the \gui{Find Data}
-dialog. Launch this dialog from the \gui{Edit} menu. From the dialog,
-enter the characteristics of the data that you are searching for. For
-example, points whose velocity ``VEL'' magnitude is between 1500
-and 1600.  Click the \gui{Run Selection Query} and ParaView will
-create the selection for you and display the results, annotated with
-the color and optionally labels chosen via the dialog box.
+dialog. Launch this dialog from the \gui{Edit} menu.  From this dialog you
+can enter characteristics of the data that you are seraching for.  For
+example, you could look for points whose velocity magnitude is near
+terminal velocity.  Or you could look for cells whose strain exceeds the
+failure of the material.  The following exercise provides a quick example
+of using the \gui{Find Data} dialog box.
 
-\begin{inlinefig}
-  \includegraphics[width=\scw]{images/FindData}
-\end{inlinefig}
+\begin{exercise}{Data Element Selections vs. Spatial Selections}
+  \label{ex:DataElementSelectionsVsSpatialSelections}%
+  In this exercise we will find all cells with the large equivalent plastic
+  strain (EQPS).
+
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Go to the last time step~\vcrLast.
+  \item Open the find data dialog with \gui{Edit} \ra \gui{Find Data}.
+  \item From the top combo box, choose to find \gui{Cell}s.
+  \item In the next row of widgets, choose \gui{EQPS} from the first combo
+    box, \gui{is~$>=$} from the second combo box, and enter \gui{1.5} in the
+    final text box.
+  \item Click the \gui{Run Selection Query} button.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/FindData}
+  \end{inlinefig}
+
+  Observe the spreadsheet below the \gui{Run Selection Query} button that
+  gets populated with the results of your query.  Each row represents a
+  cell and each column represents a field value or property (such as an
+  identifier).
+
+  You may also notice that several cells are highlighted in the 3D view of
+  the main ParaView window.  These highlights represent the selection that
+  your query created.  Close the \gui{Find Data} dialog and note that the
+  selection remains.
+\end{exercise}
 
 One of the easiest ways of creating a selection is to pick elements right
 inside the 3D view.  All of the 3D view selections are performed with a
@@ -1362,7 +1391,6 @@ difference.
 
 \begin{exercise}{Data Element Selections vs. Spatial Selections}
   \label{ex:DataElementSelectionsVsSpatialSelections}%
-
   \begin{enumerate}
   \item If you do not already have it loaded from the previous exercise,
     open the file \gui{can.ex2}, load all variables, \apply (see
