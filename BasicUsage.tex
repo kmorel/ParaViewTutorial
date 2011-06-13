@@ -931,7 +931,7 @@ filter that will plot the values of the mesh’s fields over a line in space.
   \end{inlinefig}
 
   There are several interactions you can do with the plot.  Drag with the
-  middle button up and down to zoom in and out.  Drag with the right button
+  middle button up and down to zoom in and out.  Drag with the middle button
   to do a rubber band zoom.  Drag with the left button to scroll the plot
   around.  You can also use the reset camera command~\resetCamera to restore
   the view to the full domain and range of the plot.
@@ -981,33 +981,19 @@ temperature variables.
   \end{enumerate}
 
   The \gui{Temp} and \gui{Pres} variables have different units.  Putting
-  them on the same scale is not useful.  %We can still compare them in the
-  %same plot by placing each variable on its own scale.  The line plot in
-  %ParaView allows for a different scale on the left and right axis, and you
-  %can scale each variable individually on each axis.
-  We will use two plot views to compare the variation in the two
-  quantities over the same line.%
-  \footnote{The 2D plotting infrastructure in ParaView underwent a major
-    restructuring for version 3.8. Unfortunately, the ability to plot
-    two variables on the same plot with different scales was lost. We
-    anticipate that capability will return for release 3.8.1.}
+  them on the same scale is not useful.  We can still compare them in the
+  same plot by placing each variable on its own scale.  The line plot in
+  ParaView allows for a different scale on the left and right axis, and you
+  can scale each variable individually on each axis.
 
   \begin{enumerate}
     \restorecounter
-  \item Split~\icon{pqSplitViewV12} the plot view and create a new
-    \gui{Line Chart View} underneath the existing one.
-  \item Make the \gui{Plot Over Line} filter active if it is not already by
-    selecting it in the \gui{Pipeline Browser} and make it
-    visible~\eyeball in the new view.
-  \item On the \gui{Display} tab of the \gui{Object Inspector}, enable
-    only the \gui{Pres} variable.
-  \item Toggle the visibility of the \gui{Plot Over Line} filter to
-    reset the axis.
+  \item Select the \gui{Pres} variable in the \gui{Display} tab.
+  \item Change the \gui{Chart Axis} to \gui{Bottom - Right}
   \end{enumerate}
 
   \begin{inlinefig}
-    %\includegraphics[width=\scw]{images/LinePlot3}
-    \includegraphics[width=.5\scw]{images/LinePlot4}
+    \includegraphics[width=\scw]{images/LinePlot3}
   \end{inlinefig}
 
   From this plot we can verify some of the observations we made in
@@ -1015,7 +1001,7 @@ temperature variables.
   at the plate surface and falls as we move away from the plate, but the
   pressure goes up and then back down.  In addition, we can observe that
   the maximal pressure (and hence the location where the forces on the air
-  are equalized) is three units away from the disk.
+  are equalized) is 2.74 units away from the disk.
 \end{exercise}
 
 The ParaView framework is designed to accommodate any number of different
