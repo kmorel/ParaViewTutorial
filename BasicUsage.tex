@@ -164,7 +164,8 @@ convenience.
   \item Change the background color.  (Notice that you can reset it to the
     default.)
   \item Turn the Orientation Axis (the axis in the lower left corner of the
-    view) off and on.
+    view) off and on.  (This can also be done using an icon that looks
+    like the Orientation Axis on the right side of the toolbars on top) 
   \item Move the Orientation Axis in the view.  (Hint: Make the axis
     interactive and then click and drag in the 3D view.)
   \end{itemize}
@@ -197,7 +198,7 @@ Now that we have had some practice using the ParaView GUI, let us load in
 some real data.  As you would expect, the \gui{Open} command is the first
 one off of the \gui{File} menu, and there is also toolbar
 button~\icon{pqOpen32} for opening a file.  ParaView supports many file
-types, and the list grows as more types get added.  The following is a list
+types, and the list grows as more types get added.  following is a list
 of currently available readers.
 
 % Multicols does not work correctly when in twocolumn mode and it breaks
@@ -210,49 +211,101 @@ of currently available readers.
   \begin{itemize}
   \item ParaView Data (.pvd)
   \item VTK (.vtp, .vtu, .vti, .vts, .vtr)
+  \item VTK Legacy (.vtk)
   \item VTK Multi Block (.vtm, .vtmb, .vtmg, .vthd, .vthb)
   \item Partitioned VTK (.pvtu, .pvti, .pvts, .pvtr)
-  \item VTK Legacy (.vtk)
-  \item Exodus
-  \item XDMF and hdf5 (.xmf, .xdmf)
-  \item LS-DYNA
-  \item SpyPlot CTH
-  \item EnSight (.case, .sos)
-  \item netCDF (.ncdf, .nc)
-  \item BYU (.g)
-  \item Protein Data Bank (.pdb)
-  \item XMol Molecule
-  \item PLOT3D
-  \item Digital Elevation Map (.dem)
-  \item VRML (.wrl)
-  \item PLY Polygonal File Format
-  \item Stereo Lithography (.stl)
-  \item Gaussian Cube File (.cube)
-  \item POP Ocean Files
+  \item ADAPT (.nc, .cdf, .elev, .ncd)
+  \item ANALYZE (.img, .hdr)
+  \item ANSYS (.inp)
   \item AVS UCD (.inp)
-  \item Meta Image (.mhd, .mha)
-  \item Facet Polygonal Data
-  \item Phasta Files (.pht)
-  \item SESAME Tables
-  \item MFIX (.RES)
-  \item Fluent Case Files (.cas)
-  \item OpenFOAM Files (.foam)
-  \item Cosmology Files (.cosmo)
-  \item PNG Image Files
-  \item TIFF Image Files
-  \item Raw Image Files
+  \item BOV (.bov)
+  \item BYU (.g)
+  \item CCSM MTSD (.nc, .cdf, .elev, .ncd)
+  \item CCSM STSD (.nc, .cdf, .elev, .ncd)
+  \item CEAucd (.ucd, .inp)
+  \item CMAT (.cmat)
+  \item CTRL (.ctrl)
+  \item Chombo (.hdf5, .h5)
+  \item Claw (.claw)
   \item Comma Separated Values (.csv)
-  \item Wavefront Polygonal Data (.obj)
-  \item Spy Plot (.case)
+  \item Cosmology Files (.cosmo, .gadget2)
+  \item Curve2D (.curve, .ultra, .ult, .u)
+  \item DDCMD (.ddcmd)
+  \item Digital Elevation Map (.dem)
+  \item Dyna3D(.dyn)
+  \item EnSight (.case, .sos)
   \item Enzo boundary and hierarchy
+  \item ExodusII (.g, .e, .exe, .ex2, .ex2v.., etc)
+  \item ExtrudedVol (.exvol)
+  \item FVCOM (MTMD, MTSD, Particle, STSD) 
+  \item Facet Polygonal Data
   \item Flash multiblock files
+  \item Fluent Case Files (.cas)
+  \item GGCM (.3df, .mer)
+  \item GTC (.h5)
+  \item GULP (.trg)
+  \item Gadget (.gadget)
+  \item Gaussian Cube File (.cube)
+  \item JPG Image (.jpg, .jpeg)
+  \item LAMPPS Dump (.dump)
+  \item LAMPPS Structure Files
+  \item LODI (.nc, .cdf, .elev, .ncd)
+  \item LODI Particle (.nc, .cdf, .elev, .ncd)
+  \item LS-DYNA (.k, .lsdyna, .d3plot, d3plot)
+  \item M3DCl (.h5)
+  \item MFIX Unstructred Grid (.RES)
+  \item MM5 (.mm5)
+  \item MPAS NetCDF (.nc)
+  \item Meta Image (.mhd, .mha)
+  \item Miranda (.mir, .raw)
+  \item Multilevel 3d Plasma (.m3d, .h5)
+  \item NASTRAN (.nas, .f06)
+  \item Nek5000 Files 
+  \item Nrrd Raw Image (.nrrd, .nhdr)
+  \item OpenFOAM Files (.foam)
+  \item PATRAN (.neu)
+  \item PFLOTRAN (.h5)
+  \item PLOT2D (.p2d)
+  \item PLOT3D (.xyz, .q, .x, .vp3d)
+  \item PLY Polygonal File Format
+  \item PNG Image Files
+  \item POP Ocean Files
+  \item ParaDIS Files
+  \item Phasta Files (.pht)
+  \item Pixie Files (.h5)
+  \item ProSTAR (.cel, .vrt)
+  \item Protein Data Bank (.pdb, .ent, .pdb)
+  \item Raw Image Files
   \item Raw NRRD image files (.nrrd)
-  \item LANL cosmology data (.cosmo)
-  \item VPIC (.vpc)
+  \item SAMRAI (.samrai) 
+  \item SAR (.SAR, .sar) 
+  \item SAS (.sasgeom, .sas, .sasdata) 
+  \item SESAME Tables
   \item SLAC netCDF mesh and mode data
   \item SLAC netCDF particle data
-  \item LANL windbade (.wind)
+  \item Silo (.silo, .pdb)
+  \item Spheral (.spheral, .sv)
+  \item SpyPlot CTH
+  \item Spy Plot (.case)
+  \item Stereo Lithography (.stl)
+  \item TFT Files
+  \item TIFF Image Files
+  \item TSurf Files
   \item Tecplot ASCII (.tec, .tp)
+  \item Tecplot Binary (.plt)
+  \item Tetrad (.hdf5, .h5)
+  \item UNIC (.h5) 
+  \item VASP CHGCA (.CHG)
+  \item VASP OUT (.OUT) 
+  \item VASP POSTCAR (.POS) 
+  \item VPIC (.vpc)
+  \item VRML (.wrl)
+  \item Velodyne (.vld, .rst)
+  \item VizSchema (.h5, .vsh5)
+  \item Wavefront Polygonal Data (.obj)
+  \item WindBlade (.wind)
+  \item XDMF and hdf5 (.xmf, .xdmf)
+  \item XMol Molecule
   \end{itemize}
 \ifthenelse{\boolean{savetrees}}{
 }{
@@ -1448,6 +1501,11 @@ selection mechanism will help you identify the values of interest.
   of one block of one data set.  This constraint is enforced to ensure that
   every row has the same column data.
 
+  You can sort the rows of the spreadsheet by clicking on a variable 
+  name at the top of each column.  The spreadsheet will sort the 
+  spreadsheet even if the data is spread across multiple remote ParaView 
+  servers.
+ 
   Note the widgets at the top of the spreadsheet view.  These let you
   quickly select the pipeline object, choose the type of field to show,
   choose the precision shown for floating point numbers, and hide

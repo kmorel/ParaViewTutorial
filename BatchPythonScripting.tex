@@ -30,20 +30,15 @@ There are many ways to invoke the Python interpreter.  The method you use
 depends on how you are using the scripting.  The easiest way to get a
 python interpreter, and the method we use in this tutorial, is to select
 \gui{Tools} \ra \gui{Python Shell} from the menu.  This will bring up a
-dialog box containing controls for ParaView's python shell. The left
-hand side of the dialog is a Python interpreter, where you directly control
-ParaView via the interface described below. On the right hand side are
-controls for saving and loading python scripts on disk, for managing
-\keyterm{macros} which are scripts that are accesible directly from
-ParaView's main menu bar, and for recording \keyterm{traces}, which
-are scripts that reproduce the actions initiated via ParaView's
-normal GUI interface.
+dialog box containing controls for ParaView's python shell. This is the 
+Python interpreter, where you directly control
+ParaView via the interface described below. 
 
 \begin{inlinefig}
   \includegraphics[width=.9\linewidth]{images/PythonShellDialog}
 \end{inlinefig}
 
-If you are right now most interested in getting started on writing scripts,
+If you are most interested in getting started on writing scripts,
 feel free to skip to the next section past the discussion of the other ways
 to invoke scripting.
 
@@ -60,7 +55,8 @@ service.  \progname{pvpython} is roughly equivalent to the
 interpreter.  It is a serial application that connects to a ParaView server
 (which can be either builtin or remote).  \progname{pvbatch} is roughly
 equivalent to \progname{pvserver} except that commands are taken from a
-Python script rather than from a socket connection to a client.  It is a
+Python script rather than from a socket connection to a ParaView client.  
+It is a
 parallel application that can be launched with \progname{mpirun} (assuming
 it was compiled with MPI), but it cannot connect to another server; it is
 its own server.  In general, you should use \progname{pvpython} if you
@@ -83,9 +79,11 @@ Before diving into the depths of the Python scripting features, let us take
 a moment to explore the automated facilities for creating Python scripts.
 The ParaView GUI's Python \gui{Trace}\index{trace} feature
 allows one to very easily create Python scripts for many common
-tasks. To use \gui{Trace}, one simply begins a trace recording via the GUI's
-\gui{Python Shell} dialog, uses the ParaView GUI to construct a
-visualization, and then stops the trace recording. This produces a
+tasks. To use \gui{Trace}, one simply begins a trace recording via 
+\gui{Start Trace}, found in the Tools Menu.  \gui{Start Trace} 
+uses the ParaView GUI to construct a
+visualization.  Use \gui{Stop Trace}, also found in the Tools Menu, 
+to stop the trace recording. This produces a
 python script that reconstructs the actions taken in the GUI. That
 script contains exactly the same set of operations that we are
 about to describe. As such, \gui{Trace} recordings are a good resource when
@@ -103,15 +101,12 @@ understanding the contents of any given \gui{Trace} script.
   \item If you have not already done so, open the Python shell in the
     ParaView GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the
     menu.
-  \item Click the \gui{Trace} tab in the Python shell.
-  \item Click \gui{Start Trace}.
-  \item Minimize the Python shell and build a simple pipeline in the main
+  \item Click the \gui{Start Trace} in the Tool menu.
+  \item Build a simple pipeline in the main
     ParaView GUI.  For example, create a sphere source and then clip it.
-  \item Restore the Python shell and click \gui{Stop Trace}.
-  \item Click \gui{Show Trace}.  The current traced Python script will
-    appear in the interactive Python shell.
-  \item Click \gui{Save Trace}.  Save the Python script to somewhere on
-    your hard drive.
+  \item Click \gui{Stop Trace} in the Tools meu.  
+  \item An editing window will open.  Save the Python script to somewhere 
+    on your hard drive.
   \end{enumerate}
 
   Even if you have not been exposed to ParaView's Python bindings, the
@@ -120,18 +115,18 @@ understanding the contents of any given \gui{Trace} script.
   favorite editor.  The final script can be interpreted by the
   \progname{pvpython} or \progname{pvbatch} program for totally
   automated visualization.  It is also possible to run this script in the
-  GUI by clicking the \gui{Run Script} button in the Python shell dialog,
-  but you can also assign the script to a macro to allow you to run it
-  whenever at the click of a button.
+  GUI.  In the \gui{Python Shell}, click on \gui{Run Script} and 
+  select your script.
 \end{exercise}
 
 \section{Macros}
 \label{sec:Macros}
 
 A simple but powerful way to customize the behavior of ParaView is to
-create a \keyterm{macro}.  A macro is simply an automated script that can
+add your Python script as a \keyterm{macro}.  A macro is simply an 
+automated script that can
 be invoked through its button in a toolbar or its entry in the menu bar.
-Any Python script can be assigned to a macro through the Python shell.
+Any Python script can be assigned to a macro.
 
 \begin{exercise}{Adding a Macro}
   \label{ex:AddingAMacro}%
@@ -140,13 +135,9 @@ Any Python script can be assigned to a macro through the Python shell.
   that exercise before beginning this one.
 
   \begin{enumerate}
-  \item If it is not currently open, open the Python shell in the ParaView
-    GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the menu.
-  \item Click the \gui{Directory View} tab in the Python shell.
-  \item Click on the \gui{...} button and open the directory where you
-    saved your script in Exercise~\ref{ex:CreatingAPythonScriptTrace}.
-  \item Click on your script and then click \gui{Add to macros}.
-    \savecounter
+  \item Click the \gui{Macros} tab and then \gui{Add new macro}.  Select
+   the macro you made in the prevous exercise.  You should now see 
+   your macro on the Macro toolbar at the top of the screen.
   \end{enumerate}
 
   At this point, you should now see your macro added to the toolbars.  By
