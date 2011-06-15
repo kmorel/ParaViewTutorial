@@ -66,10 +66,14 @@ the \gui{View} menu.
 
 \section{Sources}
 
+\index{sources|(}
+
+\index{sources menu}
+\index{menu!sources}
 There are two ways to get data into ParaView: read data from a file or
 generate data with a \keyterm{source} object.  All sources are located in
 the \gui{Sources} menu.  Sources can be used to add annotation to a view,
-but they are also very handy when exploring ParaView’s features.
+but they are also very handy when exploring ParaView's features.
 
 \begin{exercise}{Creating a Source}
   \label{ex:CreatingASource}%
@@ -77,8 +81,8 @@ but they are also very handy when exploring ParaView’s features.
   \gui{Cylinder}.  Once you select the \gui{Cylinder} item you will notice
   that an item named \gui{Cylinder1} is added to and selected in the
   pipeline browser.  You will also notice that the object inspector is
-  filled with the properties for the cylinder source.  Click the
-  \gui{Apply} button \apply to accept the default parameters.
+  filled with the properties for the cylinder source.  \index{apply~button}
+  Click the \gui{Apply} button \apply to accept the default parameters.
 
   Once you click \gui{Apply}, the cylinder object will be displayed in the
   3D view window on the right.  You can manipulate this 3D view by dragging
@@ -87,7 +91,52 @@ but they are also very handy when exploring ParaView’s features.
   zoom operations.  Also try using the buttons in conjunction with the
   shift and ctrl modifier keys.
 
-  You will quickly notice that ParaView creates not a real cylinder but
+  \begin{inlinefig}
+    \includegraphics[width=.83\scw]{images/ToolbarCamera}
+  \end{inlinefig}
+
+  \index{camera~controls~toolbar|see{toolbar, camera controls}}
+  \index{toolbar!camera~controls}
+
+  ParaView contains a couple of toolbars to help with camera manipulations.
+  The first toolbar, the \gui{Camera Controls} toolbar, shown here provides
+  quick access to particular camera views.  The leftmost button
+  \icon{pqResetCamera24} performs a \keyterm{reset camera} such that it
+  maintains the same view direction but repositions the camera such that
+  the entire object can be seen.  The next button
+  \icon{pqZoomToSelection24} allows you to select a rectangular region of
+  the screen to zoom to (a \keyterm{rubber-band zoom}).  The following six
+  buttons reposition the camera to view the scene straight down one of the
+  global coordinate's axes in either the positive or negative direction.
+  Try playing with these controls now.
+
+  \begin{inlinefig}
+    \includegraphics[width=.415\scw]{images/ToolbarCenterAxis}
+  \end{inlinefig}
+
+  \index{center~axis~toolbar|see{toolbar, center axis}}
+  \index{toolbar!center~axis}
+
+  The second toolbar controls the location of the center of rotation and
+  the visibility of the orientation axes.  \index{center of rotation!pick}.
+  The rightmost button \icon{pqPickCenter24} allows you to pick the
+  \keyterm{center of rotation}.  Try clicking that button then clicking
+  somewhere on the cylinder.  If you then drag the left button in the 3D
+  view, you will notice that the cylinder now rotates around this new
+  point.  \index{center of rotation!reset} The next button to the left
+  \icon{pqResetCenter24} replaces the center of rotation to the center of
+  the object.  \index{center of rotation!show}\index{axis!center of
+    rotation} The next button to the left \icon{pqShowCenterAxes24} shows
+  or hides and axis drawn at the center of rotation.  (You probably will
+  not notice the effects when the center of rotation is at the center of
+  the cylinder because the axes will be hidden by the cylinder.  Use the
+  pick center of rotation \icon{pqPickCenter24} again and you should be
+  able to see the effects.)  The final leftmost button
+  \icon{pqShowOrientationAxes32} toggles showing the
+  \index{axis!orientation|see{orientation axes}}\keyterm{orientation axes},
+  the always-viewable axes in the lower left corner of the 3D view.
+
+  You surely noticed that ParaView creates not a real cylinder but
   rather an approximation of a cylinder using polygonal \keyterm{facets}.
   The default parameters for the cylinder source provide a very coarse
   approximation of only six facets. (In fact, this object looks more like a
@@ -103,12 +152,15 @@ but they are also very handy when exploring ParaView’s features.
   blue on Mac) again.  This is because changes you make to the object
   inspector are not immediately enacted.  The highlighted button is a
   reminder that the parameters of one or more pipeline objects are ``out of
-  sync'' with the data that you are viewing.  Hitting the \gui{Apply} button
-  will accept these changes whereas hitting the \gui{Reset} button \reset
-  will revert the options back to the last time they were applied.  Hit the
-  \gui{Apply} button now.  The resolution is changed so that it is
-  virtually indistinguishable from a true cylinder.
+  sync'' with the data that you are viewing.  Hitting the \gui{Apply}
+  button will accept these changes whereas hitting the \index{reset~button}
+  \gui{Reset} button \reset will revert the options back to the last time
+  they were applied.  Hit the \gui{Apply} button now.  The resolution is
+  changed so that it is virtually indistinguishable from a true cylinder.
 \end{exercise}
+
+\index{undo|(}
+\index{redo|(}
 
 Now is a good time to note the undo~\icon{pqUndo32} and
 redo~\icon{pqRedo32} buttons in the toolbar.  Visualizing your data is
@@ -124,6 +176,8 @@ created and redo again.
   parameter changes can be reverted and restored.  Also notice how whole
   pipeline objects can be destroyed and recreated.
 
+  \index{undo camera}
+  \index{redo camera}
   There are also undo camera~\icon{pqUndoCamera24} and redo
   camera~\icon{pqRedoCamera24} buttons.  These allow you to go back and
   forth between camera angles that you have made so that you no longer have
@@ -131,6 +185,9 @@ created and redo again.
   the camera around and then use these buttons to revert and restore the
   camera angle.
 \end{exercise}
+
+\index{redo|)}
+\index{undo|)}
 
 There are also many options for selecting how objects are rendered.  You
 will notice over the 3D view a \icon{pqOptions16} button for changing the
@@ -161,11 +218,12 @@ convenience.
   changes take effect.)
 
   \begin{itemize}
-  \item Change the background color.  (Notice that you can reset it to the
-    default.)
-  \item Turn the Orientation Axis (the axis in the lower left corner of the
-    view) off and on.  (This can also be done using an icon that looks
-    like the Orientation Axis on the right side of the toolbars on top) 
+  \item \index{background color} Change the background color.  (Notice that
+    you can reset it to the default.)
+  \item \index{orientation axis} Turn the Orientation Axis (the axis in the
+    lower left corner of the view) off and on.  (This can also be done
+    using an icon that looks like the Orientation Axis on the right side of
+    the toolbars on top)
   \item Move the Orientation Axis in the view.  (Hint: Make the axis
     interactive and then click and drag in the 3D view.)
   \end{itemize}
@@ -177,29 +235,38 @@ convenience.
   \gui{Display} tab.
 
   \begin{itemize}
-  \item Set the (solid) color of the cylinder.  (Note: You can also set the
-    color with the \icon{pqEditColor24} toolbar button.)
-  \item Make the cylinder shiny.  (Hint: Make the \gui{Specular Intensity}
-    1.0.)
-  \item Make the cylinder transparent.  (Hint: Lower the \gui{Opacity}.)
-  \item Show 3D axes with tic marks giving spatial position (\gui{Show cube
-    axes}).
+  \item \index{solid color} \index{object color} Set the (solid) color of
+    the cylinder.  (Note: You can also set the color with the
+    \icon{pqEditColor24} toolbar button.)
+  \item \index{shiny} \index{specular intensity} Make the cylinder shiny.
+    (Hint: Make the \gui{Specular Intensity} 1.0.)
+  \item \index{transparency} \index{opacity} Make the cylinder transparent.
+    (Hint: Lower the \gui{Opacity}.)
+  \item \index{cube axis} \index{axis!cube|see{cube axis}} Show 3D axes
+    with tic marks giving spatial position (\gui{Show cube axes}).
   \end{itemize}
 
   We are done with the cylinder source now.  We can delete the pipeline
-  object by selecting the \gui{Properties} tab and hitting delete \delete
-  in the object inspector.
+  object by selecting the \gui{Properties} tab and hitting
+  \index{delete~button} delete \delete in the object inspector.
 \end{exercise}
+
+\index{sources|)}
 
 
 \section{Loading Data}
 
+\index{file menu}
+\index{menu!file}
+
 Now that we have had some practice using the ParaView GUI, let us load in
-some real data.  As you would expect, the \gui{Open} command is the first
-one off of the \gui{File} menu, and there is also toolbar
+some real data.  As you would expect, the \index{open} \gui{Open} command
+is the first one off of the \gui{File} menu, and there is also toolbar
 button~\icon{pqOpen32} for opening a file.  ParaView supports many file
 types, and the list grows as more types get added.  The following is a list
 of currently available readers.
+
+\index{file formats|(}
 
 % Multicols does not work correctly when in twocolumn mode and it breaks
 % across page boundaries.  That's too bad since it saves space and looks
@@ -314,6 +381,8 @@ of currently available readers.
   \end{multicols}
 }
 
+\index{file formats|)}
+
 ParaView's modular design allows for easy integration of new VTK readers
 into ParaView.  Thus, check back often for new file formats.  If you are
 looking for a file reader that does not seem to be included with ParaView,
@@ -326,11 +395,12 @@ have a reader readily available that you can use.
 
 \begin{exercise}{Opening a File}
   \label{ex:OpeningAFile}%
-  Let us open our first file now.  Click the \gui{Open} toolbar (or menu
-  item)~\icon{pqOpen32} and open the file \gui{disk\_out\_ref.ex2}.  Note
-  that opening a file is a two step process, so that you do not see any
-  data yet.  Instead, you see that the object inspector is populated with
-  several options about how we want to read the data.
+  Let us open our first file now.  Click the \index{open} \gui{Open}
+  toolbar (or menu item)~\icon{pqOpen32} and open the file
+  \index{disk\_out\_ref} \gui{disk\_out\_ref.ex2}.  Note that opening a
+  file is a two step process, so that you do not see any data yet.
+  Instead, you see that the object inspector is populated with several
+  options about how we want to read the data.
 
   \begin{inlinefig}
     \includegraphics[scale=\bbscale]{images/Variables_disk_out_ref}
@@ -352,9 +422,15 @@ Before we continue on to filtering the data, let us take a quick look at
 some of the ways to represent the data.  The most common parameters for
 representing data are located in a pair of toolbars.
 
+\index{color legend}
+\index{edit colors} \index{colors!edit}
+\index{scalar range}
+
 \begin{inlinefig}
   \includegraphics[width=\linewidth]{images/DataRepresentationToolbars}
 \end{inlinefig}
+
+\index{representation|(}
 
 \begin{exercise}{Representation and Field Coloring}
   \label{ex:RepresentationAndFieldColoring}%
@@ -375,8 +451,12 @@ representing data are located in a pair of toolbars.
   \end{inlinefig}
 \end{exercise}
 
+\index{representation|)}
+
 
 \section{Filters}
+
+\index{filters|(}
 
 We have now successfully read in some data and gleaned some information
 about it.  We can see the basic structure of the mesh and map some data
@@ -394,6 +474,10 @@ or other filters to modify its data in some way.  These filter connections
 form a \keyterm{visualization pipeline}.  There are a great many filters
 available in ParaView.  Here are the most common, which are all available
 by clicking on the respective icon in the filters toolbar.
+
+\index{toolbar!common filters}
+\index{common filters|(}
+\index{filters!common|(}
 
 \begin{description}
 \item[\calculator Calculator] \index{calculator} Evaluates a user-defined
@@ -426,6 +510,12 @@ by clicking on the respective icon in the filters toolbar.
   more items from a multi block data set.
 \end{description}
 
+\index{filters!common|)}
+\index{common filters|)}
+
+\index{filters menu|(}
+\index{menu!filters|(}
+
 \parpic[r]{\includegraphics[width=0.37\scw]{images/FiltersMenu}}
 
 These eleven filters are a small sampling of what is available in ParaView.
@@ -455,6 +545,11 @@ These submenus are organized as follows.
   guaranteed to have it.  There are also many filters that are not listed
   anywhere but in this list.
 \end{description}
+
+\index{menu!filters|)}
+\index{filters menu|)}
+
+\index{quick launch}
 
 \parpic[r]{\includegraphics[width=.5\linewidth]{images/QuickLaunch}}
 
@@ -490,6 +585,8 @@ chapter of ParaView's on-line or in-built help for more information on each filt
   modify the parameters (which you will almost always do) before applying
   the filter.
 
+  \index{contour|(}
+
   \begin{inlinefig}
     \includegraphics[scale=\bbscale]{images/ContourOptions}
   \end{inlinefig}
@@ -505,6 +602,8 @@ chapter of ParaView's on-line or in-built help for more information on each filt
   \begin{inlinefig}
     \includegraphics[width=\scw]{images/ContourResults}
   \end{inlinefig}
+
+  \index{contour|)}
 \end{exercise}
 
 In the preceding exercise, we applied a filter that processed the data and
@@ -537,9 +636,9 @@ second filter will cut some away.
   \begin{enumerate}
   \item Select \gui{disk\_out\_ref.ex2} in the pipeline browser.
   \item From the menu bar, select \gui{Filters} \ra \gui{Alphabetical} \ra
-    \gui{Extract Surface}. \index{extract surface} Or bring up the quick
-    launch (ctrl+space Win/Linux, alt+space Mac), type extract surface, and
-    select that filter.
+    \gui{Extract Surface}. \filterindex{extract surface} Or bring up the
+    quick launch (ctrl+space Win/Linux, alt+space Mac), type extract
+    surface, and select that filter.
   \item Hit the \apply button.
     \savecounter
   \end{enumerate}
@@ -583,6 +682,8 @@ second filter will cut some away.
   to see the contour clearly.
 \end{exercise}
 
+\index{pipeline browser|(}
+
 \begin{inlinefig}
   \includegraphics[width=\linewidth]{images/PipelineBrowserStructure}
 \end{inlinefig}
@@ -600,6 +701,10 @@ space.  The trouble with the traditional layout of pipeline objects is that
 it takes a lot of space, and even moderately sized pipelines require a
 significant portion of the GUI to see fully.  The pipeline browser,
 however, is complete and compact.
+
+\index{pipeline browser|)}
+
+\index{filters|)}
 
 
 \section{Multiview}
@@ -701,10 +806,12 @@ pressed.
 
   \begin{enumerate}
     \restorecounter
-  \item Right click on one of the views and select \gui{Link Camera...}
-    from the pop up menu. (If you are on a Mac with no right mouse button,
-    you can perform the same operation with the menu option \gui{Tools} \ra
-    \gui{Add Camera Link...}.)
+  \item Right click on one of the views over the background and select
+    \gui{Link Camera...}  from the pop up menu. (If \gui{Link Camera...} is
+    not in the pop up menu, make sure you click over the background of the
+    image, not on the object.  If you are on a Mac with no right mouse
+    button, you can perform the same operation with the menu option
+    \gui{Tools} \ra \gui{Add Camera Link...}.)
   \item Click in a second view.
   \item Try moving the camera in each view.
   \end{enumerate}
@@ -817,7 +924,7 @@ lines that point in the direction of the flow.
   \label{ex:MakingStreamlinesFancy}%
   \begin{enumerate}
   \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
-    the \gui{Tube}\index{tube} filter.
+    the \gui{Tube}\filterindex{tube} filter.
   \item Hit the \apply button.
     \savecounter
   \end{enumerate}
@@ -873,7 +980,7 @@ ParaView's plotting capabilities provide a mechanism to drill down into
 your data to allow quantitative analysis.  Plots are usually created with
 filters, and all of the plotting filters can be found in the \gui{Data
   Analysis} submenu of \gui{Filters}.  In the next exercise, we create a
-filter that will plot the values of the mesh’s fields over a line in space.
+filter that will plot the values of the mesh's fields over a line in space.
 
 \begin{exercise}{Plot Over a Line in Space}
   \label{ex:PlotOverLine}%
@@ -891,10 +998,11 @@ filter that will plot the values of the mesh’s fields over a line in space.
     and manipulate the line we are plotting over.
   \item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
     that the active object.
-  \item From the menu bar, select \gui{Filters} \ra \gui{Data Analysis} \ra
-    \gui{Plot Over Line}~\icon{pqPlotLineOverTime24} or apply the \gui{Plot
-      Over Line} filter using the quick launch (ctrl+space Win/Linux,
-    alt+space Mac). \index{plot~over~line} \savecounter
+  \item \filterindex{plot over line} From the menu bar, select
+    \gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot Over
+      Line}~\icon{pqPlotLineOverTime24} or apply the \gui{Plot Over Line}
+    filter using the quick launch (ctrl+space Win/Linux, alt+space
+    Mac). \index{plot~over~line} \savecounter
   \end{enumerate}
 
   \begin{inlinefig}
@@ -956,6 +1064,8 @@ ranges.
   \includegraphics[width=.66\scw]{images/PlotViewOptions}
 \end{inlinefig}
 
+\index{save screenshot}
+\index{screenshot}
 Like any other views, you can capture the plot with the \gui{File} \ra
 \icon{pqCaptureScreenshot24}~\gui{Save Screenshot}.
 %As an added bonus, you
@@ -1011,8 +1121,8 @@ types of views.  This is to provide researchers and developers a way to
 deliver new ways of looking at data.  To see another example of view,
 select \gui{disk\_out\_ref.ex2} in the pipeline browser, and then select
 \gui{Filters} \ra \gui{Data Analysis} \ra
-\gui{Histogram}~\icon{pqHistogram24}. \index{histogram} Make the histogram
-for the Temp variable, and then hit the \apply button.
+\gui{Histogram}~\icon{pqHistogram24}. \filterindex{histogram} Make the
+histogram for the Temp variable, and then hit the \apply button.
 
 \begin{inlinefig}
   \includegraphics[width=\scw]{images/HistogramPlot}
@@ -1072,11 +1182,11 @@ object.  Let us try an example of that now.
 
   The solid opaque mesh is replaced with a translucent volume. You may
   notice that when rotating the image is temporarily replaced with a
-  simpler image for performance reasons, which we will discuss this feature
+  simpler image for performance reasons, which we discuss
   in more detail later in Chapter~\ref{chap:VisualizingLargeModels}.
 \end{exercise}
 
-A useful feature of ParaView’s volume rendering is that it can be mixed
+A useful feature of ParaView's volume rendering is that it can be mixed
 with the surface rendering of other objects.  This allows you to add
 context to the volume rendering or to mix visualizations for a more
 information-rich view.  For example, we can combine this volume rendering
@@ -1104,7 +1214,7 @@ Exercise~\ref{ex:Streamlines}.
   \begin{enumerate}
     \restorecounter
   \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
-    the \gui{Tube}\index{tube} filter and hit \apply.
+    the \gui{Tube}\filterindex{tube} filter and hit \apply.
   \item If the streamlines are colored by \gui{Temp}, change that to
     \gui{Solid Color}.
   \item Select \gui{StreamTracer1} in the pipeline browser.
@@ -1132,9 +1242,10 @@ change the \keyterm{transfer function}, how scalar values are mapped to
 color and transparency.  You can access the transfer function editor by
 selecting the volume rendered pipeline object and clicking on the edit
 color map~\icon{pqEditColor24} button.
+\index{edit colors} \index{colors!edit}
 
 \begin{inlinefig}
-  \includegraphics[width=.83\scw]{images/ColorScaleEditor}
+  \includegraphics[width=\scw]{images/ColorScaleEditor}
 \end{inlinefig}
 
 The resulting dialog box provides options for editing the transfer
@@ -1151,13 +1262,14 @@ up a dialog box.  The selected control point will be deleted when you hit
 the backspace or delete key.
 
 Directly below the color bar are text entry widgets to numerically specify
-the \gui{Scalar Value} or \gui{Opacity} of the selected control point.  The
-Scale parameter adjusts the unit length of the opacity calculation.  Larger
-numbers make the volume less opaque.  The \gui{Color Space} parameter
-changes how colors are interpolated.  This parameter has no effect on the
-color at the control points, but can drastically affect the colors between
-the control points.  You can also change to a logarithmic scaling of colors
-via the \gui{Use Logarithmic Scale} checkbox.
+the \gui{Scalar Value} or \gui{Opacity}\index{opacity} of the selected
+control point.  The Scale parameter adjusts the unit length of the opacity
+calculation.  Larger numbers make the volume less opaque.  The \gui{Color
+  Space}\index{color space} parameter changes how colors are interpolated.
+This parameter has no effect on the color at the control points, but can
+drastically affect the colors between the control points.  You can also
+change to a logarithmic scaling of colors via the \gui{Use Logarithmic
+  Scale}\index{logarithmic scale} checkbox.
 
 Setting up a transfer function can be tedious, so you can save it by
 clicking the \includeinlinegraphics{images/ColorMapSave} button.  The
@@ -1208,7 +1320,7 @@ data that changes over time.
   ParaView.  The easiest way to do this is to press the~\disconnect button.
 
   \begin{enumerate}
-  \item \gui{Open} the file \gui{can.ex2}.
+  \item \index{can} \gui{Open} the file \gui{can.ex2}.
     \begin{inlinefig}
       \includegraphics[scale=\bbscale]{images/Variables_can}
     \end{inlinefig}
@@ -1250,15 +1362,13 @@ animation.
     Exercise~\ref{ex:LoadingTemporalData}, open the file \gui{can.ex2},
     load all variables, \apply.
   \item Go to the first time step~\vcrFirst.
-  \item Turn on the \gui{EQPS} variable.
+  \item Color by the \gui{EQPS} variable.
   \item Turn on the color legend~\icon{pqScalarBar32}.
   \item Play~\vcrPlay through the animation (or skip to the last time
     step~\vcrLast).
     \savecounter
   \end{enumerate}
-
   The coloring is not very useful.  To quickly fix the problem:
-
   \begin{enumerate}
     \restorecounter
   \item While at the last time step, click the Rescale to Data
@@ -1285,6 +1395,9 @@ of the original color maps range than to imply that they have not.  There
 are several workarounds to this problem:
 
 \begin{itemize}
+\item If for whatever reason your animation gets stuck on a poor color
+  range, simply go to a representative time step and
+  hit~\icon{pqResetRange24}.  This is what we did in the previous exercise.
 \item Open the settings dialog box accessed in the menu from \gui{Edit} \ra
   \gui{Settings} (\gui{ParaView} \ra \gui{Preferences} on the Mac).  Under
   the \gui{General} tab, change the \gui{On File Open} setting to \gui{Goto
@@ -1293,20 +1406,18 @@ are several workarounds to this problem:
   (such as in can), the field ranges are more representative at the last
   time step than at the beginning.  Thus, as long as you color by a field
   before changing the time, the color range will be adequate.
-\item If for whatever reason your animation gets stuck on a poor color
-  range, simply go to a representative time step and
-  hit~\icon{pqResetRange24}.
 \item Alternatively, you can open the edit color scale dialog
   box~\icon{pqEditColor24} and specify a range for the data.  This is a
   good choice if you cannot find, or do not know, a ``representative'' time
   step or if you already know a good range to use.
-\item If you are willing to wait, you can use the \gui{Rescale to Temporal
-  Range} button on the edit color scale dialog box~\icon{pqEditColor24} and
-  ParaView will compute this overall temporal range automatically.  Keep in
-  mind that this option will require ParaView to load your entire data set
-  over all time steps whenever you load a data set.  Although ParaView will
-  not hold more than one time step in memory at a time, it will take a long
-  time to pull all that memory off of disk for large data sets.
+\item \index{Rescale to Temporal Range} If you are willing to wait, you can
+  use the \gui{Rescale to Temporal Range} button on the edit color scale
+  dialog box~\icon{pqEditColor24} and ParaView will compute this overall
+  temporal range automatically.  Keep in mind that this option will require
+  ParaView to load your entire data set over all time steps whenever you
+  load a data set.  Although ParaView will not hold more than one time step
+  in memory at a time, it will take a long time to pull all that memory off
+  of disk for large data sets.
 \end{itemize}
 
 
@@ -1341,7 +1452,7 @@ of using the \gui{Find Data} dialog box.
 
 \begin{exercise}{Performing Query-Based Selections}
   \label{ex:PerformingQueryBasedSelections}%
-  In this exercise we will find all cells with the large equivalent plastic
+  In this exercise we will find all cells with a large equivalent plastic
   strain (EQPS).
 
   \begin{enumerate}
@@ -1374,7 +1485,7 @@ of using the \gui{Find Data} dialog box.
 
 One of the easiest ways of creating a selection is to pick elements right
 inside the 3D view.  All of the 3D view selections are performed with a
-\keyterm{rubber-band} selection.  That is, by clicking and dragging the
+\keyterm{rubber-band selection}.  That is, by clicking and dragging the
 mouse in the 3D view, you will create a boxed region that will select
 elements underneath it.  There are several types of rubber-band selection
 that can be performed, and you initiate one by selecting one of the icons
@@ -1544,6 +1655,8 @@ The spreadsheet provides the most readable way to inspect field data.
 However, sometimes it is helpful to place the field data directly in the 3D
 view.  The next exercise describes how we can do that.
 
+\index{labels|(}
+
 \begin{exercise}{Labeling Selections}
   \label{ex:LabelingSelections}%
   \begin{enumerate}
@@ -1571,6 +1684,8 @@ view.  The next exercise describes how we can do that.
   inspector.
 \end{exercise}
 
+\index{labels|)}
+
 ParaView provides the ability to plot field data over time.  Because you
 seldom want to plot everything over all time, these plots work against a
 selection.
@@ -1587,7 +1702,7 @@ selection.
   \item With the selection still active, add the Plot Selection Over Time
     (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot Selection Over
     Time}~\icon{pqPlotCellOverTime24} or use the quick launch: ctrl+space
-    Win/Linux, alt+space Mac). \index{plot~selection~over~time}
+    Win/Linux, alt+space Mac). \filterindex{plot~selection~over~time}
   \item \apply.
   \item Go to the \gui{Display} panel and select different blocks to plot
     (which correspond to each of the selected elements).
@@ -1621,7 +1736,7 @@ filter.
   \item Create an \gui{Extract Selection}~\icon{pqExtractSelection24}
     filter (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Extract
       Selection} or use the quick launch: ctrl+space Win/Linux, alt+space
-    Mac).  \index{extract selection}
+    Mac).  \filterindex{extract selection}
   \item \apply.
   \end{enumerate}
 
@@ -1658,17 +1773,20 @@ the menu, click on \gui{View} \ra \gui{Animation View}.
 \end{inlinefig}
 
 For now we will examine the controls at the top of the animation view.  The
-animation \keyterm{mode} parameter determines how ParaView will step
+\keyterm{animation mode} parameter determines how ParaView will step
 through time during playback.  There are three modes available.
 
 \begin{description}
-\item[Sequence] Given a start and end time, break the animation into a
-  specified number of frames spaced equally apart.
-\item[Real Time] ParaView will play back the animation such that it lasts
-  the specified number of seconds.  The actual number of frames created
-  depends on the update time between frames.
-\item[Snap To TimeSteps] ParaView will play back exactly those time steps
-  that are defined by your data.
+\item[Sequence] \index{sequence (animation mode)} Given a start and end
+  time, break the animation into a specified number of frames spaced
+  equally apart.
+\item[Real Time] \index{real time (animation mode)} ParaView will play back
+  the animation such that it lasts the specified number of seconds.  The
+  actual number of frames created depends on the update time between
+  frames.
+\item[Snap To TimeSteps] \index{Snap To TimeSteps (animation mode)}
+  ParaView will play back exactly those time steps that are defined by your
+  data.
 \end{description}
 
 Whenever you load a file that contains time, ParaView will automatically
@@ -1746,12 +1864,13 @@ ParaView and VTK pipeline structure.
 
   \begin{enumerate}
   \item Make sure \gui{can.ex2} is highlighted in the pipeline browser.
-  \item Select \gui{Filters} \ra \gui{Temporal} \ra \gui{Temporal
-    Interpolator} or apply the \gui{Temporal Interpolator} filter using the
-    quick launch (ctrl+space Win/Linux, alt+space Mac).
+  \item \filterindex{temporal interpolator} Select \gui{Filters} \ra
+    \gui{Temporal} \ra \gui{Temporal Interpolator} or apply the
+    \gui{Temporal Interpolator} filter using the quick launch (ctrl+space
+    Win/Linux, alt+space Mac).
   \item \apply.
-  \item Change back to \gui{Real Time} mode in the \gui{Animation
-    Inspector} if necessary.
+  \item Change back to \gui{Real Time} mode in the \gui{Animation View} if
+    necessary.
   \item Split the view~\splitViewH, show the \gui{TemporalInterpolator1} in
     one, show \gui{can.ex2} in the other, and link the cameras.
   \item Play~\vcrPlay the animation.
@@ -1777,6 +1896,8 @@ errors.
 % This section should probably directly follow the material currently
 % covered in the Controlling Time section.  If that material moves, so
 % should this material.
+
+\sourceindex{text}
 
 When using ParaView as a communication tool it is often helpful to annotate
 the images you create with text.  With ParaView it is very easy to create
@@ -1817,6 +1938,8 @@ with the standard text source and impossible when making an animation.
 Therefore, there is a special \keyterm{annotate time source} that will
 insert the current animation time into the string.
 
+\sourceindex{annotate time}
+
 \begin{exercise}{Adding Time Annotation}
   \label{ex:AddingTimeAnnotation}%
   \begin{enumerate}
@@ -1838,11 +1961,12 @@ insert the current animation time into the string.
   the time stored in the data file is, and there is a special version of
   annotate time that acts as a filter.
 
+
   \begin{enumerate}
     \restorecounter
   \item Select \gui{can.ex2}.
   \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
-    the \gui{Annotate Time Filter}. \index{annotate time filter}
+    the \gui{Annotate Time Filter}. \filterindex{annotate time filter}
   \item \apply.
   \item Move the annotation around as necessary.
   \item Check the animation mode in the \gui{Animation View}.  If it is set
@@ -1859,7 +1983,7 @@ insert the current animation time into the string.
 \section{Animations}
 
 We have already seen how to animate a data set with time in it
-(hit~\vcrPlay).  However, ParaView’s animation capabilities go far beyond
+(hit~\vcrPlay).  However, ParaView's animation capabilities go far beyond
 that.  With ParaView you can animate nearly any property of any pipeline
 object.
 

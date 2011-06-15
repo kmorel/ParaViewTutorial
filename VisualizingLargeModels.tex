@@ -19,7 +19,7 @@ The lower left image shows a loosely coupled SIERRA/Fuego/Syrinx/Calore
 simulation with 10 million unstructured hexahedra cells of
 objects-in-crosswind fire.  The lower right image shows a CTH simulation
 that generates AMR data.  We have used ParaView to visualize CTH simulation
-AMR data comprising billions of cells, 100’s of thousands of blocks, and
+AMR data comprising billions of cells, 100's of thousands of blocks, and
 eleven levels of hierarchy (not shown).
 
 In this section we discuss visualizing large meshes like these using the
@@ -252,7 +252,7 @@ inherit the ghost status of the cell it came from.  ParaView then strips
 off the ghost faces and we are left with the correct answer.
 
 In this example we have shown one layer of ghost cells: only those cells
-that are direct neighbors of the partition’s cells.  ParaView also has the
+that are direct neighbors of the partition's cells.  ParaView also has the
 ability to retrieve multiple layers of ghost cells, where each layer
 contains the neighbors of the previous layer not already contained in a
 lower ghost layer or the original data itself.  This is useful when we have

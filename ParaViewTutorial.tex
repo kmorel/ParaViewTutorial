@@ -208,18 +208,21 @@
 \newcommand{\reset}{\includeinlinegraphics{images/Reset}\xspace}
 \newcommand{\delete}{\includeinlinegraphics{images/Delete}\xspace}
 
+\newcommand*{\sourceindex}[1]{\index{#1}\index{source!#1}}
+\newcommand*{\filterindex}[1]{\index{#1}\index{filter!#1}}
+
 % Icons for common filters.
-\newcommand{\calculator}{\index{calculator}\icon{pqCalculator24}\xspace}
-\newcommand{\contour}{\index{contour}\icon{pqIsosurface24}\xspace}
-\newcommand{\clip}{\index{clip}\icon{pqClip24}\xspace}
-\newcommand{\slice}{\index{slice}\icon{pqSlice24}\xspace}
-\newcommand{\threshold}{\index{threshold}\icon{pqThreshold24}\xspace}
-\newcommand{\extractSubset}{\index{extract subset}\icon{pqExtractGrid24}\xspace}
-\newcommand{\glyph}{\index{glyph}\icon{pqGlyph24}\xspace}
-\newcommand{\streamTracer}{\index{stream tracer}\icon{pqStreamTracer24}\xspace}
-\newcommand{\warp}{\index{warp!vector}\icon{pqWarp24}\xspace}
-\newcommand{\group}{\index{group}\icon{pqGroup24}\xspace}
-\newcommand{\extractGroup}{\index{extract group}\icon{pqGroupExtract24}\xspace}
+\newcommand{\calculator}{\filterindex{calculator}\icon{pqCalculator24}\xspace}
+\newcommand{\contour}{\filterindex{contour}\icon{pqIsosurface24}\xspace}
+\newcommand{\clip}{\filterindex{clip}\icon{pqClip24}\xspace}
+\newcommand{\slice}{\filterindex{slice}\icon{pqSlice24}\xspace}
+\newcommand{\threshold}{\filterindex{threshold}\icon{pqThreshold24}\xspace}
+\newcommand{\extractSubset}{\filterindex{extract subset}\icon{pqExtractGrid24}\xspace}
+\newcommand{\glyph}{\filterindex{glyph}\icon{pqGlyph24}\xspace}
+\newcommand{\streamTracer}{\filterindex{stream tracer}\icon{pqStreamTracer24}\xspace}
+\newcommand{\warp}{\filterindex{warp!vector}\icon{pqWarp24}\xspace}
+\newcommand{\group}{\filterindex{group}\icon{pqGroup24}\xspace}
+\newcommand{\extractGroup}{\filterindex{extract group}\icon{pqGroupExtract24}\xspace}
 
 % Camera view icons
 \newcommand{\xPlus}{\icon{pqXPlus24}\xspace}
@@ -247,11 +250,11 @@
 \newcommand{\restoreView}{\icon{RestoreView}\xspace}
 
 % Selection icons
-\newcommand{\selectCellsOn}{\icon{pqSurfaceSelectionCell24}\xspace}
-\newcommand{\selectPointsOn}{\icon{pqSurfaceSelectionPoint24}\xspace}
-\newcommand{\selectCellsThrough}{\icon{pqFrustumSelectionCell24}\xspace}
-\newcommand{\selectPointsThrough}{\icon{pqFrustumSelectionPoint24}\xspace}
-\newcommand{\selectBlocks}{\icon{pqSelectBlock24}\xspace}
+\newcommand{\selectCellsOn}{\index{select!cells~on~surface}\icon{pqSurfaceSelectionCell24}\xspace}
+\newcommand{\selectPointsOn}{\index{select!points~on~surface}\icon{pqSurfaceSelectionPoint24}\xspace}
+\newcommand{\selectCellsThrough}{\index{select!frustum}\index{select!cells~through}\icon{pqFrustumSelectionCell24}\xspace}
+\newcommand{\selectPointsThrough}{\index{select!frustum}\index{select!points~through}\icon{pqFrustumSelectionPoint24}\xspace}
+\newcommand{\selectBlocks}{\index{select!block}\icon{pqSelectBlock24}\xspace}
 
 % Other common icons
 \newcommand{\eyeball}{\icon{pqEyeball16}\xspace}
