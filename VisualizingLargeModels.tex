@@ -685,17 +685,19 @@ meanings.
   more efficient rendering.  The display lists usually render faster, but
   require initial time to compile during the first frame and extra memory
   to store.
-\item[Use Triangle Strips] \index{triangle strips} When unchecked, data is
-  rendered as defined in the poly data.  When checked, the data is first
-  converted to triangle strips.  Triangle strips can be pushed to a
-  graphics card more efficiently and can sometimes be rendered faster, but
-  not usually.
-\item[LOD Threshold] \index{LOD Threshold}Controls when to replace the
-  geometry with a decimated version of the geometry.  The checkbox turns
-  the feature on or off.  When on, the slider gives a threshold for the
-  feature.  If the geometry size is below the threshold, it is considered
-  small enough to render.  When the geometry size is above the threshold,
-  the decimated form is used during rendering.
+\item[LOD Threshold] \index{LOD Threshold} Controls when to replace the
+  geometry with a decimated version of the geometry during interactive
+  rendering.  The checkbox turns the feature on or off.  When on, the
+  slider gives a threshold for the feature.  If the geometry size is below
+  the threshold, it is considered small enough to render.  When the
+  geometry size is above the threshold, the decimated form is used during
+  rendering.  When unchecked, the full geometry is always rendered.
+\item[LOD Resolution] \index{LOD Resolution} Controls the size of geometry
+  to create for geometric level of detail.  Moving the slider to the right
+  results in a more coarse representation.
+\item[Outline Threshold] \index{outline threshold} When an unstructured
+  dataset exceeds this threshold, the default representation mode is set
+  to outline instead of surface.
 \item[Allow Rendering Interrupts] \index{rendering interrupts} When
   checked, a still render may be interrupted by a request to perform an
   interactive render.
@@ -810,21 +812,26 @@ Mac).  The parallel rendering options in the dialog are in the \gui{Render
   which to use parallel rendering.  Whenever the geometry is below the
   threshold, the geometry is moved to the location where display occurs
   (usually the client).
+\item[Client Outline Threshold] \index{client outline threshold} Controls
+  when to render a bounding box in lieu of a reduced geometry (or other
+  representation) during interactive rendering.  If the checkbox is on and
+  the lower level geometry is above the given threshold, a bounding box is
+  rendered in place of the actual geometry.
 \item[Suppress Ordered Compositing] \index{ordered compositing} To view
   volume rendering and transparent polygons correctly, a special parallel
   rendering mode called ordered compositing is required.  However, this
   mode has some additional computation and memory.  Checking this box
   prevents ordered compositing from ever happening.
-\item[Interactive Subsample Rate] \index{subsample} The overhead of parallel rendering
-  is proportional to the size of the images generated.  Thus, you can speed
-  up interactive rendering by specifying an image subsampling rate.  When
-  this box is checked, interactive renders will create smaller images,
-  which are then magnified when displayed.  This parameter is only used
-  during interactive renders.  A full resolution image is always used
-  during a still render.
+\item[Interactive Subsample Rate] \index{subsample} The overhead of
+  parallel rendering is proportional to the size of the images generated.
+  Thus, you can speed up interactive rendering by specifying an image
+  subsampling rate.  When this box is checked, interactive renders will
+  create smaller images, which are then magnified when displayed.  This
+  parameter is only used during interactive renders.  A full resolution
+  image is always used during a still render.
 \item[Image Compression] Before images are shipped from server to client,
   they can be compressed using one of two compression algorithms.
-  \keyterm{SQUIRT} or \keyterm{Zlib}. To make the compression
+  \keyterm{Squirt} or \keyterm{Zlib}. To make the compression
   more effective, either algorithm can reduce the color resolution of
   the image before compression.  The sliders determine the amount of color
   bits saved.  Full color resolution is always used during a still render.
@@ -834,12 +841,6 @@ Mac).  The parallel rendering options in the dialog are in the \gui{Render
   unlikely to be able to resolve all of the pixels in the display.  If that
   is the case, this option allows you to subsample the still renders and
   save a significant amount of time.
-\item[Client Collect] \index{client collect} When in tiled display mode,
-  the parallel rendering is sent to the tiled display, not the desktop.
-  Thus, the client must render all of its data locally.  This parameter
-  sets a limit on the amount of data sent to the client.  If the data is
-  larger than the set threshold, the client will simply show a bounding box
-  around the data.
 \item[Compositing Threshold] \index{compositing threshold} The compositing
   threshold is the equivalent of the remote render threshold for tiled
   displays.  The trade offs for performing compositing are different.
@@ -868,11 +869,6 @@ should follow.
   If you have graphics hardware, these rendering structures are important
   for feeding the GPUs fast enough.  However, if you do not have GPUs,
   these rendering structures do not help much.
-\item Turn \gui{Use Triangle Strips} off.  This option is intended to
-  convert your data into structures that are more efficiently rendered.
-  However, the processing and memory overhead are often not worth it when
-  data is large.  In fact, when the memory limits are stretched, this can
-  actually reduce performance.
 \item Try turning the \gui{LOD Threshold} \emph{off}.  The geometry
   decimation can take a long time with large data, and it sometimes does a
   poor job if your data has high curvatures or strange connectivity.  If
@@ -890,7 +886,16 @@ should follow.
   performance.
 \item Make sure \gui{Image Compression} is on.  It has a tremendous effect
   on desktop delivery performance, and the artifacts it introduces, which
-  are only there during interactive rendering, are minimal.
+  are only there during interactive rendering, are minimal.  Lower
+  bandwidth connections can try using Zlib instead of Squirt compression.
+  Zlib will create smaller images at the cost of longer
+  compression/decompression times.
+\item If the network connection has a high latency, adjust the parameters
+  to avoid remote rendering during interaction.  Turn up \gui{Remote Render
+    Threshold} and make \gui{Client Outline Threshold} lower than that.  To
+  avoid rendering bounding boxes, play with the \gui{LOD Threshold} and
+  \gui{LOD Resolution} parameters to encourage generating representative
+  geometry small enough to ship to the client.
 \end{enumerate}
 
 
