@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{ifthen}
 \usepackage{multicol}
+\usepackage{needspace}
 \usepackage{picins}
 \usepackage{tabularx}
 \usepackage{url}
@@ -121,6 +122,7 @@
 \newenvironment{exercise}[1]{%
   \refstepcounter{exercise}
   \vspace{3.25ex}
+  \Needspace*{4\baselineskip}
   \noindent\textbf{\large{}Exercise \theexercise: #1}
   \addcontentsline{loe}{exercise}{\protect\numberline{\theexercise}#1}
   \addcontentsline{toc}{subsection}{Exercise \theexercise: #1}
