@@ -1040,8 +1040,8 @@ filter that will plot the values of the mesh's fields over a line in space.
     \includegraphics[width=\scw]{images/LinePlot2}
   \end{inlinefig}
 
-  There are several interactions you can do with the plot.  Drag with the
-  middle button up and down to zoom in and out.  Drag with the middle button
+  There are several interactions you can do with the plot.  Roll the mouse 
+  wheel up and down to zoom in and out.  Drag with the middle button
   to do a rubber band zoom.  Drag with the left button to scroll the plot
   around.  You can also use the reset camera command~\resetCamera to restore
   the view to the full domain and range of the plot.
@@ -1067,7 +1067,7 @@ ranges.
 \index{save screenshot}
 \index{screenshot}
 Like any other views, you can capture the plot with the \gui{File} \ra
-\icon{pqCaptureScreenshot24}~\gui{Save Screenshot}.
+\icon{pqCaptureScreenshot24}~\gui{Save Screenshot}.  We will discuss \gui{Save Screenshot} later in the tutorial.
 %As an added bonus, you
 %can save can save the plot in a vector PDF format so that it scales well if
 %included in reports and other documents.
@@ -1409,8 +1409,10 @@ are several workarounds to this problem:
 \item Alternatively, you can open the edit color scale dialog
   box~\icon{pqEditColor24} and specify a range for the data.  This is a
   good choice if you cannot find, or do not know, a ``representative'' time
-  step or if you already know a good range to use.
-\item \index{Rescale to Temporal Range} If you are willing to wait, you can
+  step or if you already know a good range to use.  You change the range of your  data by unselecting \gui{Automatically Rescale to Fit Data Range}, 
+  then click on \gui{Rescale Range} and fill in the \gui{Minimum} 
+  and \gui{Maximum} entries.  
+\item \index{Rescale to Temporal Range} If you are willing to wait or have small  data, you can
   use the \gui{Rescale to Temporal Range} button on the edit color scale
   dialog box~\icon{pqEditColor24} and ParaView will compute this overall
   temporal range automatically.  Keep in mind that this option will require
@@ -1419,6 +1421,143 @@ are several workarounds to this problem:
   in memory at a time, it will take a long time to pull all that memory off
   of disk for large data sets.
 \end{itemize}
+
+
+\section{Save Screeshot and Save Animation}
+
+One of the most important products of any visualization is screenshots and 
+movies that can be used in presentations and reports.  In this section we 
+save a screenshot (picture) and animation (movie). Once again, we
+will use the \gui{can.ex2} dataset.
+
+\begin{exercise}{Save Screenshot}
+  \label{ex:SaveScreenshot}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
+
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, and \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Press the~\yPlus button to orient the camera to the mesh.
+  \item Color by \gui{GlobalNodeId}.  We use \gui{GlobalNodeId} so that the
+    3D object has some color.
+  \item Select the \gui{Rescale to color range} ~\icon{pqResetRange24} button.
+  \item Select \gui{File} \ra \gui{Save Screenshot}.
+
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/SaveScreenshot1.png}
+  \end{inlinefig}
+
+  \savecounter
+  \end{enumerate}
+
+  The \gui{Save Screenshot} window includes numerous important controls.  
+  
+  In the upper left of this window is the checkbox 
+  \gui{Save only selected view}.  If you have multiple views open, 
+  clicking on this checkbox will only write the selected one to an image file.
+  Unselecting it will write all views to the image file.
+
+  The \gui{Select resolution for the image to save} entries allow you to
+  create an image that is larger (or smaller) than the current size of
+  the 3d view. 
+
+  The \gui{Override Color Palette} pulldown menu allows a user to use the
+  default color scheme or one with a white color motif for printing. You can
+  see and set all of these colors in the \gui{Edit} \ra \gui{Settings} \ra 
+  \gui(Colors) dialog box. 
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/SaveScreenshot2.png}
+  \end{inlinefig}
+%alan
+
+  Finally, the \gui{Stereo Mode (if applicable)} menu allows you to create
+  stereo screenshots.
+  \begin{enumerate}
+    \restorecounter
+    \item Press the \gui{OK} button.
+    \savecounter
+  \end{enumerate}
+
+  This brings us to the file selection screen.  If you pull down the menu
+  \gui{Files of type:} at the bottom of the dialog box, you will see the
+  following file types:
+  \begin{itemize}
+    \item .png
+    \item .bmp
+    \item .tif
+    \item .ppm
+    \item .jpg
+    \item .pdf
+  \end{itemize}
+
+  Select a \gui{File name} for your file, and place it somethere you can
+  later find and delete it.  Lets leave \gui{Files of type}  \gui{PNG image(*.png)}
+  \begin{enumerate}
+    \restorecounter
+    \item Press the \gui{OK} button.
+  \end{enumerate}
+
+  In an \gui{Explorer} window, find and double click your file to open
+  your screenshot.
+\end{exercise}
+
+
+\begin{exercise}{Save Animation}
+  \label{ex:SaveAnimation}%
+  Next, we will save an animation.  We will also resume from where we left of 
+  in the example \gui{Save Screenshot}.  
+
+  \begin{enumerate}
+  \item Select \gui{File} \ra \gui{Save Animation}.
+
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/SaveAnimation1.png}
+  \end{inlinefig}
+
+  \savecounter
+  \end{enumerate}
+
+  The \gui{Save Screenshot} window includes numerous important controls.  
+  
+  The \gui{Resolution (pixels)} entries allow you to
+  create an animation that is larger (or smaller) than the current size of
+  the 3d view. 
+
+  The \gui{Stereo Mode (if applicable)} menu allows you to create
+  stereo movies.
+  \begin{enumerate}
+    \restorecounter
+    \item Press the \gui{Save Animation} button.
+    \savecounter
+  \end{enumerate}
+
+  This brings us to the file selection screen.  If you pull down the menu
+  \gui{Files of type:} at the bottom of the dialog box, you will see the
+  following file types:
+  \begin{itemize}
+    \item .avi
+    \item .jpg
+    \item .tif
+    \item .png
+  \end{itemize}
+
+  Select a \gui{File name} for your file, and place it somethere you can
+  later find and delete it.  \gui{.avi} will create a movie format that
+  can be used on windows, and with some opensource viewers.  Otherwise,
+  you can create a \gui{flipbook}, or series of images.  These images
+  can be stitched together to form a movie using numerous opensource
+  tools.  Lets leave \gui{Files of type}  \gui{AVI files (*.avi)}
+  \begin{enumerate}
+    \restorecounter
+    \item Press the \gui{OK} button.
+  \end{enumerate}
+
+  In an \gui{Explorer} window, find and double click your file to open
+  your movie.
+\end{exercise}
 
 
 \section{Selection}
