@@ -1,30 +1,38 @@
 \chapter{Visualizing Large Models}
 \label{chap:VisualizingLargeModels}
 
-\begin{inlinefig}
-  \includegraphics[height=.33\linewidth]{images/Asteroid}
-  \includegraphics[height=.33\linewidth]{images/PolarVortex} \\ \vspace{.5ex}
-  \includegraphics[height=.33\linewidth]{images/Fire}
-  \includegraphics[height=.33\linewidth]{images/LargeAMR}
-\end{inlinefig}
+ParaView is used frequently at Sandia National Laboratories and other
+institutions for visualizing data from large-scale simulations run on the
+world's largest supercomputer including the examples shown here.
 
-ParaView is used frequently at Sandia National Laboratories for visualizing
-data from large-scale simulations run on the Red Storm supercomputer such
-as the examples shown here.  The upper left image shows a CTH shock physics
-simulation with over 1 billion cells of a 10 megaton explosion detonated at
-the center of the Golevka asteroid.  The upper right image shows a SEAM
-Climate Modeling simulation with 1 billion cells modeling the breakdown of
-the polar vortex, a circumpolar jet that traps polar air at high latitudes.
-The lower left image shows a loosely coupled SIERRA/Fuego/Syrinx/Calore
-simulation with 10 million unstructured hexahedra cells of
-objects-in-crosswind fire.  The lower right image shows a CTH simulation
-that generates AMR data.  We have used ParaView to visualize CTH simulation
-AMR data comprising billions of cells, 100's of thousands of blocks, and
-eleven levels of hierarchy (not shown).
+\begin{inlinefig}
+  \begin{tabular}{cc}
+    \includegraphics[width=0.431\linewidth]{images/Asteroid} &
+    \includegraphics[width=0.469\linewidth]{images/PolarVortex} \\
+    \parbox[t]{0.431\linewidth}{\footnotesize CTH shock physics simulation
+      with over 1 billion cells of a 10 megaton explosion detonated at the
+      center of the Golevka asteroid.} &
+    \parbox[t]{0.469\linewidth}{\footnotesize SEAM Climate Modeling
+      simulation with 1 billion cells modeling the breakdown of the polar
+      vortex, a circumpolar jet that traps polar air at high latitudes.}
+  \end{tabular}
+
+  \begin{tabular}{cc}
+    \includegraphics[width=0.474\linewidth]{images/LargeAMR} &
+    \includegraphics[width=0.426\linewidth]{images/Crossflow} \\
+    \parbox[t]{0.474\linewidth}{\footnotesize A CTH simulation that
+      generates AMR data.  We have used ParaView to visualize CTH
+      simulation AMR data comprising billions of cells, 100's of thousands
+      of blocks, and eleven levels of hierarchy (not shown).} &
+    \parbox[t]{0.426\linewidth}{\footnotesize A PHASTA simulation of 3.3
+      billion tetrahedral cells involving the flow over a full wing where a
+    synthetic jet issues an unsteady crossflow jet.}
+  \end{tabular}
+\end{inlinefig}
 
 In this section we discuss visualizing large meshes like these using the
 parallel visualization capabilities of ParaView.  This section is less
-“hands-on” than the previous section.  You will learn the conceptual
+``hands-on'' than the previous section.  You will learn the conceptual
 knowledge needed to perform large parallel visualization instead.  We
 present the basic ParaView architecture and parallel algorithms and
 demonstrate how to apply this knowledge.
