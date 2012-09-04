@@ -77,7 +77,7 @@ but they are also very handy when exploring ParaView's features.
   Let us start with a simple one.  Go to the \gui{Sources} menu and select
   \gui{Cylinder}.  Once you select the \gui{Cylinder} item you will notice
   that an item named \gui{Cylinder1} is added to and selected in the
-  pipeline browser.  You will also notice that the object inspector is
+  pipeline browser.  You will also notice that the properties panel is
   filled with the properties for the cylinder source.  \index{apply~button}
   Click the \gui{Apply} button \apply to accept the default parameters.
 
@@ -248,7 +248,7 @@ options can be repeated elsewhere in the ParaView GUI for convenience.
 
   We are done with the cylinder source now.  We can delete the pipeline
   object by selecting the \gui{Properties} tab and hitting
-  \index{delete~button} delete \delete in the object inspector.
+  \index{delete~button} delete \delete in the properties panel.
 \end{exercise}
 
 \index{sources|)}
@@ -589,7 +589,7 @@ chapter of ParaView's on-line or in-built help for more information on each filt
   \gui{disk\_out\_ref.ex2} is selected in the pipeline browser and then
   select the contour filter~\contour from the filter toolbar or
   \gui{Filters} menu.  Notice that a new item is added to the pipeline
-  filter underneath the reader and the object inspector updates to the
+  filter underneath the reader and that the properties panel updates to the
   parameters of the new filter.  As with reading a file, applying a filter
   is a two step process.  After creating the filter you get a chance to
   modify the parameters (which you will almost always do) before applying
@@ -679,7 +679,7 @@ second filter will cut some away.
     browser.
   \item Create a clip filter \clip from the toolbar or \gui{Filters} menu.
   \item Uncheck the \gui{Show Plane} checkbox
-    \includeinlinegraphics{images/ShowPlaneCheckbox} in the object inspector.
+    \includeinlinegraphics{images/ShowPlaneCheckbox} in the properties panel.
   \item Click the \apply button.
   \end{enumerate}
 
@@ -761,7 +761,7 @@ pressed.
     Exercise~\ref{ex:OpeningAFile}).
   \item Add the Clip filter~\clip to \gui{disk\_out\_ref.ex2}.
   \item Uncheck the Show Plane checkbox
-    \includeinlinegraphics{images/ShowPlaneCheckbox} in the object inspector.
+    \includeinlinegraphics{images/ShowPlaneCheckbox} in the properties panel.
   \item Click the \apply button.
   \item Color the surface by pressure by changing the variable chooser (in
     the toolbar) from \gui{Solid Color} to \gui{Pres}.
@@ -785,7 +785,7 @@ pressed.
   be filled with a new visualization.  Notice that the view in the right
   has a blue border around it.  This means that it is the \keyterm{active
     view}.  Widgets that give information about and controls for a single
-  view, including the pipeline browser and object inspector, follow the
+  view, including the pipeline browser and properties panel, follow the
   active view.  In this new view we will visualize the temperature of the
   mesh.
 
@@ -957,9 +957,9 @@ lines that point in the direction of the flow.
     \restorecounter
   \item Select \gui{StreamTracer1} in the pipeline browser.
   \item Add the glyph filter~\glyph to \gui{StreamTracer1}.
-  \item In the object inspector, change the \gui{Vectors} option (second
+  \item In the properties panel, change the \gui{Vectors} option (second
     option from the top) to \gui{V}.
-  \item In the object inspector, change the \gui{Glyph Type} option (third
+  \item In the properties panel, change the \gui{Glyph Type} option (third
     option from the top) to \gui{Cone}.
   \item Hit the \apply button.
   \item Color the glyphs with the \gui{Temp} variable.
@@ -1003,7 +1003,7 @@ filter that will plot the values of the mesh's fields over a line in space.
     Exercise~\ref{ex:OpeningAFile}).
   \item Add the Clip filter~\clip to \gui{disk\_out\_ref.ex2}, Uncheck the
     Show Plane checkbox \includeinlinegraphics{images/ShowPlaneCheckbox} in
-    the object inspector, and click \apply (like in
+    the properties panel, and click \apply (like in
     Exercise~\ref{ex:UsingMultipleViews}).  This will make it easier to see
     and manipulate the line we are plotting over.
   \item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
@@ -1022,7 +1022,7 @@ filter that will plot the values of the mesh's fields over a line in space.
   In the active view you will see a line through your data with a ball at
   each end.  If you move your mouse over either of these balls, you can
   drag the balls through the 3D view to place them.  Notice that each time
-  you move the balls some of the fields in the object inspector also
+  you move the balls some of the fields in the properties panel also
   change.  You can also place the balls by hovering your mouse over the
   target location and hitting the p key.  This will alternatively place
   each ball at the surface underneath the mouse cursor.  This was the
@@ -1041,7 +1041,7 @@ filter that will plot the values of the mesh's fields over a line in space.
     \restorecounter
   \item Adjust the line so that it goes from the base of the disk straight up
     to the top of the mesh using the 3D widget manipulators, the p key
-    shortcut, or the object inspector parameters.
+    shortcut, or the properties panel parameters.
   \item Once you have your line satisfactorily located, click the \apply
     button.
   \end{enumerate}
@@ -1060,7 +1060,7 @@ filter that will plot the values of the mesh's fields over a line in space.
 Plots, like 3D renderings, are considered views.  Both provide a
 representation for your data; they just do it in different ways.  Because
 plots are views, you interact with them in much the same ways as with a 3D
-view.  If you look in the \gui{Display} tab of the object inspector, you
+view.  If you look in the \gui{Display} section of the properties panel, you
 will see many options on the representation for each line of the plot
 including colors, line styles, vector components, and legend names.
 \begin{inlinefig}
@@ -1097,8 +1097,9 @@ temperature variables.
   \item Choose a place in your GUI that you would like the plot to go and
     try using the split, delete, resize, and swap view features to move it
     there.
-  \item Make the plot view active, go to the \gui{Display} tab, and turn
-    off all variables except \gui{Temp} and \gui{Pres}.
+  \item Make the plot view active, go to the \gui{Display} section of the
+    properties panel, and turn off all variables except \gui{Temp} and
+    \gui{Pres}.
     \savecounter
   \end{enumerate}
 
@@ -1229,9 +1230,9 @@ Exercise~\ref{ex:Streamlines}.
     \gui{Solid Color}.
   \item Select \gui{StreamTracer1} in the pipeline browser.
   \item Add the glyph filter~\glyph to \gui{StreamTracer1}.
-  \item In the object inspector, change the \gui{Vectors} option (second
+  \item In the properties panel, change the \gui{Vectors} option (second
     option from the top) to \gui{V}.
-  \item In the object inspector, change the \gui{Glyph Type} option (third
+  \item In the properties panel, change the \gui{Glyph Type} option (third
     option from the top) to \gui{Cone}.
   \item Hit the \apply button.
   \item Color the glyphs with the \gui{Temp} variable.
@@ -1852,9 +1853,9 @@ selection.
   \end{inlinefig}
 
   Note that the selection you had was automatically added as the selection
-  to use in the \gui{Object Inspector}.  If you want to change the
+  to use in the \gui{Properties} panel.  If you want to change the
   selection, simply make a new one and click \gui{Copy Active Selection} in
-  the \gui{Object Inspector}.
+  the \gui{Properties} panel.
 \end{exercise}
 
 You can also extract a selection in order to view the selected points or
@@ -2052,7 +2053,7 @@ text annotation wherever you want in a 3D view.  There is a special
 
   \begin{enumerate}
   \item From the menu bar, select \gui{Sources} \ra \gui{Text}.
-  \item In the text edit box of the object inspector, type a message.
+  \item In the text edit box of the properties panel, type a message.
   \item Hit the \apply button.
   \end{enumerate}
 
@@ -2062,7 +2063,7 @@ text annotation wherever you want in a 3D view.  There is a special
 
   The text you entered appears in the 3D view.  You can place this text
   wherever you want by simply dragging it with the mouse.  The
-  \gui{Display} tab in the object inspector provides additional options for
+  \gui{Display} group in the properties panel provides additional options for
   the size, font, and color of the text.  It also has additional controls
   for placing the text in the most common locations.
 
