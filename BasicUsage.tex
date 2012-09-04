@@ -37,16 +37,13 @@ following components.
 \item[Pipeline Browser] \index{pipeline browser} ParaView manages the
   reading and filtering of data with a pipeline.  The pipeline browser
   allows you to view the pipeline structure and select pipeline objects.
-  Redesigned for ParaView 3, the pipeline browser provides a convenient
-  list of pipeline objects with an indentation style that shows the
-  pipeline structure.
-\item[Object Inspector] \index{object inspector} The object inspector
+  The pipeline browser provides a convenient list of pipeline objects with
+  an indentation style that shows the pipeline structure.
+\item[Properties Panel] \index{properties panel} The properties panel
   allows you to view and change the parameters of the current pipeline
-  object.  There are three tabs in the object inspector.  The
-  \keyterm{Properties} tab presents the configurable options for the object
-  behavior.  The \keyterm{Display} tab presents options for how the object
-  is represented in the view.  The \keyterm{Information} tab shows basic
-  statistics on the data produced by the pipeline object.
+  object.  The properties are by default coupled with an
+  \keyterm{Information} tab that shows a basic summary of the data produced
+  by the pipeline object.
 \item[3D View] \index{3D View} The remainder of the GUI is used to present
   data so that you may view, interact with, and explore your data.  This
   area is initially populated with a 3D view that will provide a geometric
@@ -56,7 +53,7 @@ following components.
 Note that the GUI layout is highly configurable, so that it is easy to
 change the look of the window.  The toolbars can be moved around and even
 hidden from view.  To toggle the use of a toolbar, use the \gui{View} \ra
-\gui{Toolbars} submenu.  The pipeline browser and object inspector are both
+\gui{Toolbars} submenu.  The pipeline browser and properties panel are both
 \keyterm{dockable} windows.  This means that these components can be moved
 around in the GUI, torn off as their own floating windows, or hidden
 altogether.  These two windows are important to the operation of ParaView,
@@ -118,7 +115,7 @@ but they are also very handy when exploring ParaView's features.
   \index{toolbar!center~axis}
 
   The second toolbar controls the location of the center of rotation and
-  the visibility of the orientation axes.  \index{center of rotation!pick}.
+  the visibility of the orientation axes.  \index{center of rotation!pick}
   The rightmost button \icon{pqPickCenter24} allows you to pick the
   \keyterm{center of rotation}.  Try clicking that button then clicking
   somewhere on the cylinder.  If you then drag the left button in the 3D
@@ -150,7 +147,7 @@ but they are also very handy when exploring ParaView's features.
   Using either the slider or text edit, increase the resolution to 50 or
   more.  Notice that the \gui{Apply} button \apply has turned green (or
   blue on Mac) again.  This is because changes you make to the object
-  inspector are not immediately enacted.  The highlighted button is a
+  properties are not immediately enacted.  The highlighted button is a
   reminder that the parameters of one or more pipeline objects are ``out of
   sync'' with the data that you are viewing.  Hitting the \gui{Apply}
   button will accept these changes whereas hitting the \index{reset~button}
@@ -180,7 +177,7 @@ created and redo again.
   \index{redo camera}
   There are also undo camera~\icon{pqUndoCamera24} and redo
   camera~\icon{pqRedoCamera24} buttons.  These allow you to go back and
-  forth between camera angles that you have made so that you no longer have
+  forth between camera angles that you have made so that you do not have
   to worry about errant mouse movements ruining that perfect view.  Move
   the camera around and then use these buttons to revert and restore the
   camera angle.
@@ -198,15 +195,17 @@ change things like the background color, the lighting, and annotation.
   \includegraphics[width=\scw]{images/RenderViewOptions}
 \end{inlinefig}
 
-Another location for rendering options is the \gui{Display} tab in the
-object inspector.  This tab provides the rendering options that apply
-specifically for the selected object.  It includes the visibility,
-coloring, and representation.  Be aware that some of the view options and
-object display options are repeated elsewhere in the ParaView GUI for
-convenience.
+Another location for rendering options is the \gui{Display} section in the
+properties panel.  These properties provide the rendering options that
+apply specifically for the selected object.  It includes the visibility,
+coloring, and representation.  By default many of the lesser used display
+properties are hidden.  The \keyterm{advanced properties}
+toggle~\icon{pqAdvanced26} can be used to show or hide these extra
+parameters.  Be aware that some of the view options and object display
+options can be repeated elsewhere in the ParaView GUI for convenience.
 
 \begin{inlinefig}
-  \includegraphics[width=0.53\scw]{images/DisplayTab}
+  \includegraphics[width=0.53\scw]{images/DisplayProperties}
 \end{inlinefig}
 
 \begin{exercise}{Modifying Rendering Parameters}
@@ -231,15 +230,16 @@ convenience.
   Now change the drawing parameters of the cylinder.  (If you do not have a
   cylinder or another pipeline object, create one as described in
   Exercise~\ref{ex:CreatingASource}.)  Make sure the cylinder is selected
-  in the pipeline browser.  In the object inspector, select the
-  \gui{Display} tab.
+  in the pipeline browser.  In the properties panel, scroll down to the
+  \gui{Display} section.
 
   \begin{itemize}
   \item \index{solid color} \index{object color} Set the (solid) color of
-    the cylinder.  (Note: You can also set the color with the
-    \icon{pqEditColor24} toolbar button.)
+    the cylinder by clicking the \gui{Edit}~\icon{pqEditColor24} button.
   \item \index{shiny} \index{specular intensity} Make the cylinder shiny.
-    (Hint: Make the \gui{Specular Intensity} 1.0.)
+    (Hint: Make the \gui{Specular Intensity} 1.0.  This is an advanced
+    parameter, so you will need to toggle \icon{pqAdvanced26}.)
+    \fix{Specular Intensity not in new implementation yet.}
   \item \index{transparency} \index{opacity} Make the cylinder transparent.
     (Hint: Lower the \gui{Opacity}.)
   \item \index{cube axis} \index{axis!cube|see{cube axis}} Show 3D axes
@@ -289,10 +289,12 @@ of currently available readers.
   \item AVS UCD (.inp)
   \item BOV (.bov)
   \item BYU (.g)
+  \item CAM NetCDF (.nc, .ncdf)
   \item CCSM MTSD (.nc, .cdf, .elev, .ncd)
   \item CCSM STSD (.nc, .cdf, .elev, .ncd)
   \item CEAucd (.ucd, .inp)
   \item CMAT (.cmat)
+  \item CML (.cml)
   \item CTRL (.ctrl)
   \item Chombo (.hdf5, .h5)
   \item Claw (.claw)
@@ -315,7 +317,7 @@ of currently available readers.
   \item GULP (.trg)
   \item Gadget (.gadget)
   \item Gaussian Cube File (.cube)
-  \item JPG Image (.jpg, .jpeg)
+  \item JPEG Image (.jpg, .jpeg)
   \item LAMPPS Dump (.dump)
   \item LAMPPS Structure Files
   \item LODI (.nc, .cdf, .elev, .ncd)
@@ -324,7 +326,7 @@ of currently available readers.
   \item M3DCl (.h5)
   \item MFIX Unstructred Grid (.RES)
   \item MM5 (.mm5)
-  \item MPAS NetCDF (.nc)
+  \item MPAS NetCDF (.nc, .ncdf)
   \item Meta Image (.mhd, .mha)
   \item Miranda (.mir, .raw)
   \item Multilevel 3d Plasma (.m3d, .h5)
@@ -355,7 +357,8 @@ of currently available readers.
   \item Silo (.silo, .pdb)
   \item Spheral (.spheral, .sv)
   \item SpyPlot CTH
-  \item Spy Plot (.case)
+  \item SpyPlot Case (.case)
+  \item SpyPlot History (.hscth)
   \item Stereo Lithography (.stl)
   \item TFT Files
   \item TIFF Image Files
@@ -399,7 +402,7 @@ have a reader readily available that you can use.
   toolbar (or menu item)~\icon{pqOpen32} and open the file
   \index{disk\_out\_ref} \gui{disk\_out\_ref.ex2}.  Note that opening a
   file is a two step process, so that you do not see any data yet.
-  Instead, you see that the object inspector is populated with several
+  Instead, you see that the properties panel is populated with several
   options about how we want to read the data.
 
   \begin{inlinefig}
@@ -414,20 +417,22 @@ have a reader readily available that you can use.
   a hollowed out portion in one end.  This data is the output of a
   simulation for the flow of air around a heated and spinning disk.  The
   mesh you are seeing is the air around the disk (with the cylinder shape
-  being the boundary of the simulation.  The hollow area in the middle is
+  being the boundary of the simulation).  The hollow area in the middle is
   where the heated disk would be were it meshed for the simulation.
 \end{exercise}
 
 Before we continue on to filtering the data, let us take a quick look at
 some of the ways to represent the data.  The most common parameters for
-representing data are located in a pair of toolbars.
+representing data are located in the \gui{Display} group of the properties
+panel.
 
 \index{color legend}
 \index{edit colors} \index{colors!edit}
 \index{scalar range}
 
 \begin{inlinefig}
-  \includegraphics[width=\linewidth]{images/DataRepresentationToolbars}
+  %\includegraphics[width=\linewidth]{images/DataRepresentationToolbars}
+  \includegraphics[scale=\bbscale]{images/DataRepresentationControls}
 \end{inlinefig}
 
 \index{representation|(}
@@ -527,12 +532,17 @@ These submenus are organized as follows.
 \begin{description}
 \item[Recent] The list of most recently used filters sorted with the most
   recently used filters on top.
+\item[AMR] A set of filters designed specifically for data in an adaptive
+  mesh refinement (AMR) \index{AMR} structure.
+\item[CTH] Filters used to process results from a CTH \index{CTH} simulation.
 \item[Common] The most common filters.  This is the same list of filters
   available in the filters toolbar and listed previously.
 \item[Cosmology] This contains filters developed at LANL for cosmology research. 
 \item[Data Analysis] The filters designed to retrieve quantitative values
   from the data.  These filters compute data on the mesh, extract elements
   from the mesh, or plot data.
+\item[Material Analysis] Filters for processing data from volume fractions
+  of materials.
 \item[Statistics] This contains filters that provide descriptive
   statistics of data, primarily in tabular form.
 \item[Temporal] Filters that analyze or modify data that changes over time.
@@ -848,7 +858,7 @@ to arbitrarily divide up the working space.  And you can delete views
 The location of each view is also not fixed.  You are also able to swap two
 views by clicking on one of the view toolbars (somewhere outside of where
 the buttons are), holding down the mouse button, and dragging onto one of
-the other views.  This will immediately swap the two views.
+the other view toolbars.  This will immediately swap the two views.
 
 \begin{inlinefig}
   \includegraphics[width=\linewidth]{images/SwapViews}
