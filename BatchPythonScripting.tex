@@ -98,15 +98,16 @@ understanding the contents of any given \gui{Trace} script.
   the~\disconnect button.
 
   \begin{enumerate}
-  \item If you have not already done so, open the Python shell in the
-    ParaView GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the
-    menu.
+  %% \item If you have not already done so, open the Python shell in the
+  %%   ParaView GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the
+  %%   menu.
   \item Click the \gui{Start Trace} in the Tool menu.
   \item Build a simple pipeline in the main
     ParaView GUI.  For example, create a sphere source and then clip it.
   \item Click \gui{Stop Trace} in the Tools meu.  
-  \item An editing window will open.  Save the Python script to somewhere 
-    on your hard drive.
+  \item An editing window will open populated with a Python script that
+    replicates the operations you just made.
+    %% Save the Python script to somewhere on your hard drive.
   \end{enumerate}
 
   Even if you have not been exposed to ParaView's Python bindings, the
@@ -115,9 +116,17 @@ understanding the contents of any given \gui{Trace} script.
   favorite editor.  The final script can be interpreted by the
   \progname{pvpython} or \progname{pvbatch} program for totally
   automated visualization.  It is also possible to run this script in the
-  GUI.  In the \gui{Python Shell}, click on \gui{Run Script} and 
-  select your script.
+  GUI.  The \gui{Python Shell} dialog has a \gui{Run Script} button that
+  invokes a saved script.
 \end{exercise}
+
+It should be noted that there is also a way to capture the current ParaView
+state as a Python script without tracing actions.  Simply select \gui{Save
+  State...} from the ParaView \gui{File} menu and choose to save as a
+Python .py state file (as opposed to a ParaView .pvsm state file).  We will
+not have an exercise on state Python scripts, but suffice it to say they
+can be used in much the same way as traced Python scripts.  You are welcome
+to experiment with this feature as you like.
 
 \section{Macros}
 \label{sec:Macros}
@@ -132,12 +141,17 @@ Any Python script can be assigned to a macro.
   \label{ex:AddingAMacro}%
   This exercise is a continuation of
   Exercise~\ref{ex:CreatingAPythonScriptTrace}.  You will need to finish
-  that exercise before beginning this one.
+  that exercise before beginning this one.  You should have the editing
+  window containing the Python script created in
+  Exercise~\ref{ex:CreatingAPythonScriptTrace} open.
 
   \begin{enumerate}
-  \item Click the \gui{Macros} tab and then \gui{Add new macro}.  Select
-   the macro you made in the prevous exercise.  You should now see 
-   your macro on the Macro toolbar at the top of the screen.
+  \item In the menu bar (of the editing window), select \gui{File} \ra
+    \gui{Save As Macro...}.
+  \item Choose a descriptive name for the macro file and save it in the
+    default directory provided by the browser.  You should now see 
+    your macro on the Macro toolbar at the top of the ParaView GUI.
+    \savecounter
   \end{enumerate}
 
   At this point, you should now see your macro added to the toolbars.  By
@@ -148,7 +162,7 @@ Any Python script can be assigned to a macro.
 
   \begin{enumerate}
     \restorecounter
-  \item Close the Python shell.
+  \item Close the Python editor window.
   \item Delete the pipeline you have created by either selecting \gui{Edit}
     \ra \gui{Delete All} from the menu or pressing the~\disconnect button.
   \item Activate your macro by clicking on the toolbar button or selecting
@@ -268,13 +282,13 @@ Render()
 So far as we have built pipelines we have accepted the default parameters
 for the pipeline objects.  As we have seen in the exercises of
 Chapter~\ref{chap:BasicUsage}, it is common to have to modify the
-parameters of the objects using the object inspector.
+parameters of the objects using the properties panel.
 
 In Python scripting, we use the proxy returned from the creation functions
 to manipulate the pipeline objects.  These proxies are in fact Python
 objects with class attributes that correspond to the same properties you
-set in the Object Inspector.  They have the same names as those in the
-object inspector with spaces and other illegal characters removed.  You can
+set in the properties panel.  They have the same names as those in the
+properties panel with spaces and other illegal characters removed.  You can
 set them by simply assigning them a value.
 
 \begin{exercise}{Changing Pipeline Object Properties}
@@ -314,7 +328,7 @@ Render()
   \end{python}
 
   You may have noticed that as you type in Python commands to change the
-  pipeline object properties, the GUI in the object inspector updates
+  pipeline object properties, the GUI in the properties panel updates
   accordingly.
 \end{exercise}
 
@@ -414,8 +428,8 @@ sphere = Sphere(ThetaResolution=360, PhiResolution=180)
 If you have any experience with the ParaView GUI, then you should already
 be familiar with the concept of an active object.  As you build and
 manipulate visualizations within the GUI, you first have to select an
-object in the pipeline browser.  Other GUI panels such as the object
-inspector will change based on what the active object is.  The active
+object in the pipeline browser.  Other GUI panels such as the properties
+panel will change based on what the active object is.  The active
 object is also used as the default object to use for some operations such
 as adding a filter.
 
@@ -494,11 +508,11 @@ will first give help on the \pyfunc{Sphere} function, then use it to create
 an object, and then give help on the object that was returned (including a
 list of all the properties for the proxy).
 
-Most of the panels displayed in the object inspector's \gui{Properties} tab
+Most of the widgets displayed in the properties panel's \gui{Properties} group
 are automatically generated from the same introspection that builds the
 Python classes. (There are a small number of exceptions where a custom
 panel was created for better usability.) Thus, if you see a labeled widget
-in the object inspector, there is a good chance that there is a
+in the properties panel, there is a good chance that there is a
 corresponding property in the Python object with the same name.
 
 Regardless of whether the GUI contains a custom panel for a pipeline
@@ -614,7 +628,7 @@ a view.  The representation is responsible for managing how a data set is
 drawn in the view.  The representation defines and manages the underlying
 rendering objects used to draw the data as well as other rendering
 properties such as coloring and lighting.  Parameters made available in the
-\gui{Display} panel of the GUI are managed by representations.  There is a
+\gui{Display} group of the GUI are managed by representations.  There is a
 separate representation object instance for every pipeline-object--view
 pair.  This is so that each view can display the data differently.
 
