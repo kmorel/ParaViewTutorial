@@ -133,6 +133,10 @@ but they are also very handy when exploring ParaView's features.
   \index{axis!orientation|see{orientation axes}}\keyterm{orientation axes},
   the always-viewable axes in the lower left corner of the 3D view.
 
+  \fix{The resolution parameter is currenlty marked as advanced.  I am
+    advocating changing this to non-advanced, so I am not going to update
+    this exercise around that until this is resolved.}
+
   You surely noticed that ParaView creates not a real cylinder but
   rather an approximation of a cylinder using polygonal \keyterm{facets}.
   The default parameters for the cylinder source provide a very coarse
@@ -154,6 +158,12 @@ but they are also very handy when exploring ParaView's features.
   \gui{Reset} button \reset will revert the options back to the last time
   they were applied.  Hit the \gui{Apply} button now.  The resolution is
   changed so that it is virtually indistinguishable from a true cylinder.
+
+  If you scroll down to the bottom of the properties panel, you will notice
+  a set of \gui{Display} properties\index{display properties}.  Try these
+  options now by clicking on the \gui{Edit}~\icon{pqEditColor24} button to
+  change the color of the cylinder.  You may notice that you do not need to
+  hit \gui{Apply} for display properties.
 \end{exercise}
 
 \index{undo|(}
@@ -186,6 +196,8 @@ created and redo again.
 \index{redo|)}
 \index{undo|)}
 
+\index{view properties}
+\index{render view options}
 There are also many options for selecting how objects are rendered.  You
 will notice over the 3D view a \icon{pqOptions16} button for changing the
 rendering options.  Clicking this brings up a dialog box that allows you to
@@ -195,7 +207,9 @@ change things like the background color, the lighting, and annotation.
   \includegraphics[width=\scw]{images/RenderViewOptions}
 \end{inlinefig}
 
-Another location for rendering options is the \gui{Display} section in the
+\index{display properties}
+As discussed in Exercise~\ref{ex:CreatingASource},
+another location for rendering options is the \gui{Display} section in the
 properties panel.  These properties provide the rendering options that
 apply specifically for the selected object.  It includes the visibility,
 coloring, and representation.  By default many of the lesser used display
@@ -236,14 +250,13 @@ options can be repeated elsewhere in the ParaView GUI for convenience.
   \begin{itemize}
   \item \index{solid color} \index{object color} Set the (solid) color of
     the cylinder by clicking the \gui{Edit}~\icon{pqEditColor24} button.
+  \item \index{cube axis} \index{axis!cube|see{cube axis}} Show 3D axes
+    with tic marks giving spatial position (make \gui{Cube Axis} visible).
   \item \index{shiny} \index{specular intensity} Make the cylinder shiny.
     (Hint: Make the \gui{Specular Intensity} 1.0.  This is an advanced
     parameter, so you will need to toggle \icon{pqAdvanced26}.)
-    \fix{Specular Intensity not in new implementation yet.}
   \item \index{transparency} \index{opacity} Make the cylinder transparent.
     (Hint: Lower the \gui{Opacity}.)
-  \item \index{cube axis} \index{axis!cube|see{cube axis}} Show 3D axes
-    with tic marks giving spatial position (\gui{Show cube axes}).
   \end{itemize}
 
   We are done with the cylinder source now.  We can delete the pipeline
@@ -1256,20 +1269,32 @@ color map~\icon{pqEditColor24} button.
 \index{edit colors} \index{colors!edit}
 
 \begin{inlinefig}
+  \includegraphics[width=0.8\scw]{images/ColorScaleEditorSimple}
+\end{inlinefig}
+
+When you first open up the color scale editor, you get this simplified
+interface.  From here you can change the scaling of the the colors.  You
+can also choose one of the many pre-defined color scales by pressing the
+\gui{Choose Preset} button.
+
+However, you can also have much finer controls over the transfer function.
+To access these, press the \icon{pqAdvanced26} toggle in the upper right
+corner of the color scale editor dialog box.
+
+\begin{inlinefig}
   \includegraphics[width=\scw]{images/ColorScaleEditor}
 \end{inlinefig}
 
-The resulting dialog box provides options for editing the transfer
-function.  The colorful box at top displays the colors of the transfer
-function with a plot of the transparency in black.  The dots on the
-transfer function represent the \keyterm{control points}.  The control
-points are the specific color and opacity you set at particular scalar
-values, and the colors and transparency are interpolated between them.
-Clicking on a blank spot in the bar will create a new control point.
-Clicking on an existing control point will select it.  The selected control
-point can be dragged throughout the box to change its scalar value and
-transparency, and clicking again on the selected control point will bring
-up a dialog box.  The selected control point will be deleted when you hit
+The colorful box at top displays the colors of the transfer function and
+the one below that plots the transparency.  The dots on the transfer
+functions represent the \keyterm{control points}.  The control points are
+the specific color and opacity you set at particular scalar values, and the
+colors and transparency are interpolated between them.  Clicking on a blank
+spot in either bar will create a new control point.  Clicking on an
+existing control point will select it.  The selected control point can be
+dragged throughout the box to change its scalar value and transparency (if
+applicable).  Double clicking on a color control point will allow you to
+change the color.  The selected control point will be deleted when you hit
 the backspace or delete key.
 
 Directly below the color bar are text entry widgets to numerically specify
@@ -1283,8 +1308,7 @@ change to a logarithmic scaling of colors via the \gui{Use Logarithmic
   Scale}\index{logarithmic scale} checkbox.
 
 Setting up a transfer function can be tedious, so you can save it by
-clicking the \includeinlinegraphics{images/ColorMapSave} button.  The
-\includeinlinegraphics{images/ColorMapChoosePreset} button brings up a
+clicking the \gui{Save} button.  The \gui{Choose Preset} button brings up a
 dialog that allows you to manage and apply the color maps that you have
 created as well as several provided by ParaView.
 
@@ -1299,11 +1323,15 @@ created as well as several provided by ParaView.
   \item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
     that the active object.
   \item Click on the edit color map~\icon{pqEditColor24} button.
-  \item Try adding and changing control points and observe their effect on
-    the volume rendering.
   \item Change the volume rendering to be more representative of heat.
     Press \includeinlinegraphics{images/ColorMapChoosePreset}, select
     \gui{Black-Body Radiation} in the dialog box, and then click \gui{OK}.
+  \item Turn on the advanced options by pressing the \icon{pqAdvanced26}
+    toggle.
+  \item Try adding and changing control points and observe their effect on
+    the volume rendering.  Click the \gui{Apply} button or turn on the
+    \gui{Render View Immediately} checkbox to see the effects of your
+    change.
   \end{enumerate}
 
   \begin{inlinefig}
@@ -1441,6 +1469,9 @@ movies that can be used in presentations and reports.  In this section we
 save a screenshot (picture) and animation (movie). Once again, we
 will use the \gui{can.ex2} dataset.
 
+\index{save screenshot|(}
+\index{screenshot|(}
+
 \begin{exercise}{Save Screenshot}
   \label{ex:SaveScreenshot}%
   \begin{enumerate}
@@ -1451,7 +1482,8 @@ will use the \gui{can.ex2} dataset.
   \item Color by \gui{GlobalNodeId}.  We use \gui{GlobalNodeId} so that the
     3D object has some color.
   \item Select the \gui{Rescale to color range}~\icon{pqResetRange24} button.
-  \item Select \gui{File} \ra \gui{Save Screenshot}.
+  \item Select \gui{File} \ra \gui{Save
+    Screenshot}~\icon{pqCaptureScreenshot24}.
 
   \begin{inlinefig}
     \includegraphics[width=.8\scw]{images/SaveScreenshot1}
@@ -1500,6 +1532,9 @@ will use the \gui{can.ex2} dataset.
   files.
 \end{exercise}
 
+\index{save screenshot|)}
+\index{screenshot|)}
+
 The colors used for the color palettes (as chosen, for example, with the
 \gui{Override Color Palette} in the previous exercise), are part of
 ParaView's settings.  You can see and set all of these colors in the
@@ -1508,6 +1543,10 @@ Mac) under the \gui(Colors) tab.
 \begin{inlinefig}
   \includegraphics[width=\scw]{images/SettingsColors}
 \end{inlinefig}
+
+\index{save animation|(}
+\index{animation save|(}
+\index{movie|(}
 
 Next, we will save an animation.
 
@@ -1518,7 +1557,7 @@ Next, we will save an animation.
     open the file \gui{can.ex2}, load all variables, and \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
 
-  \item Select \gui{File} \ra \gui{Save Animation}.
+  \item Select \gui{File} \ra \gui{Save Animation}~\icon{pqSaveAnimation24}.
 
   \begin{inlinefig}
     \includegraphics[width=\scw]{images/SaveAnimation1}
@@ -1559,6 +1598,10 @@ Next, we will save an animation.
 
   Using your favorite movie viewer, find and load the image you created.
 \end{exercise}
+
+\index{save animation|)}
+\index{animation save|)}
+\index{movie|)}
 
 
 \section{Selection}
