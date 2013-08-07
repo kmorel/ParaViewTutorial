@@ -100,12 +100,20 @@ but they are also very handy when exploring ParaView's features.
   quick access to particular camera views.  The leftmost button
   \icon{pqResetCamera24} performs a \keyterm{reset camera} such that it
   maintains the same view direction but repositions the camera such that
-  the entire object can be seen.  The next button
-  \icon{pqZoomToSelection24} allows you to select a rectangular region of
-  the screen to zoom to (a \keyterm{rubber-band zoom}).  The following six
-  buttons reposition the camera to view the scene straight down one of the
-  global coordinate's axes in either the positive or negative direction.
-  Try playing with these controls now.
+  the entire object can be seen.  The second button \icon{pqZoomToData24}
+  performs a \keyterm{zoom to data}.  It behaves very much like reset
+  camera except that instead of positioning the camera to see all data, the
+  camera is placed to look specifically at the data currently selected in
+  the pipeline browser.  You currently only have one object in the pipeline
+  browser, so right now reset camera and zoom to data will perform the same
+  operation.
+
+  The next button in the camera controls toolbar \icon{pqZoomToSelection24}
+  allows you to select a rectangular region of the screen to zoom to (a
+  \keyterm{rubber-band zoom}).  The following six buttons reposition the
+  camera to view the scene straight down one of the global coordinate's
+  axes in either the positive or negative direction.  Try playing with
+  these controls now.
 
   \begin{inlinefig}
     \includegraphics[width=.415\scw]{images/ToolbarCenterAxis}
@@ -133,10 +141,6 @@ but they are also very handy when exploring ParaView's features.
   \index{axis!orientation|see{orientation axes}}\keyterm{orientation axes},
   the always-viewable axes in the lower left corner of the 3D view.
 
-  \fix{The resolution parameter is currenlty marked as advanced.  I am
-    advocating changing this to non-advanced, so I am not going to update
-    this exercise around that until this is resolved.}
-
   You surely noticed that ParaView creates not a real cylinder but
   rather an approximation of a cylinder using polygonal \keyterm{facets}.
   The default parameters for the cylinder source provide a very coarse
@@ -149,21 +153,22 @@ but they are also very handy when exploring ParaView's features.
   \end{inlinefig}
 
   Using either the slider or text edit, increase the resolution to 50 or
-  more.  Notice that the \gui{Apply} button \apply has turned green (or
-  blue on Mac) again.  This is because changes you make to the object
-  properties are not immediately enacted.  The highlighted button is a
-  reminder that the parameters of one or more pipeline objects are ``out of
-  sync'' with the data that you are viewing.  Hitting the \gui{Apply}
-  button will accept these changes whereas hitting the \index{reset~button}
-  \gui{Reset} button \reset will revert the options back to the last time
-  they were applied.  Hit the \gui{Apply} button now.  The resolution is
-  changed so that it is virtually indistinguishable from a true cylinder.
+  more.  Notice that the \gui{Apply} button \apply started pulsing blue.
+  This is because changes you make to the object properties are not
+  immediately enacted.  The highlighted button is a reminder that the
+  parameters of one or more pipeline objects are ``out of sync'' with the
+  data that you are viewing.  Hitting the \gui{Apply} button will accept
+  these changes whereas hitting the \index{reset~button} \gui{Reset} button
+  \reset will revert the options back to the last time they were applied.
+  Hit the \gui{Apply} button now.  The resolution is changed so that it is
+  virtually indistinguishable from a true cylinder.
 
   If you scroll down to the bottom of the properties panel, you will notice
   a set of \gui{Display} properties\index{display properties}.  Try these
   options now by clicking on the \gui{Edit}~\icon{pqEditColor24} button to
-  change the color of the cylinder.  You may notice that you do not need to
-  hit \gui{Apply} for display properties.
+  change the color of the cylinder. (This button is also replicated in the
+  toolbar.) You may notice that you do not need to hit \gui{Apply} for
+  display properties.
 \end{exercise}
 
 \index{undo|(}
@@ -275,129 +280,14 @@ options can be repeated elsewhere in the ParaView GUI for convenience.
 Now that we have had some practice using the ParaView GUI, let us load in
 some real data.  As you would expect, the \index{open} \gui{Open} command
 is the first one off of the \gui{File} menu, and there is also toolbar
-button~\icon{pqOpen32} for opening a file.  ParaView supports many file
-types, and the list grows as more types get added.  The following is a list
-of currently available readers.
+button~\icon{pqOpen32} for opening a file.  ParaView currently supports
+over 130 distinct file formats, and the list grows as more types get
+added.  To see the current list of supported files, invoke the Open command
+and look at the list of files in the \gui{Files of type} chooser box.
 
-\index{file formats|(}
-
-% Multicols does not work correctly when in twocolumn mode and it breaks
-% across page boundaries.  That's too bad since it saves space and looks
-% nice.
-\ifthenelse{\boolean{savetrees}}{
-}{
-  \begin{multicols}{2}
-}
-  \begin{itemize}
-  \setlength{\itemsep}{0pt}
-  \setlength{\parskip}{0pt}
-  \item ParaView Data (.pvd)
-  \item VTK (.vtp, .vtu, .vti, .vts, .vtr)
-  \item VTK Legacy (.vtk)
-  \item VTK Multi Block (.vtm, .vtmb, .vtmg, .vthd, .vthb)
-  \item Partitioned VTK (.pvtu, .pvti, .pvts, .pvtr)
-  \item ADAPT (.nc, .cdf, .elev, .ncd)
-  \item ANALYZE (.img, .hdr)
-  \item ANSYS (.inp)
-  \item AVS UCD (.inp)
-  \item BOV (.bov)
-  \item BYU (.g)
-  \item CAM NetCDF (.nc, .ncdf)
-  \item CCSM MTSD (.nc, .cdf, .elev, .ncd)
-  \item CCSM STSD (.nc, .cdf, .elev, .ncd)
-  \item CEAucd (.ucd, .inp)
-  \item CMAT (.cmat)
-  \item CML (.cml)
-  \item CTRL (.ctrl)
-  \item Chombo (.hdf5, .h5)
-  \item Claw (.claw)
-  \item Comma Separated Values (.csv)
-  \item Cosmology Files (.cosmo, .gadget2)
-  \item Curve2D (.curve, .ultra, .ult, .u)
-  \item DDCMD (.ddcmd)
-  \item Digital Elevation Map (.dem)
-  \item Dyna3D(.dyn)
-  \item EnSight (.case, .sos)
-  \item Enzo boundary and hierarchy
-  \item ExodusII (.g, .e, .exe, .ex2, .ex2v.., etc)
-  \item ExtrudedVol (.exvol)
-  \item FVCOM (MTMD, MTSD, Particle, STSD) 
-  \item Facet Polygonal Data
-  \item Flash multiblock files
-  \item Fluent Case Files (.cas)
-  \item GGCM (.3df, .mer)
-  \item GTC (.h5)
-  \item GULP (.trg)
-  \item Gadget (.gadget)
-  \item Gaussian Cube File (.cube)
-  \item JPEG Image (.jpg, .jpeg)
-  \item LAMPPS Dump (.dump)
-  \item LAMPPS Structure Files
-  \item LODI (.nc, .cdf, .elev, .ncd)
-  \item LODI Particle (.nc, .cdf, .elev, .ncd)
-  \item LS-DYNA (.k, .lsdyna, .d3plot, d3plot)
-  \item M3DCl (.h5)
-  \item MFIX Unstructred Grid (.RES)
-  \item MM5 (.mm5)
-  \item MPAS NetCDF (.nc, .ncdf)
-  \item Meta Image (.mhd, .mha)
-  \item Miranda (.mir, .raw)
-  \item Multilevel 3d Plasma (.m3d, .h5)
-  \item NASTRAN (.nas, .f06)
-  \item Nek5000 Files 
-  \item Nrrd Raw Image (.nrrd, .nhdr)
-  \item OpenFOAM Files (.foam)
-  \item PATRAN (.neu)
-  \item PFLOTRAN (.h5)
-  \item PLOT2D (.p2d)
-  \item PLOT3D (.xyz, .q, .x, .vp3d)
-  \item PLY Polygonal File Format
-  \item PNG Image Files
-  \item POP Ocean Files
-  \item ParaDIS Files
-  \item Phasta Files (.pht)
-  \item Pixie Files (.h5)
-  \item ProSTAR (.cel, .vrt)
-  \item Protein Data Bank (.pdb, .ent, .pdb)
-  \item Raw Image Files
-  \item Raw NRRD image files (.nrrd)
-  \item SAMRAI (.samrai) 
-  \item SAR (.SAR, .sar) 
-  \item SAS (.sasgeom, .sas, .sasdata) 
-  \item SESAME Tables
-  \item SLAC netCDF mesh and mode data
-  \item SLAC netCDF particle data
-  \item Silo (.silo, .pdb)
-  \item Spheral (.spheral, .sv)
-  \item SpyPlot CTH
-  \item SpyPlot Case (.case)
-  \item SpyPlot History (.hscth)
-  \item Stereo Lithography (.stl)
-  \item TFT Files
-  \item TIFF Image Files
-  \item TSurf Files
-  \item Tecplot ASCII (.tec, .tp)
-  \item Tecplot Binary (.plt)
-  \item Tetrad (.hdf5, .h5)
-  \item UNIC (.h5) 
-  \item VASP CHGCA (.CHG)
-  \item VASP OUT (.OUT) 
-  \item VASP POSTCAR (.POS) 
-  \item VPIC (.vpc)
-  \item VRML (.wrl)
-  \item Velodyne (.vld, .rst)
-  \item VizSchema (.h5, .vsh5)
-  \item Wavefront Polygonal Data (.obj)
-  \item WindBlade (.wind)
-  \item XDMF and hdf5 (.xmf, .xdmf)
-  \item XMol Molecule
-  \end{itemize}
-\ifthenelse{\boolean{savetrees}}{
-}{
-  \end{multicols}
-}
-
-\index{file formats|)}
+\begin{inlinefig}
+  \includegraphics[width=\scw]{images/OpenFileTypes}
+\end{inlinefig}
 
 ParaView's modular design allows for easy integration of new VTK readers
 into ParaView.  Thus, check back often for new file formats.  If you are
@@ -436,16 +326,16 @@ have a reader readily available that you can use.
 
 Before we continue on to filtering the data, let us take a quick look at
 some of the ways to represent the data.  The most common parameters for
-representing data are located in the \gui{Display} group of the properties
-panel.
+representing data are located in a pair of toolbars. (They can also be
+found in the \gui{Display} group of the properties panel.)
 
 \index{color legend}
 \index{edit colors} \index{colors!edit}
 \index{scalar range}
 
 \begin{inlinefig}
-  %\includegraphics[width=\linewidth]{images/DataRepresentationToolbars}
-  \includegraphics[scale=\bbscale]{images/DataRepresentationControls}
+  \includegraphics[width=\linewidth]{images/DataRepresentationToolbars}
+  %\includegraphics[scale=\bbscale]{images/DataRepresentationControls}
 \end{inlinefig}
 
 \index{representation|(}
@@ -578,13 +468,13 @@ These submenus are organized as follows.
 
 Searching through these lists of filters, particularly the full
 alphabetical list, can be cumbersome.  To speed up the selection of
-filters, you should use the \keyterm{quick launch} dialog.  When the ctrl
+filters, you should use the \keyterm{quick launch} dialog.  Pressing the ctrl
 and space keys together on Windows or Linux or the alt and space keys
 together on Macintosh, ParaView brings up a small, lightweight dialog box
 like the one shown here.  Type in words or word fragments that are
 contained in the filter name, and the box will list only those sources and
 filters that match the terms.  Hit enter to add the object to the pipeline
-browser.
+browser.  Press Esc a couple of times to cancel the dialog.
 
 You have probably noticed that some of the filters are grayed out.  Many
 filters only work on a specific types of data and therefore cannot always
@@ -1002,8 +892,37 @@ lines that point in the direction of the flow.
 ParaView's plotting capabilities provide a mechanism to drill down into
 your data to allow quantitative analysis.  Plots are usually created with
 filters, and all of the plotting filters can be found in the \gui{Data
-  Analysis} submenu of \gui{Filters}.  In the next exercise, we create a
-filter that will plot the values of the mesh's fields over a line in space.
+  Analysis} submenu of \gui{Filters}.  There is also a data analysis
+toolbar containing the most common data analysis filters, some of which are
+used to generate plots.
+
+\index{toolbar!data analysis}
+\index{data analysis|(}
+\index{filters!data analysis|(}
+
+\begin{description}
+\item[\extractSelection Extract Selection] Extracts any data selected into
+  its own object.  Selections are described in Section~\ref{sec:Selection}.
+\item[\plotGlobal Plot Global Variables Over Time] Data sets sometimes
+  capture information in ``global'' variables that apply to an entire
+  dataset rather than a single point or cell.  This filter plots the global
+  informaiton over time.  ParaView's handling of time is described in
+  Section~\ref{sec:Time}.
+\item[\plotOverLine Plot Over Line] Allows you to define a line in segment
+  in 3D space and then plot field information over this line.
+\item[\plotSelectionOverTime Plot Selection Over Time] Takes the fields in
+  selected points or cells and plots their values over time.  Selections
+  are described in Section~\ref{sec:Selection} and time is described in
+  Section~\ref{sec:Time}.
+\item[\probe Probe] Provides the field values in a particular location in
+  space.
+\end{description}
+
+\index{filters!data analysis|)}
+\index{data analysis|)}
+
+In the next exercise, we create a filter that will plot the values of the
+mesh's fields over a line in space.
 
 \begin{exercise}{Plot Over a Line in Space}
   \label{ex:PlotOverLine}%
@@ -1021,11 +940,8 @@ filter that will plot the values of the mesh's fields over a line in space.
     and manipulate the line we are plotting over.
   \item Click on \gui{disk\_out\_ref.ex2} in the pipeline browser to make
     that the active object.
-  \item \filterindex{plot over line} From the menu bar, select
-    \gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot Over
-      Line}~\icon{pqPlotLineOverTime24} or apply the \gui{Plot Over Line}
-    filter using the quick launch (ctrl+space Win/Linux, alt+space
-    Mac). \index{plot~over~line} \savecounter
+  \item From the toolbars, select the plot over line~\plotOverLine
+    filter. \savecounter
   \end{enumerate}
 
   \begin{inlinefig}
@@ -1144,9 +1060,8 @@ The ParaView framework is designed to accommodate any number of different
 types of views.  This is to provide researchers and developers a way to
 deliver new ways of looking at data.  To see another example of view,
 select \gui{disk\_out\_ref.ex2} in the pipeline browser, and then select
-\gui{Filters} \ra \gui{Data Analysis} \ra
-\gui{Histogram}~\icon{pqHistogram24}. \filterindex{histogram} Make the
-histogram for the Temp variable, and then hit the \apply button.
+\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Histogram}~\histogram.  Make
+the histogram for the Temp variable, and then hit the \apply button.
 
 \begin{inlinefig}
   \includegraphics[width=\scw]{images/HistogramPlot}
@@ -1346,6 +1261,7 @@ created as well as several provided by ParaView.
 
 
 \section{Time}
+\label{sec:Time}
 
 Now that we have thoroughly analyzed the disk\_out\_ref simulation, we will
 move to a new simulation to see how ParaView handles time.  In this section
@@ -1605,6 +1521,7 @@ Next, we will save an animation.
 
 
 \section{Selection}
+\label{sec:Selection}
 
 The goal of Visualization is often to find the important details within a
 large body of information. ParaView's selection abstraction is an
@@ -1903,8 +1820,7 @@ selection.
 
 You can also extract a selection in order to view the selected points or
 cells separately or perform some independent processing on them.  This is
-done through the \gui{Extract Selection}~\icon{pqExtractSelection24}
-filter.
+done through the \gui{Extract Selection}~\extractSelection filter.
 
 \begin{exercise}{Extracting a Selection}
   \label{ex:ExtractingASelection}%
@@ -1916,10 +1832,8 @@ filter.
     \gui{Selection Inspector}).
   \item Make a sizable cell selection for example, with Select Cells
     Through~\selectCellsThrough.
-  \item Create an \gui{Extract Selection}~\icon{pqExtractSelection24}
-    filter (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Extract
-      Selection} or use the quick launch: ctrl+space Win/Linux, alt+space
-    Mac).  \filterindex{extract selection}
+  \item Create an \gui{Extract Selection}~\extractSelection
+    filter (available on the toolbar).
   \item \apply.
   \end{enumerate}
 
@@ -2187,7 +2101,7 @@ object.
     \begin{inlinefig}
       \includegraphics[height=1.5\baselineskip]{images/AddStartThetaTrack}
     \end{inlinefig}
-    Hit the \icon{pqPlus16} button.
+    Hit the \icon{Plus} button.
   \end{enumerate}
 
   \begin{inlinefig}
@@ -2299,7 +2213,7 @@ to automatically generate such an animation.
     \begin{inlinefig}
       \includegraphics[height=1.5\baselineskip]{images/AddCameraOrbit}
     \end{inlinefig}
-    Hit the \icon{pqPlus16} button.
+    Hit the \icon{Plus} button.
     \savecounter
   \end{enumerate}
 
