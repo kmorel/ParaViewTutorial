@@ -324,6 +324,19 @@ have a reader readily available that you can use.
   where the heated disk would be were it meshed for the simulation.
 \end{exercise}
 
+Most of the time ParaView will be able to determine the appropriate method
+to read your file based on the file extension and underlying data, as was
+the case in Exercise~\ref{ex:OpeningAFile}. However, with so many file
+formats supported by ParaView there are some files that cannot be fully
+determined. In this case, ParaView will present a dialog box asking what
+type of file is being loaded. The following image is an example from
+opening a \index{netCDF}netCDF file, which is a generic file format for
+which ParaView has many readers for different conventions.
+
+\begin{inlinefig}
+  \includegraphics[width=.75\scw]{images/ChooseFileType}
+\end{inlinefig}
+
 Before we continue on to filtering the data, let us take a quick look at
 some of the ways to represent the data.  The most common parameters for
 representing data are located in a pair of toolbars. (They can also be
@@ -1011,7 +1024,7 @@ Like any other views, you can capture the plot with the \gui{File} \ra
 %can save can save the plot in a vector PDF format so that it scales well if
 %included in reports and other documents.
 %TODO: charts in 3.8 don't do vector PDF yet
-You can also move around plots in the GUI like you can other views.
+You can also resize and swap plots in the GUI like you can other views.
 
 In the next exercise, we use these features to get more information out of
 our plot.  Specifically, we use the plot to compare the pressure and
@@ -1201,21 +1214,24 @@ corner of the color scale editor dialog box.
 \end{inlinefig}
 
 The colorful box at top displays the colors of the transfer function and
-the one below that plots the transparency.  The dots on the transfer
-functions represent the \keyterm{control points}.  The control points are
-the specific color and opacity you set at particular scalar values, and the
-colors and transparency are interpolated between them.  Clicking on a blank
-spot in either bar will create a new control point.  Clicking on an
-existing control point will select it.  The selected control point can be
-dragged throughout the box to change its scalar value and transparency (if
+the one below that plots the transparency.\footnote{For surface rendering,
+  the transparency controls are hidden unless ``Enable Opacity Function''
+  is enabled.}  The dots on the transfer functions represent the
+\keyterm{control points}.  The control points are the specific color and
+opacity you set at particular scalar values, and the colors and
+transparency are interpolated between them.  Clicking on a blank spot in
+either bar will create a new control point.  Clicking on an existing
+control point will select it.  The selected control point can be dragged
+throughout the box to change its scalar value and transparency (if
 applicable).  Double clicking on a color control point will allow you to
 change the color.  The selected control point will be deleted when you hit
 the backspace or delete key.
 
-Directly below the color bar are text entry widgets to numerically specify
-the \gui{Scalar Value} or \gui{Opacity}\index{opacity} of the selected
-control point.  The Scale parameter adjusts the unit length of the opacity
-calculation.  Larger numbers make the volume less opaque.  The \gui{Color
+Directly below the respective color and transparency bars are text entry
+widgets to numerically specify the \gui{Scalar Value} or
+\gui{Opacity}\index{opacity} of the selected control point.  The
+\gui{Scale} parameter adjusts the unit length of the opacity calculation.
+Larger numbers make the volume less opaque.  The \gui{Color
   Space}\index{color space} parameter changes how colors are interpolated.
 This parameter has no effect on the color at the control points, but can
 drastically affect the colors between the control points.  You can also
@@ -1240,7 +1256,7 @@ created as well as several provided by ParaView.
   \item Click on the edit color map~\icon{pqEditColor24} button.
   \item Change the volume rendering to be more representative of heat.
     Press \includeinlinegraphics{images/ColorMapChoosePreset}, select
-    \gui{Black-Body Radiation} in the dialog box, and then click \gui{OK}.
+    \gui{Black-Body Radiation} in the dialog box, and then click \gui{Close}.
   \item Turn on the advanced options by pressing the \icon{pqAdvanced26}
     toggle.
   \item Try adding and changing control points and observe their effect on
@@ -1346,7 +1362,7 @@ slow for large data.  Second, when you animate over time, it is important
 to hold the color range fixed even if the range in the data changes.
 Changing the scale of the data as an animation plays causes a
 misrepresentation of the data.  It is far better to let the scalars go out
-of the original color maps range than to imply that they have not.  There
+of the original color map's range than to imply that they have not.  There
 are several workarounds to this problem:
 
 \begin{itemize}
@@ -1361,12 +1377,12 @@ are several workarounds to this problem:
   (such as in can), the field ranges are more representative at the last
   time step than at the beginning.  Thus, as long as you color by a field
   before changing the time, the color range will be adequate.
-\item Alternatively, you can open the edit color scale dialog
-  box~\icon{pqEditColor24} and specify a range for the data.  This is a
-  good choice if you cannot find, or do not know, a ``representative'' time
-  step or if you already know a good range to use.  You change the range of your  data by unselecting \gui{Automatically Rescale to Fit Data Range}, 
-  then click on \gui{Rescale Range} and fill in the \gui{Minimum} 
-  and \gui{Maximum} entries.  
+\item Open the edit color scale dialog box~\icon{pqEditColor24} and specify
+  a range for the data.  This is a good choice if you cannot find, or do
+  not know, a ``representative'' time step or if you already know a good
+  range to use.  You change the range of your data by unselecting
+  \gui{Automatically Rescale to Fit Data Range}, then click on \gui{Rescale
+    Range} and fill in the \gui{Minimum} and \gui{Maximum} entries.
 \item \index{Rescale to Temporal Range} If you are willing to wait or have small  data, you can
   use the \gui{Rescale to Temporal Range} button on the edit color scale
   dialog box~\icon{pqEditColor24} and ParaView will compute this overall
@@ -1430,12 +1446,16 @@ will use the \gui{can.ex2} dataset.
 
   This brings us to the file selection screen.  If you pull down the menu
   \gui{Files of type:} at the bottom of the dialog box, you will see
-  several file types supported including .png, .jpg, and .pdf.
+  several file types supported including
+  \index{portable~network~graphics}\index{PNG}portable network graphics
+  (PNG), \index{JPEG}JPEG, and
+  \index{portable~document~format}\index{PDF}portable document format
+  (PDF).
 
   Select a \gui{File name} for your file, and place it somewhere you can
-  later find and delete.  We usually recommend saving images as .png
-  files.  The lossy compression of .jpg often creates noticeable artifacts
-  in the images generated by ParaView, and the compression of .png is
+  later find and delete.  We usually recommend saving images as PNG
+  files.  The lossy compression of JPEG often creates noticeable artifacts
+  in the images generated by ParaView, and the compression of PNG is
   better than most other raster formats.
 
   \begin{enumerate}
@@ -1444,7 +1464,7 @@ will use the \gui{can.ex2} dataset.
   \end{enumerate}
 
   Using your favorite image viewer, find and load the image you created.
-  If you have no image viewer, ParaView itself is capable of loading .png
+  If you have no image viewer, ParaView itself is capable of loading PNG
   files.
 \end{exercise}
 
@@ -1498,14 +1518,17 @@ Next, we will save an animation.
 
   This brings us to the file selection screen.  If you pull down the menu
   \gui{Files of type:} at the bottom of the dialog box, you will see the
-  several file types including .avi, .jpg, and .png.
+  several file types including \index{Ogg/Theora}Ogg/Theora,
+  \index{AVI}AVI, \index{JPEG}JPEG, and
+  \index{portable~network~graphics}\index{PNG}PNG.
 
   Select a \gui{File name} for your file, and place it somewhere you can
-  later find and delete.  \gui{.avi} will create a movie format that
-  can be used on windows, and with some open source viewers.  Otherwise,
+  later find and delete.  \gui{AVI} will create a movie format that
+  can be used on windows, and with some open source viewers.
+  \index{Ogg/Theora} is used in many open source viewers.  Otherwise,
   you can create a \keyterm{flipbook}, or series of images.  These images
   can be stitched together to form a movie using numerous open source
-  tools.  For now, try creating an .avi.
+  tools.  For now, try creating an AVI.
 
   \begin{enumerate}
     \restorecounter
