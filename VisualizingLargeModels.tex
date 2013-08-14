@@ -444,7 +444,7 @@ caution on structured data.
   \item \gui{Clip}~\clip
   \item \gui{Decimate}
   \item \gui{Extract Cells by Region}
-  \item \gui{Extract Selection}~\icon{pqExtractSelection24}
+  \item \gui{Extract Selection}~\extractSelection
   \item \gui{Quadric Clustering}
   \item \gui{Threshold}~\threshold
   \end{itemize}
@@ -529,15 +529,15 @@ safe to add under any circumstances (although they may take a lot of time).
   \item \gui{Extract Level}~\extractGroup
   \item \gui{Glyph}~\glyph
   \item \gui{Group Datasets}~\group
-  \item \gui{Histogram}~\icon{pqHistogram24}
+  \item \gui{Histogram}~\histogram
   \item \gui{Integrate Variables}
   \item \gui{Normal Glyphs}
   \item \gui{Outline}
   \item \gui{Outline Corners}
   \item \gui{Plot Global Variables Over Time}
-  \item \gui{Plot Over Line}~\icon{pqPlotLineOverTime24}
-  \item \gui{Plot Selection Over Time}~\icon{pqPlotCellOverTime24}
-  \item \gui{Probe Location}~\icon{pqProbeLocation24}
+  \item \gui{Plot Over Line}~\plotOverLine
+  \item \gui{Plot Selection Over Time}~\plotSelectionOverTime
+  \item \gui{Probe Location}~\probe
   \item \gui{Temporal Shift Scale}
   \item \gui{Temporal Snap-to-Time-Steps}
   \item \gui{Temporal Statistics}
@@ -615,7 +615,7 @@ the \gui{Contour}~\contour filter to generate surfaces at the ends of the
 range rather than extract all of the cells with the
 \gui{Threshold}~\threshold filter.  Be aware that substituting filters can
 have an effect on downstream filters.  For example, running the
-\gui{Histogram}~\icon{pqHistogram24} filter after
+\gui{Histogram}~\histogram filter after
 \gui{Threshold}~\threshold will have an entirely different effect then
 running it after the roughly equivalent \gui{Contour}~\contour filter.
 
@@ -745,7 +745,7 @@ meanings.
 \subsection{Basic Parallel Rendering}
 
 When performing parallel visualization, we are careful to ensure that the
-data remains partitioned amongst all of the processes up to and including
+data remains partitioned among all of the processes up to and including
 the rendering processes.  ParaView uses a parallel rendering library called
 \keyterm{IceT}.  IceT uses a \keyterm{sort-last} algorithm for parallel
 rendering.  This parallel rendering algorithm allows each process to
@@ -835,7 +835,8 @@ Mac).  The parallel rendering options in the dialog are in the \gui{Render
   turns remote rendering on or off.  The slider controls the threshold at
   which to use parallel rendering.  Whenever the geometry is below the
   threshold, the geometry is moved to the location where display occurs
-  (usually the client).
+  (usually the client).  Unchecking this box forces all geometry to be
+  copied to the display, which can be dangerous.
 %% \item[Client Outline Threshold] \index{client outline threshold} Controls
 %%   when to render a bounding box in lieu of a reduced geometry (or other
 %%   representation) during interactive rendering.  If the checkbox is on and

@@ -12,8 +12,12 @@ Batch scripting is a good way to automate mundane or repetitive tasks, but
 it is also a critical component when using ParaView in situations where the
 GUI is undesired or unavailable.  The automation of Python scripts allows
 you to leverage ParaView as a scalable parallel post-processing framework.
-We are also leveraging Python scripting to establish \emph{in-situ}
-computation within simulation code (a.k.a. co-processing).
+We are also leveraging Python scripting to establish \emph{in situ}
+computation within simulation code. (ParaView supports an \emph{in situ}
+library called \index{Catalyst}\keyterm{Catalyst}, which is not documented
+in this tutorial.  See
+\href{http://catalyst.paraview.org/}{http://catalyst.paraview.org/} for
+more information on Catalyst).
 
 This tutorial gives only a brief introduction to Python scripting.  The
 most recent and complete documentation is kept on the ParaView Wiki.
@@ -77,19 +81,17 @@ your environment, consult the ParaView Wiki.
 
 Before diving into the depths of the Python scripting features, let us take
 a moment to explore the automated facilities for creating Python scripts.
-The ParaView GUI's Python \gui{Trace}\index{trace} feature
-allows one to very easily create Python scripts for many common
-tasks. To use \gui{Trace}, one simply begins a trace recording via 
-\gui{Start Trace}, found in the Tools Menu.  \gui{Start Trace} 
-uses the ParaView GUI to construct a
-visualization.  Use \gui{Stop Trace}, also found in the Tools Menu, 
-to stop the trace recording. This produces a
-python script that reconstructs the actions taken in the GUI. That
-script contains exactly the same set of operations that we are
-about to describe. As such, \gui{Trace} recordings are a good resource when
-you are trying to figure out how to do some action via the Python
-interface, and conversely the following descriptions will help in
-understanding the contents of any given \gui{Trace} script.
+The ParaView GUI's Python \gui{Trace}\index{trace} feature allows one to
+very easily create Python scripts for many common tasks. To use
+\gui{Trace}, one simply begins a trace recording via \gui{Start Trace},
+found in the Tools Menu, and ends a trace recording via \gui{Stop Trace},
+also found in the Tools Menu. This produces a python script that
+reconstructs the actions taken in the GUI. That script contains the same
+set of operations that we are about to describe. As such, \gui{Trace}
+recordings are a good resource when you are trying to figure out how to do
+some action via the Python interface, and conversely the following
+descriptions will help in understanding the contents of any given
+\gui{Trace} script.
 
 \begin{exercise}{Creating a Python Script Trace}
   \label{ex:CreatingAPythonScriptTrace}%
@@ -210,7 +212,7 @@ removed.  For example, the \pyfunc{Sphere} function corresponds to
 function corresponds to \gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot
   Over Line}.  Each function creates a pipeline object, which will show up
 in the pipeline browser (with the exception of writers), and returns an
-object that is a proxy that can be used to query and manipulate the
+object that is a \keyterm{proxy} that can be used to query and manipulate the
 properties of that pipeline object.
 
 There are also several other functions in the \textpy{paraview.simple}
@@ -243,9 +245,9 @@ Render()
 
   The \pyfunc{Sphere} command creates a sphere pipeline object.  Once it is
   executed you will see an item in the pipeline browser created.  We save a
-  proxy to the pipeline object in the variable \textpy{sphere}.  We are
-  not using this variable (yet), but it is good practice to save references
-  to your pipeline objects.
+  \index{proxy}proxy to the pipeline object in the variable
+  \textpy{sphere}.  We are not using this variable (yet), but it is good
+  practice to save references to your pipeline objects.
 
   The subsequent \pyfunc{Show} command turns on visibility of this object in
   the view, and the subsequent \pyfunc{Render} causes the results to be
@@ -284,10 +286,10 @@ for the pipeline objects.  As we have seen in the exercises of
 Chapter~\ref{chap:BasicUsage}, it is common to have to modify the
 parameters of the objects using the properties panel.
 
-In Python scripting, we use the proxy returned from the creation functions
-to manipulate the pipeline objects.  These proxies are in fact Python
-objects with class attributes that correspond to the same properties you
-set in the properties panel.  They have the same names as those in the
+In Python scripting, we use the \keyterm{proxy} returned from the creation
+functions to manipulate the pipeline objects.  These proxies are in fact
+Python objects with class attributes that correspond to the same properties
+you set in the properties panel.  They have the same names as those in the
 properties panel with spaces and other illegal characters removed.  You can
 set them by simply assigning them a value.
 
@@ -506,7 +508,7 @@ does.  For example
 \end{python}
 will first give help on the \pyfunc{Sphere} function, then use it to create
 an object, and then give help on the object that was returned (including a
-list of all the properties for the proxy).
+list of all the properties for the \index{proxy}proxy).
 
 Most of the widgets displayed in the properties panel's \gui{Properties} group
 are automatically generated from the same introspection that builds the
@@ -536,7 +538,7 @@ within Python.
 The equivalent to opening a file in the ParaView GUI is to create a reader
 in Python scripting.  Reader objects are created in much the same way as
 sources and filters; \textpy{paraview.simple} has a function for each
-reader type that creates the pipeline object and returns a proxy
+reader type that creates the pipeline object and returns a \index{proxy}proxy
 object. One can instantatiate any given reader directly as described
 below, or more simply call \textpy{reader = OpenDataFile(\argdesc{filename})}
 
@@ -632,11 +634,11 @@ properties such as coloring and lighting.  Parameters made available in the
 separate representation object instance for every pipeline-object--view
 pair.  This is so that each view can display the data differently.
 
-Representations are created automatically.  You can get the proxy to the
-representation objects with the \pyfunc{GetRepresentation} function.  With
-no arguments, this function will return the representation for the active
-pipeline object and the active view.  You can also specify a pipeline
-object or view or both.
+Representations are created automatically.  You can get the
+\index{proxy}proxy to the representation objects with the
+\pyfunc{GetRepresentation} function.  With no arguments, this function will
+return the representation for the active pipeline object and the active
+view.  You can also specify a pipeline object or view or both.
 
 \begin{exercise}{Coloring Data}
   \label{ex:ColoringData}%
@@ -668,9 +670,22 @@ Render()
 
   \begin{python}
 readerRep.ColorArrayName = 'Pres'
-readerRep.LookupTable = MakeBlueToRedLT(0, 0.03)
+readerRep.LookupTable = GetLookupTableForArray('Pres', 1)
+readerRep.LookupTable.RGBPoints = [0.0, 0.0, 0.0, 1.0, 0.03, 1.0, 0.0, 0.0]
 Render()
   \end{python}
+
+  \fix{ParaView 4.1 is cleaning up some of the issues with lookup tables
+    being different between the GUI and Python scripts. A better way to do
+    this in ParaView 4.1 would be the following.}
+    \begin{python}
+readerRep.ColorArrayName = 'Pres'
+readerRep.LookupTable = \
+  AssignLookupTable(reader.PointData['Pres'], 'Cool to Warm')
+    \end{python}
 \end{exercise}
+
+
+
 
 % Chapter Batch Python Scripting
