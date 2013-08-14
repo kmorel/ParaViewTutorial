@@ -1565,13 +1565,14 @@ maintains a current selected set that is linked between all views.
 That is, if you select something in one view, that selection is also
 shown in all other views that display the same object.
 
-The most direct means to create a selection is via the \gui{Find Data}
-dialog. Launch this dialog from the \gui{Edit} menu.  From this dialog you
-can enter characteristics of the data that you are seraching for.  For
-example, you could look for points whose velocity magnitude is near
-terminal velocity.  Or you could look for cells whose strain exceeds the
-failure of the material.  The following exercise provides a quick example
-of using the \gui{Find Data} dialog box.
+The most direct means to create a selection is via the \gui{Find
+Data}~\findData dialog. Launch this dialog from the toolbar or the
+\gui{Edit} menu.  From this dialog you can enter characteristics of the
+data that you are seraching for.  For example, you could look for points
+whose velocity magnitude is near terminal velocity.  Or you could look for
+cells whose strain exceeds the failure of the material.  The following
+exercise provides a quick example of using the \gui{Find Data}~\findData
+dialog box.
 
 \begin{exercise}{Performing Query-Based Selections}
   \label{ex:PerformingQueryBasedSelections}%
@@ -1583,7 +1584,7 @@ of using the \gui{Find Data} dialog box.
     open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
   \item Go to the last time step~\vcrLast.
-  \item Open the find data dialog with \gui{Edit} \ra \gui{Find Data}.
+  \item Open the find data dialog~\findData.
   \item From the top combo box, choose to find \gui{Cell}s.
   \item In the next row of widgets, choose \gui{EQPS} from the first combo
     box, \gui{is~$>=$} from the second combo box, and enter \gui{1.5} in the
@@ -1607,23 +1608,31 @@ of using the \gui{Find Data} dialog box.
 \end{exercise}
 
 One of the easiest ways of creating a selection is to pick elements right
-inside the 3D view.  All of the 3D view selections are performed with a
+inside the 3D view.  Most of the 3D view selections are performed with a
 \keyterm{rubber-band selection}.  That is, by clicking and dragging the
 mouse in the 3D view, you will create a boxed region that will select
-elements underneath it.  There are several types of rubber-band selection
-that can be performed, and you initiate one by selecting one of the icons
-in the selection controls toolbar or using one of the shortcut keys.  The
-following 3D selections are possible.
+elements underneath it.  There are also some 3D view selections that allow
+you to select within a polygonal region drawn on the screen.  There are
+several types of interactive selections that can be performed, and you
+initiate one by selecting one of the icons in the small toolbar over the 3D
+view or using one of the shortcut keys.  The following 3D selections are
+possible.
 
 \begin{description}
 \item[\selectCellsOn Select Cells On (Surface)] Selects cells that are
-  visible in the view.  (Shortcut: s)
+  visible in the view under a rubber band.  (Shortcut: s)
 \item[\selectPointsOn Select Points On (Surface)] Selects points that are
-  visible in the view.
+  visible in the view under a rubber band.
 \item[\selectCellsThrough Select Cells Through (Frustum)] Selects all cells
-  that exist under the rubber band.
+  that exist under a rubber band.
 \item[\selectPointsThrough Select Points Through (Frustum)] Selects all
-  points that exist under the rubber band.
+  points that exist under a rubber band.
+\item[\selectCellsPolygon Select Cells With Polygon] Like \gui{Select Cells
+  On} except that you draw a polygon by dragging the mouse rather than
+  making a rubber-band selection.
+\item[\selectPointsPolygon Select Points With Polygon] Like \gui{Select
+  Points On} except that you draw a polygon by dragging the mouse rather
+  than making a rubber-band selection.
 \item[\selectBlocks Select Blocks] Selects blocks in a
   multiblock data set.  (Shortcut: b)
 \end{description}
@@ -1822,10 +1831,8 @@ selection.
   \item If you do not have a few cells selected from the previous exercise,
     select a few now. (For this exercise it is not a good idea to select a
     large amount of cells.)
-  \item With the selection still active, add the Plot Selection Over Time
-    (\gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot Selection Over
-    Time}~\icon{pqPlotCellOverTime24} or use the quick launch: ctrl+space
-    Win/Linux, alt+space Mac). \filterindex{plot~selection~over~time}
+  \item With the selection still active, add the Plot Selection Over
+    Time~\plotSelectionOverTime filter.
   \item \apply.
   \item Go to the \gui{Display} panel and select different blocks to plot
     (which correspond to each of the selected elements).
@@ -1974,8 +1981,7 @@ smoother animation.
 There is a filter in ParaView designed for this purpose.  It is called
 the \keyterm{temporal interpolator}.  This filter will interpolate the
 positional and field data in between the time steps defined in the original
-data set.  This functionality is made possible by recent advances in the
-ParaView and VTK pipeline structure.
+data set.
 
 \begin{exercise}{Temporal Interpolation}
   \label{ex:TemporalInterpolation}%
