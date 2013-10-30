@@ -1197,51 +1197,54 @@ color map~\icon{pqEditColor24} button.
 \index{edit colors} \index{colors!edit}
 
 \begin{inlinefig}
-  \includegraphics[width=0.8\scw]{images/ColorScaleEditorSimple}
+  \includegraphics[width=0.8\scw]{images/ColorMapEditor}
 \end{inlinefig}
 
-When you first open up the color scale editor, you get this simplified
-interface.  From here you can change the scaling of the the colors.  You
-can also choose one of the many pre-defined color scales by pressing the
-\gui{Choose Preset} button.
+The first time you bring up the color map editor, it should appear at the
+right side of the ParaView GUI window. Like most of the panels in ParaView,
+this is a dockable window that you can move around the GUI or pull off and
+place elsewhere on your desktop. Like the properties panel, some of the
+advanced options are hidden to simplify the interface. To access these
+hidden features, toggle the \icon{pqAdvanced26} button in the upper right
+or type a search string.
 
-However, you can also have much finer controls over the transfer function.
-To access these, press the \icon{pqAdvanced26} toggle in the upper right
-corner of the color scale editor dialog box.
+The two colorful boxes at the top represent the transfer function. The
+first box with a function plot with colors underneath represents the
+transparency whereas the long box at the bottom represents the
+colors.\footnote{For surface rendering, the transparency controls have no
+  effect unless ``Enable opacity mapping for surfaces'' is enabled.} The
+dots on the transfer functions represent the \keyterm{control points}. The
+control points are the specific color and opacity\index{opacity} you set at
+particular scalar values, and the colors and transparency are interpolated
+between them. Clicking on a blank spot in either bar will create a new
+control point. Clicking on an existing control point will select it. The
+selected control point can be dragged throughout the box to change its
+scalar value and transparency (if applicable). Double clicking on a color
+control point will allow you to change the color. The selected control
+point will be deleted when you hit the backspace or delete key.
 
-\begin{inlinefig}
-  \includegraphics[width=\scw]{images/ColorScaleEditor}
-\end{inlinefig}
+Directly below the color and transparency bars is a text entry widget to
+numerically specify the \gui{Data} Value of the selected control
+point. Below this are checkbox options to \gui{Use log scale when mapping
+  data to colors}\index{logarithmic scale}, to \gui{Enable opacity mapping
+  for surfaces}\index{opacity}, and to \gui{Automatically rescale transfer
+  functions to fit data}. (Note that this last option causes the data range
+to be resized under most operations that change data, but not when the time
+value changes. See Section~\ref{sec:Time} for more details.)
 
-The colorful box at top displays the colors of the transfer function and
-the one below that plots the transparency.\footnote{For surface rendering,
-  the transparency controls are hidden unless ``Enable Opacity Function''
-  is enabled.}  The dots on the transfer functions represent the
-\keyterm{control points}.  The control points are the specific color and
-opacity you set at particular scalar values, and the colors and
-transparency are interpolated between them.  Clicking on a blank spot in
-either bar will create a new control point.  Clicking on an existing
-control point will select it.  The selected control point can be dragged
-throughout the box to change its scalar value and transparency (if
-applicable).  Double clicking on a color control point will allow you to
-change the color.  The selected control point will be deleted when you hit
-the backspace or delete key.
-
-Directly below the respective color and transparency bars are text entry
-widgets to numerically specify the \gui{Scalar Value} or
-\gui{Opacity}\index{opacity} of the selected control point.  The
-\gui{Scale} parameter adjusts the unit length of the opacity calculation.
-Larger numbers make the volume less opaque.  The \gui{Color
-  Space}\index{color space} parameter changes how colors are interpolated.
-This parameter has no effect on the color at the control points, but can
-drastically affect the colors between the control points.  You can also
-change to a logarithmic scaling of colors via the \gui{Use Logarithmic
-  Scale}\index{logarithmic scale} checkbox.
+The following \gui{Color Space}\index{color space} parameter changes how
+colors are interpolated. This parameter has no effect on the color at the
+control points, but can drastically affect the colors between the control
+points. Finally, the \gui{Nan Color}\index{NaN} allows you to select a
+color for ``invalid'' values. A \keyterm{NaN} is a special floating point
+value used to represent something that is not a number (such as the result
+of $0/0$).
 
 Setting up a transfer function can be tedious, so you can save it by
-clicking the \gui{Save} button.  The \gui{Choose Preset} button brings up a
-dialog that allows you to manage and apply the color maps that you have
-created as well as several provided by ParaView.
+clicking the \gui{Save to preset}~\icon{pqSave32} button.  The \gui{Choose
+  preset}~\icon{pqFavorites32} button brings up a dialog that allows you to
+manage and apply the color maps that you have created as well as many
+provided by ParaView.
 
 \begin{exercise}{Modifying Volume Rendering Transfer Functions}
   \label{ex:ModifyingVolumeRenderingTransferFunctions}%
@@ -1255,14 +1258,12 @@ created as well as several provided by ParaView.
     that the active object.
   \item Click on the edit color map~\icon{pqEditColor24} button.
   \item Change the volume rendering to be more representative of heat.
-    Press \includeinlinegraphics{images/ColorMapChoosePreset}, select
-    \gui{Black-Body Radiation} in the dialog box, and then click \gui{Close}.
-  \item Turn on the advanced options by pressing the \icon{pqAdvanced26}
-    toggle.
+    Press \gui{Choose preset}~\icon{pqFavorites32}, select \gui{Black-Body
+      Radiation} in the dialog box, and then click \gui{Close}.
   \item Try adding and changing control points and observe their effect on
-    the volume rendering.  Click the \gui{Apply} button or turn on the
-    \gui{Render View Immediately} checkbox to see the effects of your
-    change.
+    the volume rendering.  Click the \gui{Update} button or turn on the
+    update automatically~\icon{pqUpdate32} toggle to see the effects of
+    your changes.
   \end{enumerate}
 
   \begin{inlinefig}
@@ -1365,6 +1366,8 @@ misrepresentation of the data.  It is far better to let the scalars go out
 of the original color map's range than to imply that they have not.  There
 are several workarounds to this problem:
 
+\index{colors!rescale}
+\index{rescale colors}
 \begin{itemize}
 \item If for whatever reason your animation gets stuck on a poor color
   range, simply go to a representative time step and
@@ -1377,15 +1380,17 @@ are several workarounds to this problem:
   (such as in can), the field ranges are more representative at the last
   time step than at the beginning.  Thus, as long as you color by a field
   before changing the time, the color range will be adequate.
-\item Open the edit color scale dialog box~\icon{pqEditColor24} and specify
-  a range for the data.  This is a good choice if you cannot find, or do
-  not know, a ``representative'' time step or if you already know a good
-  range to use.  You change the range of your data by unselecting
-  \gui{Automatically Rescale to Fit Data Range}, then click on \gui{Rescale
-    Range} and fill in the \gui{Minimum} and \gui{Maximum} entries.
-\item \index{Rescale to Temporal Range} If you are willing to wait or have small  data, you can
-  use the \gui{Rescale to Temporal Range} button on the edit color scale
-  dialog box~\icon{pqEditColor24} and ParaView will compute this overall
+\item Open the edit color map dialog~\icon{pqEditColor24} and specify a
+  range for the data using \gui{Rescale to custom
+    range}~\icon{pqResetRangeCustom24}. This is a good choice if you cannot
+  find, or do not know, a ``representative'' time step or if you already
+  know a good range to use. You should also consider turning off the
+  \gui{Automatically rescale transfer functions to fit data} to prevent
+  your scale from changing the next time you add a filter.
+\item If you are willing to wait or have small data, you can use the
+  \gui{Rescale to data range over all
+    timesteps}~\icon{pqResetRangeTemporal24} button on the edit color map
+  dialog~\icon{pqEditColor24} and ParaView will compute this overall
   temporal range automatically.  Keep in mind that this option will require
   ParaView to load your entire data set over all time steps whenever you
   load a data set.  Although ParaView will not hold more than one time step
@@ -1546,7 +1551,7 @@ Next, we will save an animation.
 \section{Selection}
 \label{sec:Selection}
 
-The goal of Visualization is often to find the important details within a
+The goal of visualization is often to find the important details within a
 large body of information. ParaView's selection abstraction is an
 important simplification of this process. Selection is the act of
 identifying a subset of some dataset. There are a variety of ways that
@@ -1645,34 +1650,30 @@ elements).
 
 Feel free to experiment with the selections now.
 
-\begin{inlinefig}
-  \includegraphics[scale=\bbscale]{images/SelectionInspector}
-\end{inlinefig}
+You can manage your selection with the \gui{Find Data}~\findData dialog
+even if the selection was created with one of these 3D interactions rather
+than directly with a find data query. The find data dialog allows you to
+view all the points and cells in the selection as well perform simple
+operations on the selection. These include inverting the selection (a
+checkbox just over the spreadsheet), adding labels
+(Exercise~\ref{ex:LabelingSelections}), freezing selections
+(Exercise~\ref{ex:DataElementSelectionsVsSpatialSelections}), and shortcuts
+for the \gui{Extract Selection}~\extractSelection and \gui{Plot Selection
+  Over Time}~\plotSelectionOverTime filters (Exercises
+\ref{ex:ExtractingASelection} and \ref{ex:PlotOverTime}, respectively).
 
-You can manage your selection with the \keyterm{selection inspector}.  You
-can view the selection inspector through the menu \gui{View} \ra
-\gui{Selection Inspector}.  The selection inspector allows you to view all
-the points and cells in the selection as well as modify the selection.  You
-can also use the selection inspector to add labels to the selection to make
-it easier to identify which element is which.
+Experiment with selections in \gui{Find Data}~\findData a bit.  Open the
+\gui{Find Data}~\findData dialog box.  Then make selections using the
+rubber-band selection and see the results in the \gui{Find Data} dialog
+box.  Also experiment with altering the selection by inverting selections
+with the \gui{Invert selection} checkbox.
 
-Experiment with the selection inspector a bit.  Open the \gui{Selection
-  Inspector}.  Then make selections using the rubber-band selection and see
-the results in the \gui{Selection Inspector}.  Also experiment with
-altering the selection by changing ids or inverting selections with the
-\gui{Invert selection} checkbox.
-
-You will notice that the select-on tools, \selectCellsOn/\selectPointsOn,
-show a list of points/cells and the select blocks tool,~\selectBlocks,
-shows a list of blocks, but the select-through tools,
-\selectCellsThrough/\selectPointsThrough, show neither.  That is because it
-is selecting a region in space.  If you click on the \gui{Show Frustum} and
-rotate the 3D view to see the region of the selection.
-
-It should be noted that there is a fundamental difference between
-selections that specify a list of points or cells and a selection that
-specifies a region in space.  The following exercise demonstrates the
-difference.
+It should be noted that selections can be internally represented in
+different ways. Some are recorded as a list of data element ids. Others are
+specified as a region in space or by query parameters. Although the
+selections all look the same, they can be have differently, especially with
+respect to changes in time. The following exercise demonstrates how these
+different selection mechanisms can behave differently.
 
 \begin{exercise}{Data Element Selections vs. Spatial Selections}
   \label{ex:DataElementSelectionsVsSpatialSelections}%
@@ -1682,11 +1683,11 @@ difference.
     Exercise~\ref{ex:LoadingTemporalData}).
   \item Make a selection using the \gui{Select Cells
     Through}~\selectCellsThrough tool.
-  \item If it is not already visible, show the selection inspector
-    with \gui{View} \ra \gui{Selection Inspector}.  You may need to dock
-    the selection inspector elsewhere to see its widgets well.
-  \item Click on the \gui{Show Frustum} checkbox in the \gui{Selection
-    Inspector} and rotate the 3D view.
+  \item If it is not already visible, show the \gui{Find Data}~\findData
+    dialog box.
+  \item Click on the \gui{Show Frustum} checkbox in the \gui{Find Data}
+    dialog and rotate the 3D view.
+    % FIX: Need to update this image.
 
     \begin{inlinefig}
       \includegraphics[width=\scw]{images/SelectionFrustum}
@@ -1695,8 +1696,8 @@ difference.
   \item Play~\vcrPlay the animation a bit.  Notice that the region remains
     fixed and the selection changes based on what cells move in or out of
     the region.
-  \item Change the \gui{Selection Type} to \gui{IDs} in the \gui{Selection
-    Inspector}.
+  \item Go to a timestep where some data is selected. In the \gui{Find
+    Data} dialog box, click the \gui{Freeze Selection} button.
   \item Play~\vcrPlay again.  Notice that the cells selected are fixed
     regardless of position.
   \end{enumerate}
@@ -1704,15 +1705,16 @@ difference.
   In summary, a spatial selection (created with one of the select through
   tools) will re-perform the selection at each time step as elements move
   in and out of the selected region.  Likewise, other queries such as field
-  range queries will also reexecute as the data changes.  In contrast, in
-  an ID selection, the points or cells selected are fixed and will be
-  followed as they move through an animation.
+  range queries will also re-execute as the data changes. However, when you
+  select the \gui{Freeze Selection} button, ParaView captures the
+  identifiers of the currently selected elements so that they will remain
+  the same throughout the animation.
 \end{exercise}
 
-The \keyterm{spreadsheet view} is an important tool to use in combination
-with selections and quantitative drill down.  The spreadsheet view
-allows you to read the actual values of scalar fields and the
-selection mechanism will help you identify the values of interest.
+The \keyterm{spreadsheet view} is an important tool to use for quantitative
+drill down. The spreadsheet view allows you to read the actual values of
+scalar fields throughout the data and the selection mechanism will help you
+identify the values of interest.
 
 \begin{exercise}{The Spreadsheet View and Selection}
   \label{ex:TheSpreadsheetViewAndSelection}%
@@ -1798,12 +1800,9 @@ view.  The next exercise describes how we can do that.
   \item If you do not have a few cells selected from the previous exercise,
     select a few now. (For this exercise it is not a good idea to select a
     large amount of cells.)
-  \item If it is not already visible, show the selection inspector
-    with \gui{View} \ra \gui{Selection Inspector}.
-  \item Click the \gui{Cell Label} tab in the \gui{Selection Inspector} (at
-    the bottom).
-  \item Check \gui{Visible}.
-  \item Change the \gui{Label Mode} to \gui{EQPS}.
+  \item If it is not already visible, show the \gui{Find Data}~\findData
+    dialog box.
+  \item In the \gui{Labels} chooser, select \gui{EQPS}.
   \end{enumerate}
 
   \begin{inlinefig}
@@ -1812,8 +1811,8 @@ view.  The next exercise describes how we can do that.
 
   ParaView places the values for the \gui{EQPS} field near the selected
   cell that contains that value.  It is also possible to change the look of
-  the font with respect to type, size, and color through the selection
-  inspector.
+  the font with respect to type, size, and color with the \gui{Find Data}
+  dialog box.
 \end{exercise}
 
 \index{labels|)}
@@ -1831,8 +1830,8 @@ selection.
   \item If you do not have a few cells selected from the previous exercise,
     select a few now. (For this exercise it is not a good idea to select a
     large amount of cells.)
-  \item With the selection still active, add the Plot Selection Over
-    Time~\plotSelectionOverTime filter.
+  \item With the selection still active, add the \gui{Plot Selection Over
+    Time}~\plotSelectionOverTime filter.
   \item \apply.
   \item Go to the \gui{Display} panel and select different blocks to plot
     (which correspond to each of the selected elements).
@@ -1859,7 +1858,7 @@ done through the \gui{Extract Selection}~\extractSelection filter.
     open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
   \item Turn off cell labels if they are still showing (check the
-    \gui{Selection Inspector}).
+    \gui{Find Data} dialog).
   \item Make a sizable cell selection for example, with Select Cells
     Through~\selectCellsThrough.
   \item Create an \gui{Extract Selection}~\extractSelection
@@ -1877,9 +1876,6 @@ done through the \gui{Extract Selection}~\extractSelection filter.
   relation to the full data.) You can perform computations on the extracted
   cells by simply adding filters to the extract selection pipeline object.
 \end{exercise}
-
-Now that we have finished the selection exercises, we will no longer be
-using the \gui{Selection Inspector}.  You may close it now if you wish.
 
 
 \section{Controlling Time}
@@ -2059,7 +2055,7 @@ text annotation wherever you want in a 3D view.  There is a special
 \end{exercise}
 
 Often times you will need to put the current time value into the text
-annotation.  Typing the correct time value can be tedious an error prone
+annotation.  Typing the correct time value can be tedious and error prone
 with the standard text source and impossible when making an animation.
 Therefore, there is a special \keyterm{annotate time source} that will
 insert the current animation time into the string.
@@ -2164,7 +2160,8 @@ dialog box that you can use to add, delete, and modify key frames.
   \includegraphics[width=\scw]{images/AnimationKeyframesDialog}
 \end{inlinefig}
 
-Use this feature to create a new key frame in the animation.
+We use this feature to create a new key frame in the animation in the next
+exercise.
 
 \begin{exercise}{Modifying Animation Track Keyframes}
   \label{ex:ModifyingAnimationTrackKeyframes}%

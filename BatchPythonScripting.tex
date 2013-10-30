@@ -34,7 +34,7 @@ There are many ways to invoke the Python interpreter.  The method you use
 depends on how you are using the scripting.  The easiest way to get a
 python interpreter, and the method we use in this tutorial, is to select
 \gui{Tools} \ra \gui{Python Shell} from the menu.  This will bring up a
-dialog box containing controls for ParaView's python shell. This is the 
+dialog box containing controls for ParaView's Python shell. This is the 
 Python interpreter, where you directly control
 ParaView via the interface described below. 
 
@@ -85,7 +85,7 @@ The ParaView GUI's Python \gui{Trace}\index{trace} feature allows one to
 very easily create Python scripts for many common tasks. To use
 \gui{Trace}, one simply begins a trace recording via \gui{Start Trace},
 found in the Tools Menu, and ends a trace recording via \gui{Stop Trace},
-also found in the Tools Menu. This produces a python script that
+also found in the Tools Menu. This produces a Python script that
 reconstructs the actions taken in the GUI. That script contains the same
 set of operations that we are about to describe. As such, \gui{Trace}
 recordings are a good resource when you are trying to figure out how to do
@@ -181,17 +181,11 @@ Any Python script can be assigned to a macro.
 \section{Creating a Pipeline}
 \label{sec:CreatingAPipeline}
 
-We should first note that the ParaView GUI's python \gui{Trace} feature
-allows one to very easily create Python scripts for many common
-tasks. To use \gui{Trace}, one simply begins a trace recording via the GUI's
-\gui{Python Shell} dialog, uses the ParaView GUI to construct a
-visualization, and then stops the trace recording. This produces a
-python script that reconstructs the actions taken in the GUI. That
-script contains exactly the same set of operations that we are
-about to describe. As such, \gui{Trace} recordings are a good resource when
-you are trying to figure out how to do some action via the python
-interface, and conversely the following descriptions will help in
-understanding the contents of any given \gui{Trace} script.
+As described in the previous two sections, the ParaView GUI's Python
+\gui{Trace} feature provides a simple mechanism to create scripts. In this
+section we will begin to describe the basic bindings for ParaView
+scripting. This is important information in building Python scripts, but
+you can always fall back on producing traces with the GUI.
 
 The first thing any ParaView Python script must do is load the
 \textpy{paraview.simple} module.  This is done by invoking
@@ -670,19 +664,10 @@ Render()
 
   \begin{python}
 readerRep.ColorArrayName = 'Pres'
-readerRep.LookupTable = GetLookupTableForArray('Pres', 1)
-readerRep.LookupTable.RGBPoints = [0.0, 0.0, 0.0, 1.0, 0.03, 1.0, 0.0, 0.0]
-Render()
-  \end{python}
-
-  \fix{ParaView 4.1 is cleaning up some of the issues with lookup tables
-    being different between the GUI and Python scripts. A better way to do
-    this in ParaView 4.1 would be the following.}
-    \begin{python}
-readerRep.ColorArrayName = 'Pres'
 readerRep.LookupTable = \
   AssignLookupTable(reader.PointData['Pres'], 'Cool to Warm')
-    \end{python}
+Render()
+  \end{python}
 \end{exercise}
 
 
