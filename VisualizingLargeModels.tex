@@ -365,6 +365,7 @@ you cull your data quickly.
 
 
 \section{Avoiding Data Explosion}
+\label{sec:AvoidingDataExplosion}
 
 The pipeline model that ParaView presents is very convenient for
 exploratory visualization.  The loose coupling between components provides
@@ -563,6 +564,7 @@ whatever it is programmed to do, it can fall into any one of these
 categories.
 
 \section{Culling Data}
+\label{sec:CullingData}
 
 When dealing with large data, it is clearly best to cull out data whenever
 possible, and the earlier the better.  Most large data starts as 3D
@@ -618,6 +620,37 @@ have an effect on downstream filters.  For example, running the
 \gui{Histogram}~\histogram filter after
 \gui{Threshold}~\threshold will have an entirely different effect then
 running it after the roughly equivalent \gui{Contour}~\contour filter.
+
+
+\section{Keeping Track of Memory}
+
+\index{memory inspector|(}
+
+When working with very large models, it is important to keep track of
+memory usage on your computer. One of the most common and frustrating
+problems encountered with large models is running out of memory. This in
+turn will lead to thrashing in the virtual memory system or an outright
+program fault.
+
+Sections \ref{sec:AvoidingDataExplosion} and \ref{sec:CullingData} provide
+suggestions to reduce your memory usage. Even so, it is wise to keep an eye
+on the memory available in your system. ParaView provides a tool called the
+\keyterm{memory inspector} designed to do just that.
+
+\begin{inlinefig}
+  \includegraphics[width=\scw]{images/MemoryInspector}
+\end{inlinefig}
+
+To access the memory inspector, select in the menu bar \gui{View} \ra
+\gui{Memory Inspector}. The memory inspector provides information for both
+the client you are running on and any server you might be connected to. It
+will tell you the total amount of memory used on the system and the amount
+of memory ParaView is using. For servers containing multiple nodes,
+information both for the conglomerate job and for each individual node are
+given. Note that a memory issue in any single node can cause a problem for
+the entire ParaView job.
+
+\index{memory inspector|)}
 
 
 \section{Rendering}
