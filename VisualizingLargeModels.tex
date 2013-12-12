@@ -3,7 +3,7 @@
 
 ParaView is used frequently at Sandia National Laboratories and other
 institutions for visualizing data from large-scale simulations run on the
-world's largest supercomputer including the examples shown here.
+world's largest supercomputers including the examples shown here.
 
 \begin{inlinefig}
   \begin{tabular}{cc}
@@ -130,7 +130,7 @@ To compile ParaView on a parallel machine, you will need the following.
 \item MPI
 \item OpenGL (or use Mesa 3D \href{http://www.mesa3d.org}{www.mesa3d.org}
   if otherwise unavailable)
-\item Qt 4.6 (optional)
+\item Qt 4.7 (optional)
 \item Python (optional)
 \end{itemize}
 
@@ -326,7 +326,7 @@ data you wish to repartition.
 \end{inlinefig}
 
 The most common use case for D3 is to attach it directly to your
-unstructured grid reader.  Regardless of how well load balance the incoming
+unstructured grid reader.  Regardless of how well load balanced the incoming
 data might be, it is important to be able to retrieve ghost cell so that
 subsequent filters will generate the correct data.  The example above shows
 a cutaway of the extract surface filter on an unstructured grid.  On the
