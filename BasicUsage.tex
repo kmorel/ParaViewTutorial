@@ -83,7 +83,19 @@ but they are also very handy when exploring ParaView's features.
   Click the \gui{Apply} button \apply to accept the default parameters.
 
   Once you click \gui{Apply}, the cylinder object will be displayed in the
-  3D view window on the right.  You can manipulate this 3D view by dragging
+  3D view window on the right.
+\end{exercise}
+
+Now that we have created our first simple visualization, we want to
+interact with it. There are many ways to interact with a visualization in
+ParaView. We start by exploring the data in the 3D view.
+
+\begin{exercise}{Interacting with a 3D View}
+  \label{ex:InteractingWithA3DView}%
+  This exercise is a continuation of Exercise~\ref{ex:CreatingASource}.
+  You will need to finish that exercise before beginning this one.
+
+  You can manipulate the cylinder in the 3D view by dragging
   the mouse over the 3D view.  Experiment with dragging different mouse
   buttons---left, middle, and right---to perform different rotate, pan, and
   zoom operations.  Also try using the buttons in conjunction with the
@@ -97,7 +109,7 @@ but they are also very handy when exploring ParaView's features.
   \index{toolbar!camera~controls}
 
   ParaView contains a couple of toolbars to help with camera manipulations.
-  The first toolbar, the \gui{Camera Controls} toolbar, shown here provides
+  The first toolbar, the \gui{Camera Controls} toolbar, shown here, provides
   quick access to particular camera views.  The leftmost button
   \icon{pqResetCamera24} performs a \keyterm{reset camera} such that it
   maintains the same view direction but repositions the camera such that
@@ -120,8 +132,8 @@ but they are also very handy when exploring ParaView's features.
     \includegraphics[width=.415\scw]{images/ToolbarCenterAxis}
   \end{inlinefig}
 
-  \index{center~axis~toolbar|see{toolbar, center axis}}
-  \index{toolbar!center~axis}
+  \index{center~axes~toolbar|see{toolbar, center axes}}
+  \index{toolbar!center~axes}
 
   The second toolbar controls the location of the center of rotation and
   the visibility of the orientation axes.  \index{center of rotation!pick}
@@ -131,16 +143,29 @@ but they are also very handy when exploring ParaView's features.
   view, you will notice that the cylinder now rotates around this new
   point.  \index{center of rotation!reset} The next button to the left
   \icon{pqResetCenter24} replaces the center of rotation to the center of
-  the object.  \index{center of rotation!show}\index{axis!center of
+  the object.  \index{center of rotation!show}\index{axes!center of
     rotation} The next button to the left \icon{pqShowCenterAxes24} shows
-  or hides and axis drawn at the center of rotation.  (You probably will
+  or hides axes drawn at the center of rotation.  (You probably will
   not notice the effects when the center of rotation is at the center of
   the cylinder because the axes will be hidden by the cylinder.  Use the
   pick center of rotation \icon{pqPickCenter24} again and you should be
   able to see the effects.)  The final leftmost button
   \icon{pqShowOrientationAxes32} toggles showing the
-  \index{axis!orientation|see{orientation axes}}\keyterm{orientation axes},
+  \index{axes!orientation|see{orientation axes}}\keyterm{orientation axes},
   the always-viewable axes in the lower left corner of the 3D view.
+\end{exercise}
+
+Although interactive 3D controls are a vital part of visualization, an
+equally important ability is to modify the parameters of the data
+processing and display. ParaView contains many GUI components for modifying
+visualization parameters, which we will begin to explore in the next
+exercise.
+
+\begin{exercise}{Modifying Visualization Parameters}
+  \label{ex:ModifyingVisualizationParameters}%
+  This exercise is a continuation of
+  Exercise~\ref{ex:InteractingWithA3DView}. You will need to finish that
+  exercise before beginning this one.
 
   You surely noticed that ParaView creates not a real cylinder but
   rather an approximation of a cylinder using polygonal \keyterm{facets}.
@@ -164,12 +189,61 @@ but they are also very handy when exploring ParaView's features.
   Hit the \gui{Apply} button now.  The resolution is changed so that it is
   virtually indistinguishable from a true cylinder.
 
-  If you scroll down to the bottom of the properties panel, you will notice
+  \begin{inlinefig}
+    \includegraphics[width=0.53\scw]{images/DisplayProperties}
+  \end{inlinefig}
+
+  If you scroll down the properties panel, you will notice
   a set of \gui{Display} properties\index{display properties}.  Try these
   options now by clicking on the \gui{Edit}~\icon{pqEditColor24} button to
   change the color of the cylinder. (This button is also replicated in the
   toolbar.) You may notice that you do not need to hit \gui{Apply} for
   display properties.
+
+  \begin{inlinefig}
+    \includegraphics[width=0.53\scw]{images/RenderViewOptions}
+  \end{inlinefig}
+
+  If you scroll down further yet to the bottom of the properties panel, you
+  will notice a set of \gui{View} properties\index{view properties}. Try
+  using the view properties to change the background\index{background color}
+  of the image. Change the background from \gui{Single color} to
+  \gui{Gradient}\index{gradient}\index{background gradient}.  Using a
+  gradient in the background can add glitz to an image, but it can also
+  distract from the data in the visualization. Be aware that some of the
+  view options and object display options can be repeated elsewhere in the
+  ParaView GUI for convenience.
+
+  By default many of the lesser used display properties are hidden.  The
+  \keyterm{advanced properties} toggle~\icon{pqAdvanced26} can be used to
+  show or hide these extra parameters. There is also a search box at the
+  top of the properties panel\index{properties panel!search} that can be
+  used to quickly find a property. Try typing \gui{specular} into this
+  search box now. Under the display properties you should see an option
+  named \gui{Specular}. This controls the intensity of the specular
+  highlight seen on shiny objects. \index{shiny} \index{specular intensity}
+  Set this parameter to \gui{1} to make the cylinder shiny.
+
+  Most objects have similar display and view properties. Here are some
+  other common tricks you can do with most objects using parameters
+  available in the properties panel and that you can try now.
+
+  \begin{itemize}
+  \item \index{cube axes} \index{axes!cube|see{cube axes}} Show 3D axes at
+    the boarders of the object containing rulers showing the physical
+    distance in each direction by clicking the \gui{Show Axes} checkbox
+    under the \gui{Cube Axes} options.
+  \item \index{transparency} \index{opacity} Make objects transparent by
+    changing their \gui{Opacity} parameter. An opacity parameter of 1 is
+    completely opaque, a parameter of 0 is completely invisible, and values
+    in between are varying degrees of see through.
+  \item \index{lighting} The default configuration of lights in a 3D
+    rendering are position to provide a natural shading to best show the
+    structure of objects. If you want to change the lighting (for example,
+    to brightly show a flat surface facing the camera), you can click the
+    \gui{Edit} button under the \gui{Lights} option (an advanced
+    property).
+  \end{itemize}
 \end{exercise}
 
 \index{undo|(}
@@ -202,73 +276,9 @@ created and redo again.
 \index{redo|)}
 \index{undo|)}
 
-\index{view properties}
-\index{render view options}
-There are also many options for selecting how objects are rendered.  You
-will notice over the 3D view a \icon{pqOptions16} button for changing the
-rendering options.  Clicking this brings up a dialog box that allows you to
-change things like the background color, the lighting, and annotation.
-
-\begin{inlinefig}
-  \includegraphics[width=\scw]{images/RenderViewOptions}
-\end{inlinefig}
-
-\index{display properties}
-As discussed in Exercise~\ref{ex:CreatingASource},
-another location for rendering options is the \gui{Display} section in the
-properties panel.  These properties provide the rendering options that
-apply specifically for the selected object.  It includes the visibility,
-coloring, and representation.  By default many of the lesser used display
-properties are hidden.  The \keyterm{advanced properties}
-toggle~\icon{pqAdvanced26} can be used to show or hide these extra
-parameters.  Be aware that some of the view options and object display
-options can be repeated elsewhere in the ParaView GUI for convenience.
-
-\begin{inlinefig}
-  \includegraphics[width=0.53\scw]{images/DisplayProperties}
-\end{inlinefig}
-
-\begin{exercise}{Modifying Rendering Parameters}
-  \label{ex:ModifyingRenderingParameters}%
-  Click the \icon{pqOptions16} button above the 3D view to bring up the
-  \gui{Render View Options} dialog box.  Explore the different panels of
-  options.  Try modifying how the view looks in the following ways.
-  (Remember that you will have to hit \gui{Apply} or \gui{OK} before the
-  changes take effect.)
-
-  \begin{itemize}
-  \item \index{background color} Change the background color.  (Notice that
-    you can reset it to the default.)
-  \item \index{orientation axis} Turn the Orientation Axis (the axis in the
-    lower left corner of the view) off and on.  (This can also be done
-    using an icon that looks like the Orientation Axis on the right side of
-    the toolbars on top)
-  \item Move the Orientation Axis in the view.  (Hint: Make the axis
-    interactive and then click and drag in the 3D view.)
-  \end{itemize}
-
-  Now change the drawing parameters of the cylinder.  (If you do not have a
-  cylinder or another pipeline object, create one as described in
-  Exercise~\ref{ex:CreatingASource}.)  Make sure the cylinder is selected
-  in the pipeline browser.  In the properties panel, scroll down to the
-  \gui{Display} section.
-
-  \begin{itemize}
-  \item \index{solid color} \index{object color} Set the (solid) color of
-    the cylinder by clicking the \gui{Edit}~\icon{pqEditColor24} button.
-  \item \index{cube axis} \index{axis!cube|see{cube axis}} Show 3D axes
-    with tic marks giving spatial position (make \gui{Cube Axis} visible).
-  \item \index{shiny} \index{specular intensity} Make the cylinder shiny.
-    (Hint: Make the \gui{Specular Intensity} 1.0.  This is an advanced
-    parameter, so you will need to toggle \icon{pqAdvanced26}.)
-  \item \index{transparency} \index{opacity} Make the cylinder transparent.
-    (Hint: Lower the \gui{Opacity}.)
-  \end{itemize}
-
-  We are done with the cylinder source now.  We can delete the pipeline
-  object by selecting the \gui{Properties} tab and hitting
-  \index{delete~button} delete \delete in the properties panel.
-\end{exercise}
+We are done with the cylinder source now.  We can delete the pipeline
+object by making sure the cylinder is selected in the pipeline browser and
+hitting \index{delete~button} delete \delete in the properties panel.
 
 \index{sources|)}
 
