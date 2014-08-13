@@ -292,7 +292,7 @@ Now that we have had some practice using the ParaView GUI, let us load in
 some real data.  As you would expect, the \index{open} \gui{Open} command
 is the first one off of the \gui{File} menu, and there is also toolbar
 button~\icon{pqOpen32} for opening a file.  ParaView currently supports
-over 130 distinct file formats, and the list grows as more types get
+over 140 distinct file formats, and the list grows as more types get
 added.  To see the current list of supported files, invoke the Open command
 and look at the list of files in the \gui{Files of type} chooser box.
 
@@ -315,7 +315,7 @@ have a reader readily available that you can use.
   Let us open our first file now.  Click the \index{open} \gui{Open}
   toolbar (or menu item)~\icon{pqOpen32} and open the file
   \index{disk\_out\_ref} \gui{disk\_out\_ref.ex2}.  Note that opening a
-  file is a two step process, so that you do not see any data yet.
+  file is a two step process, so you do not see any data yet.
   Instead, you see that the properties panel is populated with several
   options about how we want to read the data.
 
@@ -327,8 +327,8 @@ have a reader readily available that you can use.
   loading of all the variables.  This is a small data set, so we do not
   have to worry about loading too much into memory.  Once all of the
   variables are selected, click \apply to load all of the data.  When the
-  data is loaded you will see that the geometry looks like a cylinder with
-  a hollowed out portion in one end.  This data is the output of a
+  data are loaded you will see that the geometry looks like a cylinder with
+  a hollowed out portion in one end.  These data are the output of a
   simulation for the flow of air around a heated and spinning disk.  The
   mesh you are seeing is the air around the disk (with the cylinder shape
   being the boundary of the simulation).  The hollow area in the middle is
@@ -393,8 +393,8 @@ found in the \gui{Display} group of the properties panel.)
 We have now successfully read in some data and gleaned some information
 about it.  We can see the basic structure of the mesh and map some data
 onto the surface of the mesh.  However, as we will soon see, there are many
-interesting features about this data that we cannot determine by simply
-looking at the surface of this data.  There are many variables associated
+interesting features about these data that we cannot determine by simply
+looking at the surface of these data.  There are many variables associated
 with the mesh of different types (scalars and vectors).  And remember that
 the mesh is a solid model.  Most of the interesting information is on the
 inside.
@@ -464,12 +464,14 @@ These submenus are organized as follows.
 \item[CTH] Filters used to process results from a CTH \index{CTH} simulation.
 \item[Common] The most common filters.  This is the same list of filters
   available in the filters toolbar and listed previously.
-\item[Cosmology] This contains filters developed at LANL for cosmology research. 
+\item[CosmoTools] This contains filters developed at LANL for cosmology
+  research.
 \item[Data Analysis] The filters designed to retrieve quantitative values
   from the data.  These filters compute data on the mesh, extract elements
   from the mesh, or plot data.
 \item[Material Analysis] Filters for processing data from volume fractions
   of materials.
+\item[Quadrature Points] \fix{What do these do?}
 \item[Statistics] This contains filters that provide descriptive
   statistics of data, primarily in tabular form.
 \item[Temporal] Filters that analyze or modify data that changes over time.
@@ -506,8 +508,8 @@ be used.  ParaView disables these filters from the menu and toolbars to
 indicate (and enforce) that you cannot use these filters.
 
 Throughout this tutorial we will explore many filters.  However, we cannot
-explore all the filters in this forum.  Consult the Filters Menu
-chapter of ParaView's on-line or in-built help for more information on each filter.
+explore all the filters in this forum.  Consult the Filters Menu chapter of
+ParaView's on-line or built-in help for more information on each filter.
 
 \begin{exercise}{Apply a Filter}
   \label{ex:ApplyAFilter}%
@@ -586,7 +588,7 @@ second filter will cut some away.
 
   When you apply the \gui{Extract Surface} filter, you will once again see
   the surface of the mesh.  Although it looks like the original mesh, it is
-  different in that this data is hollow whereas the original data was solid
+  different in that this data is hollow whereas the original data were solid
   throughout.
 
   If you were showing the results of the contour filter, you cannot see the
@@ -627,11 +629,11 @@ second filter will cut some away.
 
 Now that we have added several filters to our pipeline, let us take a look
 at the layout of these filters in the pipeline browser.  The pipeline
-browser provides a convenient list of pipeline objects that we have created
-make it easy to select pipeline objects and change their
+browser provides a convenient list of pipeline objects that we have created.
+This makes it easy to select pipeline objects and change their
 \keyterm{visibility} by clicking on the eyeball icons~\eyeball next to
 them.  But also notice the indentation of the entries in the list and the
-connecting lines toward the right.  These features reveal the
+connecting lines toward the left.  These features reveal the
 \keyterm{connectivity} of the pipeline.  It shows the same information as
 the traditional graph layout on the right, but in a much more compact
 space.  The trouble with the traditional layout of pipeline objects is that
@@ -702,6 +704,7 @@ pressed.
   \begin{enumerate}
     \restorecounter
   \item Press the \splitViewH button.
+    \savecounter
   \end{enumerate}
 
   \begin{inlinefig}
@@ -717,6 +720,7 @@ pressed.
   mesh.
 
   \begin{enumerate}
+    \restorecounter
   \item Make sure the blue border is still around the new, blank view (to
     the right).  You can make any view the active view by simply clicking
     on it.
@@ -724,8 +728,7 @@ pressed.
     eyeball~\eyeballg next to \gui{Clip1} in the pipeline browser.
   \item Color the surface by temperature by selecting \gui{Clip1} in the
     pipeline browser and changing the variable chooser (in the toolbar)
-    from \gui{Solid Color} to \gui{Temp} (you may want to turn on the color
-    bar at this point as well).
+    from \gui{Solid Color} to \gui{Temp}.
     \savecounter
   \end{enumerate}
 
@@ -743,12 +746,10 @@ pressed.
 
   \begin{enumerate}
     \restorecounter
-  \item Right click on one of the views over the background and select
-    \gui{Link Camera...}  from the pop up menu. (If \gui{Link Camera...} is
-    not in the pop up menu, make sure you click over the background of the
-    image, not on the object.  If you are on a Mac with no right mouse
-    button, you can perform the same operation with the menu option
-    \gui{Tools} \ra \gui{Add Camera Link...}.)
+  \item Right click on one of the views and select \gui{Link Camera...}
+    from the pop up menu. (If you are on a Mac with no right mouse button,
+    you can perform the same operation with the menu option \gui{Tools} \ra
+    \gui{Add Camera Link...}.)
   \item Click in a second view.
   \item Try moving the camera in each view.
   \end{enumerate}
@@ -860,8 +861,8 @@ lines that point in the direction of the flow.
 \begin{exercise}{Making Streamlines Fancy}
   \label{ex:MakingStreamlinesFancy}%
   \begin{enumerate}
-  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
-    the \gui{Tube}\filterindex{tube} filter.
+  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to add
+    the \gui{Tube}\filterindex{tube} filter to the streamlines.
   \item Hit the \apply button.
     \savecounter
   \end{enumerate}
@@ -982,7 +983,7 @@ mesh's fields over a line in space.
   purpose of adding the clip filter: It allows us to easily add the
   endpoints to this plane.  Note that placing the endpoints in this manner
   only works when rendering solid surfaces.  It will not work with a volume
-  rendered image.
+  rendered image or transparent surfaces.
 
   This representation is called a \keyterm{3D widget} because it is a GUI
   component that is manipulated in 3D space.  There are many examples of 3D
@@ -1020,24 +1021,25 @@ including colors, line styles, vector components, and legend names.
   \includegraphics[width=.5\scw]{images/PlotDisplayTab}
 \end{inlinefig}
 
-Plots also have a \icon{pqOptions16} button that brings up a dialog that
-allows you to change plot-wide options such as labels, legends, and axes
+If you scroll down further to the \gui{View} section of the properties
+panel, you to change plot-wide options such as labels, legends, and axes
 ranges.
 \begin{inlinefig}
-  \includegraphics[width=.66\scw]{images/PlotViewOptions}
+  \includegraphics[width=.5\scw]{images/PlotViewOptions}
 \end{inlinefig}
 
 \index{save screenshot}
 \index{screenshot}
+\index{export scene}
 Like any other views, you can capture the plot with the \gui{File} \ra
-\icon{pqCaptureScreenshot24}~\gui{Save Screenshot}.  We will discuss \gui{Save Screenshot} later in the tutorial.
-%As an added bonus, you
-%can save can save the plot in a vector PDF format so that it scales well if
-%included in reports and other documents.
-%TODO: charts in 3.8 don't do vector PDF yet
-You can also resize and swap plots in the GUI like you can other views.
+\icon{pqCaptureScreenshot24}~\gui{Save Screenshot}. Additionally, if you
+choose \gui{File} \ra \gui{Export Scene...} you can export a file with
+vector graphics that will scale properly for paper-quality images.  We will
+discuss these image capture features later in
+Section~\ref{sec:SaveScreenshot}.  You can also resize and swap plots in
+the GUI like you can other views.
 
-In the next exercise, we use these features to get more information out of
+In the next exercise, we modify the display to get more information out of
 our plot.  Specifically, we use the plot to compare the pressure and
 temperature variables.
 
@@ -1077,7 +1079,7 @@ temperature variables.
   at the plate surface and falls as we move away from the plate, but the
   pressure goes up and then back down.  In addition, we can observe that
   the maximal pressure (and hence the location where the forces on the air
-  are equalized) is 2.74 units away from the disk.
+  are equalized) is about 3 units away from the disk.
 \end{exercise}
 
 The ParaView framework is designed to accommodate any number of different
@@ -1411,6 +1413,9 @@ are several workarounds to this problem:
 
 
 \section{Save Screenshot and Save Animation}
+\label{sec:SaveScreenshot}
+
+\fix{Add example of \gui{Export Scene...}}
 
 One of the most important products of any visualization is screenshots and 
 movies that can be used in presentations and reports.  In this section we 
@@ -1557,6 +1562,9 @@ Next, we will save an animation.
 \index{save animation|)}
 \index{animation save|)}
 \index{movie|)}
+
+\fix{Check to see if Section~\ref{sec:ControllingTime} work now and if so,
+  pull it and the following up here.}
 
 
 \section{Selection}
@@ -1891,6 +1899,7 @@ done through the \gui{Extract Selection}~\extractSelection filter.
 
 
 \section{Controlling Time}
+\label{sec:ControllingTime}
 
 % Originally this was in the Time section, but I had to move it due to a
 % strange bug with the spreadsheet view and the temporal interpolator (bug
