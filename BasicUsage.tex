@@ -913,6 +913,7 @@ lines that point in the direction of the flow.
 
 
 \section{Plotting}
+\label{sec:Plotting}
 
 ParaView's plotting capabilities provide a mechanism to drill down into
 your data to allow quantitative analysis.  Plots are usually created with
@@ -1205,9 +1206,9 @@ the surface with the transparency set to 0 for the low end of the range and
 1 for the high end of the range.  ParaView also provides an easy way to
 change the \keyterm{transfer function}, how scalar values are mapped to
 color and transparency.  You can access the transfer function editor by
-selecting the volume rendered pipeline object and clicking on the edit
-color map~\icon{pqEditColor24} button.
-\index{edit colors} \index{colors!edit}
+selecting the volume rendered-pipeline object (in this case
+\gui{disk\_out\_ref.ex2}) and clicking on the edit color
+map~\icon{pqEditColor24} button.  \index{edit colors} \index{colors!edit}
 
 \begin{inlinefig}
   \includegraphics[width=0.8\scw]{images/ColorMapEditor}
@@ -1284,9 +1285,10 @@ provided by ParaView.
   \end{inlinefig}
 
   Notice that not only did the color mapping in the volume rendering
-  change, but all the color mapping for \gui{Temp} changed.  This ensures
-  consistency between the views and avoids any confusion from mapping the
-  same variable with different colors or different ranges.
+  change, but all the color mapping for \gui{Temp} changed including the
+  cone glyphs if you created them.  This ensures consistency between the
+  views and avoids any confusion from mapping the same variable with
+  different colors or different ranges.
 \end{exercise}
 
 
@@ -1387,35 +1389,35 @@ are several workarounds to this problem:
   hit~\icon{pqResetRange24}.  This is what we did in the previous exercise.
 \item Open the settings dialog box accessed in the menu from \gui{Edit} \ra
   \gui{Settings} (\gui{ParaView} \ra \gui{Preferences} on the Mac).  Under
-  the \gui{General} tab, change the \gui{On File Open} setting to \gui{Goto
-    last timestep}.  When this is selected, ParaView will automatically go
-  to the last time step when loading any data set with time.  For many data
-  (such as in can), the field ranges are more representative at the last
-  time step than at the beginning.  Thus, as long as you color by a field
-  before changing the time, the color range will be adequate.
-\item Open the edit color map dialog~\icon{pqEditColor24} and specify a
-  range for the data using \gui{Rescale to custom
-    range}~\icon{pqResetRangeCustom24}. This is a good choice if you cannot
-  find, or do not know, a ``representative'' time step or if you already
-  know a good range to use. You should also consider turning off the
-  \gui{Automatically rescale transfer functions to fit data} to prevent
-  your scale from changing the next time you add a filter.
+  the \gui{General} tab, find the option labeled \gui{Any time a new
+    dataset with timesteps is opened, set the timestep the application
+    should go to by default} and change it to \gui{Go to last
+    timestep}. (If you have trouble finding this option, try typing
+  \gui{timestep} into the setting's search box.) When this is selected,
+  ParaView will automatically go to the last time step when loading any
+  data set with time.  For many data (such as in can), the field ranges are
+  more representative at the last time step than at the beginning.  Thus,
+  as long as you color by a field before changing the time, the color range
+  will be adequate.
+\item \index{colors!custom range} \index{custom data range} Click the
+  \gui{Rescale to Custom Data Range}~\icon{pqResetRangeCustom24} toolbar
+  button. This is a good choice if you cannot find, or do not know, a
+  ``representative'' time step or if you already know a good range to
+  use.
 \item If you are willing to wait or have small data, you can use the
   \gui{Rescale to data range over all
     timesteps}~\icon{pqResetRangeTemporal24} button on the edit color map
   dialog~\icon{pqEditColor24} and ParaView will compute this overall
   temporal range automatically.  Keep in mind that this option will require
-  ParaView to load your entire data set over all time steps whenever you
-  load a data set.  Although ParaView will not hold more than one time step
-  in memory at a time, it will take a long time to pull all that memory off
-  of disk for large data sets.
+  ParaView to load your entire data set over all time steps.  Although
+  ParaView will not hold more than one time step in memory at a time, it
+  will take a long time to pull all that memory off of disk for large data
+  sets.
 \end{itemize}
 
 
 \section{Save Screenshot and Save Animation}
 \label{sec:SaveScreenshot}
-
-\fix{Add example of \gui{Export Scene...}}
 
 One of the most important products of any visualization is screenshots and 
 movies that can be used in presentations and reports.  In this section we 
@@ -1469,9 +1471,8 @@ will use the \gui{can.ex2} dataset.
   \gui{Files of type:} at the bottom of the dialog box, you will see
   several file types supported including
   \index{portable~network~graphics}\index{PNG}portable network graphics
-  (PNG), \index{JPEG}JPEG, and
-  \index{portable~document~format}\index{PDF}portable document format
-  (PDF).
+  (PNG), and \index{joint~photographic~experts~group}\index{JPEG}joint
+  photographic experts group (JPEG).
 
   Select a \gui{File name} for your file, and place it somewhere you can
   later find and delete.  We usually recommend saving images as PNG
@@ -1496,10 +1497,88 @@ The colors used for the color palettes (as chosen, for example, with the
 \gui{Override Color Palette} in the previous exercise), are part of
 ParaView's settings.  You can see and set all of these colors in the
 \gui{Edit} \ra \gui{Settings} (\gui{ParaView} \ra \gui{Preferences} on the
-Mac) under the \gui(Colors) tab.
+Mac) under the \gui{Color Palette} tab. \index{color palette}
 \begin{inlinefig}
   \includegraphics[width=\scw]{images/SettingsColors}
 \end{inlinefig}
+
+\index{screenshot|(}
+\index{save screenshot|(}
+\index{export scene|(}
+
+The save screenshot function saves the image as a \keyterm{raster graphic}.
+This means that the image is represented by a rectangular grid of pixels
+with a corresponding color for each pixel. This is natural for rendered
+images and very efficient for images from large data sets. However,
+elements like text and other labels often become disfigured, especially if
+the image is resized. These elements are better represented as
+\keyterm{vector graphics}, which use geometrical primitives to draw the
+shapes. This geometry allows these elements to remain smooth after image
+transformations and tend to look much nicer when used in paper
+publications.
+
+Images with vector graphics are created using the \keyterm{export scene}
+function, which is similar but separate to the save screenshot function.
+
+\begin{exercise}{Export Scene}
+  \label{ex:ExportScene}
+  \begin{enumerate}
+  \item If you do not already have it loaded from the previous exercise,
+    open the file \gui{can.ex2}, load all variables, and \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Press the~\yPlus button to orient the camera to the mesh.
+  \item Color by \gui{GlobalNodeId}.  We use \gui{GlobalNodeId} so that the
+    3D object has some color.
+  \item Select the \gui{Rescale to color range}~\icon{pqResetRange24}
+    button.
+  \item Turn on the \gui{Cube Axes} around the can. (The checkbox is in the
+    properties panel under the display options. You can type \gui{axes} to
+    quickly find it.) This will add some vector graphics to the scene.
+  \item Select \gui{File} \ra \gui{Export Scene}.
+    \savecounter
+  \end{enumerate}
+
+  This brings us to the file selection screen. If you pull down the menu
+  \gui{Files of type:} at the bottom of the dialog box, you will see
+  several file types supported including
+  \index{portable~document~format}\index{PDF}portable document format
+  (PDF), \index{postscript}\index{PS}postscript (PS),
+  \index{encapsulated~postscript}\index{EPS}encapsulated postscript (EPS),
+  and \index{scalable~vector~graphics}\index{SVG} scalable vector graphics
+  (SVG).
+
+  \begin{enumerate}
+    \restorecounter
+  \item Select PDF as the file format (unless you have a convenient reader
+    for a different format) and enter a \gui{File name} for your file. Then
+    press \gui{OK}.
+    \savecounter
+  \end{enumerate}
+
+  One final dialog box is presented to allow you to set options on how the
+  data is saved in the particular format. The default values are usually
+  sufficient. Although it may be tempting to turn off the option to
+  rasterize the 3D geometry (thereby vectorizing everything in the image),
+  we usually discourage using this option. The vector graphics for 3D
+  geometry tend to have non-portable elements, and large geometry can cause
+  lots of problems.
+
+  \begin{enumerate}
+    \restorecounter
+  \item Press the \gui{Save} button.
+  \end{enumerate}
+
+  Open the saved file in your favorite PDF viewer. Zoom in on the cube axes
+  labels and the color legend. Note that the lines and text remain crisp
+  and readable no matter how far you zoom in.
+\end{exercise}
+
+The export scene feature is particularly useful for saving charts like
+those described in Section~\ref{sec:Plotting}.
+
+\index{export scene|)}
+\index{save screenshot|)}
+\index{screenshot|)}
 
 \index{save animation|(}
 \index{animation save|(}
@@ -1517,7 +1596,7 @@ Next, we will save an animation.
   \item Select \gui{File} \ra \gui{Save Animation}~\icon{pqSaveAnimation24}.
 
   \begin{inlinefig}
-    \includegraphics[width=\scw]{images/SaveAnimation1}
+    \includegraphics[width=0.8\scw]{images/SaveAnimation1}
   \end{inlinefig}
 
   \savecounter
