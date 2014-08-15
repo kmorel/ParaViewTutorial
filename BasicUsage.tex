@@ -1350,7 +1350,7 @@ animation.
     load all variables, \apply.
   \item Go to the first time step~\vcrFirst.
   \item Color by the \gui{EQPS} variable.
-  \item Turn on the color legend~\icon{pqScalarBar32}.
+  %\item Turn on the color legend~\icon{pqScalarBar32}.
   \item Play~\vcrPlay through the animation (or skip to the last time
     step~\vcrLast).
     \savecounter
@@ -1415,6 +1415,221 @@ are several workarounds to this problem:
   sets.
 \end{itemize}
 
+ParaView has many powerful options for controlling time and animation.  The
+majority of these are accessed through the \keyterm{animation view}.  From
+the menu, click on \gui{View} \ra \gui{Animation View}.
+
+\begin{inlinefig}
+  \includegraphics[width=\scw]{images/AnimationView}
+\end{inlinefig}
+
+For now we will examine the controls at the top of the animation view. (We
+will examine the use of the tracks in the rest of the animation view later
+in Section~\ref{sec:Animations}.) The \keyterm{animation mode} parameter
+determines how ParaView will step through time during playback.  There are
+three modes available.
+
+\begin{description}
+\item[Sequence] \index{sequence (animation mode)} Given a start and end
+  time, break the animation into a specified number of frames spaced
+  equally apart.
+\item[Real Time] \index{real time (animation mode)} ParaView will play back
+  the animation such that it lasts the specified number of seconds.  The
+  actual number of frames created depends on the update time between
+  frames.
+\item[Snap To TimeSteps] \index{Snap To TimeSteps (animation mode)}
+  ParaView will play back exactly those time steps that are defined by your
+  data.
+\end{description}
+
+Whenever you load a file that contains time, ParaView will automatically
+change the animation mode to \gui{Snap To TimeSteps}.  Thus, by default you
+can load in your data, hit play~\vcrPlay, and see each time step as defined
+in your data.  This is by far the most common use case.
+
+A counter use case can occur when a simulation writes data at variable time
+intervals.  Perhaps you would like the animation to play back relative to
+the simulation time rather than the time index.  No problem.  We can switch
+to one of the other two animation modes.  Another use case is the desire to
+change the playback rate.  Perhaps you would like to speed up or slow down
+the animation.  The other two animation modes allow us to do that.
+
+\begin{exercise}{Slowing Down an Animation with the Animation Mode}%
+  \label{ex:SlowingDownAnAnimation}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
+
+  \begin{enumerate}
+  \item Open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Press the~\yPlus button to orient the camera to the mesh.
+  \item Press the play button~\vcrPlay in the toolbars.
+    \savecounter
+  \end{enumerate}
+
+  During this animation, ParaView is visiting each time step in the
+  original data file exactly once.  Note the speed at which the animation
+  plays.
+
+  \begin{enumerate}
+    \restorecounter
+  \item If you have not done so yet, make the animation view visible:
+    \gui{View} \ra \gui{Animation View}.
+  \item Change the animation mode to \gui{Real Time}.  By default the
+    animation is set up with the time range specified by the data and a
+    duration of 10 seconds.
+  \item Play~\vcrPlay the animation again.
+    \savecounter
+  \end{enumerate}
+
+  The result looks similar to the previous \gui{Snap To TimeSteps}
+  animation, but the animation is now a linear scaling of the simulation
+  time and will complete in 10 seconds.
+
+  \begin{enumerate}
+    \restorecounter
+  \item Change the \gui{Duration} to 60 seconds.
+  \item Play~\vcrPlay the animation again.
+  \end{enumerate}
+
+  The animation is clearly playing back more slowly.  Unless your computer
+  is updating slowly, you will also notice that the animation appears
+  jerkier than before.  This is because we have exceeded the temporal
+  resolution of the data set.
+\end{exercise}
+
+Often showing the jerky time steps from the original data is the desired
+behavior; it is showing you exactly what is present in the data.  However,
+if you wanted to make an animation for a presentation, you may want a
+smoother animation.
+
+There is a filter in ParaView designed for this purpose.  It is called
+the \keyterm{temporal interpolator}.  This filter will interpolate the
+positional and field data in between the time steps defined in the original
+data set.
+
+\begin{exercise}{Temporal Interpolation}
+  \label{ex:TemporalInterpolation}%
+  This exercise is a continuation of Exercise~\ref{ex:VolumeRendering}.
+  You will need to finish that exercise before beginning this one.
+
+  \begin{enumerate}
+  \item Make sure \gui{can.ex2} is highlighted in the pipeline browser.
+  \item \filterindex{temporal interpolator} Select \gui{Filters} \ra
+    \gui{Temporal} \ra \gui{Temporal Interpolator} or apply the
+    \gui{Temporal Interpolator} filter using the quick launch (ctrl+space
+    Win/Linux, alt+space Mac).
+  \item \apply.
+  %% \item Change back to \gui{Real Time} mode in the \gui{Animation View} if
+  %%   necessary.
+  \item Split the view~\splitViewH, show the \gui{TemporalInterpolator1} in
+    one, show \gui{can.ex2} in the other, and link the cameras.
+  \item Play~\vcrPlay the animation.
+  \end{enumerate}
+
+  You should notice that the output from the temporal interpolator animates
+  much more smoothly than the original data.
+\end{exercise}
+
+It is worth noting that the temporal interpolator can (and often does)
+introduce artifacts in the data.  It is because of this that ParaView will
+never apply this type of interpolation automatically; you will have to
+explicitly add the \gui{Temporal Interpolator}.  In general, mesh
+deformations often interpolate well but moving fields through a static mesh
+do not.  Also be aware that the \gui{Temporal Interpolator} only works if
+the topology remains consistent.  If you have an adaptive mesh that changes
+from one time step to the next, the \gui{Temporal Interpolator} will give
+errors.
+
+
+\section{Text Annotation}
+
+\sourceindex{text}
+
+When using ParaView as a communication tool it is often helpful to annotate
+the images you create with text.  With ParaView it is very easy to create
+text annotation wherever you want in a 3D view.  There is a special
+\keyterm{text source} that simply places some text in the view.
+
+\begin{exercise}{Adding Text Annotation}
+  \label{ex:AddingTextAnnotation}%
+  If you are continuing this exercise after finishing
+  Exercise~\ref{ex:TemporalInterpolation}, feel free to simply continue.
+  If you have had to restart ParaView since or your state does not match up
+  well enough, it is also fine to start with a fresh state.
+
+  \begin{enumerate}
+  \item From the menu bar, select \gui{Sources} \ra \gui{Text}.
+  \item In the text edit box of the properties panel, type a message.
+  \item Hit the \apply button.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/TextSource}
+  \end{inlinefig}
+
+  The text you entered appears in the 3D view.  You can place this text
+  wherever you want by simply dragging it with the mouse.  The
+  \gui{Display} group in the properties panel provides options for
+  the size, font, and color of the text.  It also has additional controls
+  for placing the text in the most common locations.
+
+  \begin{inlinefig}
+    \includegraphics[width=.66\scw]{images/TextPosition}
+  \end{inlinefig}
+\end{exercise}
+
+Often times you will need to put the current time value into the text
+annotation.  Typing the correct time value can be tedious and error prone
+with the standard text source and impossible when making an animation.
+Therefore, there is a special \keyterm{annotate time source} that will
+insert the current animation time into the string.
+
+\sourceindex{annotate time}
+
+\begin{exercise}{Adding Time Annotation}
+  \label{ex:AddingTimeAnnotation}%
+  \begin{enumerate}
+  \item If you do not already have it loaded from a previous exercise, open
+    the file \gui{can.ex2}, \apply.
+  \item Add an \gui{Annotate Time} source (\gui{Sources} \ra \gui{Annotate
+    Time} or use the quick launch: ctrl+space Win/Linux, alt+space Mac), \apply.
+  \item Move the annotation around as necessary.
+  \item Play~\vcrPlay and observe how the time annotation changes.
+    \savecounter
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/AnnotateTimeSource}
+  \end{inlinefig}
+
+  There are instances when the current animation time is not the same as
+  the time step read from a data file.  Often it is important to know what
+  the time stored in the data file is, and there is a special version of
+  annotate time that acts as a filter.
+
+
+  \begin{enumerate}
+    \restorecounter
+  \item Select \gui{can.ex2} in the pipeline browser.
+  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
+    the \gui{Annotate Time Filter}. \filterindex{annotate time filter}
+  \item \apply.
+  \item Move the annotation around as necessary.
+  \item Check the animation mode in the \gui{Animation View}.  If it is set
+    to \gui{Snap to TimeSteps}, change it to \gui{Real Time}.
+  \item Play~\vcrPlay and observe how the time annotation changes.
+  \end{enumerate}
+
+  \begin{inlinefig}
+    \includegraphics[width=\scw]{images/AnnotateTimeFilter}
+  \end{inlinefig}
+\end{exercise}
+
+You can close the animation view. We are done with it for now, but we will
+revisit it again in Section~\ref{sec:Animations}.
+
 
 \section{Save Screenshot and Save Animation}
 \label{sec:SaveScreenshot}
@@ -1429,14 +1644,17 @@ will use the \gui{can.ex2} dataset.
 
 \begin{exercise}{Save Screenshot}
   \label{ex:SaveScreenshot}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to press the~\disconnect button.
+
   \begin{enumerate}
-  \item If you do not already have it loaded from the previous exercise,
-    open the file \gui{can.ex2}, load all variables, and \apply (see
+  \item Open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
   \item Press the~\yPlus button to orient the camera to the mesh.
   \item Color by \gui{GlobalNodeId}.  We use \gui{GlobalNodeId} so that the
     3D object has some color.
-  \item Select the \gui{Rescale to color range}~\icon{pqResetRange24} button.
+  %% \item Select the \gui{Rescale to color range}~\icon{pqResetRange24} button.
   \item Select \gui{File} \ra \gui{Save
     Screenshot}~\icon{pqCaptureScreenshot24}.
 
@@ -1529,11 +1747,12 @@ function, which is similar but separate to the save screenshot function.
   \item Press the~\yPlus button to orient the camera to the mesh.
   \item Color by \gui{GlobalNodeId}.  We use \gui{GlobalNodeId} so that the
     3D object has some color.
-  \item Select the \gui{Rescale to color range}~\icon{pqResetRange24}
-    button.
+  %% \item Select the \gui{Rescale to color range}~\icon{pqResetRange24}
+  %%   button.
   \item Turn on the \gui{Cube Axes} around the can. (The checkbox is in the
-    properties panel under the display options. You can type \gui{axes} to
-    quickly find it.) This will add some vector graphics to the scene.
+    properties panel under the display options. You can type \gui{axes} in
+    the search box to quickly find it.) This will add some vector graphics
+    to the scene.
   \item Select \gui{File} \ra \gui{Export Scene}.
     \savecounter
   \end{enumerate}
@@ -1544,7 +1763,7 @@ function, which is similar but separate to the save screenshot function.
   \index{portable~document~format}\index{PDF}portable document format
   (PDF), \index{postscript}\index{PS}postscript (PS),
   \index{encapsulated~postscript}\index{EPS}encapsulated postscript (EPS),
-  and \index{scalable~vector~graphics}\index{SVG} scalable vector graphics
+  and \index{scalable~vector~graphics}\index{SVG}scalable vector graphics
   (SVG).
 
   \begin{enumerate}
@@ -1641,9 +1860,6 @@ Next, we will save an animation.
 \index{save animation|)}
 \index{animation save|)}
 \index{movie|)}
-
-\fix{Check to see if Section~\ref{sec:ControllingTime} work now and if so,
-  pull it and the following up here.}
 
 
 \section{Selection}
@@ -1977,237 +2193,14 @@ done through the \gui{Extract Selection}~\extractSelection filter.
 \end{exercise}
 
 
-\section{Controlling Time}
-\label{sec:ControllingTime}
-
-% Originally this was in the Time section, but I had to move it due to a
-% strange bug with the spreadsheet view and the temporal interpolator (bug
-% 7701).  If that gets fixed, this section should probably go back up into
-% the Time section (or at least before Selection).  Might also consider
-% moving annotation before Selection so that you don't have to do that
-% weird delete everything but can.
-
-ParaView has many powerful options for controlling time and animation.  The
-majority of these are accessed through the \keyterm{animation view}.  From
-the menu, click on \gui{View} \ra \gui{Animation View}.
-
-\begin{inlinefig}
-  \includegraphics[width=\scw]{images/AnimationView}
-\end{inlinefig}
-
-For now we will examine the controls at the top of the animation view.  The
-\keyterm{animation mode} parameter determines how ParaView will step
-through time during playback.  There are three modes available.
-
-\begin{description}
-\item[Sequence] \index{sequence (animation mode)} Given a start and end
-  time, break the animation into a specified number of frames spaced
-  equally apart.
-\item[Real Time] \index{real time (animation mode)} ParaView will play back
-  the animation such that it lasts the specified number of seconds.  The
-  actual number of frames created depends on the update time between
-  frames.
-\item[Snap To TimeSteps] \index{Snap To TimeSteps (animation mode)}
-  ParaView will play back exactly those time steps that are defined by your
-  data.
-\end{description}
-
-Whenever you load a file that contains time, ParaView will automatically
-change the animation mode to \gui{Snap To TimeSteps}.  Thus, by default you
-can load in your data, hit play~\vcrPlay, and see each time step as defined
-in your data.  This is by far the most common use case.
-
-A counter use case can occur when a simulation writes data at variable time
-intervals.  Perhaps you would like the animation to play back relative to
-the simulation time rather than the time index.  No problem.  We can switch
-to one of the other two animation modes.  Another use case is the desire to
-change the playback rate.  Perhaps you would like to speed up or slow down
-the animation.  The other two animation modes allow us to do that.
-
-\begin{exercise}{Slowing Down an Animation with the Animation Mode}%
-  \label{ex:SlowingDownAnAnimation}%
-  We are going to start a fresh visualization, so if you have been
-  following along with the exercises so far, now is a good time to reset
-  ParaView.  The easiest way to do this is to press the~\disconnect button.
-
-  \begin{enumerate}
-  \item Open the file \gui{can.ex2}, load all variables, \apply (see
-    Exercise~\ref{ex:LoadingTemporalData}).
-  \item Press the~\yPlus button to orient the camera to the mesh.
-  \item Press the play button~\vcrPlay in the toolbars.
-    \savecounter
-  \end{enumerate}
-
-  During this animation, ParaView is visiting each time step in the
-  original data file exactly once.  Note the speed at which the animation
-  plays.
-
-  \begin{enumerate}
-    \restorecounter
-  \item If you have not done so yet, make the animation view visible:
-    \gui{View} \ra \gui{Animation View}.
-  \item Change the animation mode to \gui{Real Time}.  By default the
-    animation is set up with the time range specified by the data and a
-    duration of 10 seconds.
-  \item Play~\vcrPlay the animation again.
-    \savecounter
-  \end{enumerate}
-
-  The result looks similar to the previous \gui{Snap To TimeSteps}
-  animation, but the animation is now a linear scaling of the simulation
-  time and will complete in 10 seconds.
-
-  \begin{enumerate}
-    \restorecounter
-  \item Change the \gui{Duration} to 60 seconds.
-  \item Play~\vcrPlay the animation again.
-  \end{enumerate}
-
-  The animation is clearly playing back more slowly.  Unless your computer
-  is updating slowly, you will also notice that the animation appears
-  jerkier than before.  This is because we have exceeded the temporal
-  resolution of the data set.
-\end{exercise}
-
-Often showing the jerky time steps from the original data is the desired
-behavior; it is showing you exactly what is present in the data.  However,
-if you wanted to make an animation for a presentation, you may want a
-smoother animation.
-
-There is a filter in ParaView designed for this purpose.  It is called
-the \keyterm{temporal interpolator}.  This filter will interpolate the
-positional and field data in between the time steps defined in the original
-data set.
-
-\begin{exercise}{Temporal Interpolation}
-  \label{ex:TemporalInterpolation}%
-  This exercise is a continuation of Exercise~\ref{ex:VolumeRendering}.
-  You will need to finish that exercise before beginning this one.
-
-  \begin{enumerate}
-  \item Make sure \gui{can.ex2} is highlighted in the pipeline browser.
-  \item \filterindex{temporal interpolator} Select \gui{Filters} \ra
-    \gui{Temporal} \ra \gui{Temporal Interpolator} or apply the
-    \gui{Temporal Interpolator} filter using the quick launch (ctrl+space
-    Win/Linux, alt+space Mac).
-  \item \apply.
-  \item Change back to \gui{Real Time} mode in the \gui{Animation View} if
-    necessary.
-  \item Split the view~\splitViewH, show the \gui{TemporalInterpolator1} in
-    one, show \gui{can.ex2} in the other, and link the cameras.
-  \item Play~\vcrPlay the animation.
-  \end{enumerate}
-
-  You should notice that the output from the temporal interpolator animates
-  much more smoothly than the original data.
-\end{exercise}
-
-It is worth noting that the temporal interpolator can (and often does)
-introduce artifacts in the data.  It is because of this that ParaView will
-never apply this type of interpolation automatically; you will have to
-explicitly add the \gui{Temporal Interpolator}.  In general, mesh
-deformations often interpolate well but moving fields through a static mesh
-do not.  Also be aware that the \gui{Temporal Interpolator} only works if
-the topology remains constant.  If you have an adaptive mesh that changes
-from one time step to the next, the \gui{Temporal Interpolator} will give
-errors.
-
-
-\section{Text Annotation}
-
-% This section should probably directly follow the material currently
-% covered in the Controlling Time section.  If that material moves, so
-% should this material.
-
-\sourceindex{text}
-
-When using ParaView as a communication tool it is often helpful to annotate
-the images you create with text.  With ParaView it is very easy to create
-text annotation wherever you want in a 3D view.  There is a special
-\keyterm{text source} that simply places some text in the view.
-
-\begin{exercise}{Adding Text Annotation}
-  \label{ex:AddingTextAnnotation}%
-  If you are continuing this exercise after finishing
-  Exercise~\ref{ex:TemporalInterpolation}, feel free to simply continue.
-  If you have had to restart ParaView since or your state does not match up
-  well enough, it is also fine to start with a fresh state.
-
-  \begin{enumerate}
-  \item From the menu bar, select \gui{Sources} \ra \gui{Text}.
-  \item In the text edit box of the properties panel, type a message.
-  \item Hit the \apply button.
-  \end{enumerate}
-
-  \begin{inlinefig}
-    \includegraphics[width=\scw]{images/TextSource}
-  \end{inlinefig}
-
-  The text you entered appears in the 3D view.  You can place this text
-  wherever you want by simply dragging it with the mouse.  The
-  \gui{Display} group in the properties panel provides additional options for
-  the size, font, and color of the text.  It also has additional controls
-  for placing the text in the most common locations.
-
-  \begin{inlinefig}
-    \includegraphics[width=.66\scw]{images/TextPosition}
-  \end{inlinefig}
-\end{exercise}
-
-Often times you will need to put the current time value into the text
-annotation.  Typing the correct time value can be tedious and error prone
-with the standard text source and impossible when making an animation.
-Therefore, there is a special \keyterm{annotate time source} that will
-insert the current animation time into the string.
-
-\sourceindex{annotate time}
-
-\begin{exercise}{Adding Time Annotation}
-  \label{ex:AddingTimeAnnotation}%
-  \begin{enumerate}
-  \item If you do not already have it loaded from a previous exercise, open
-    the file \gui{can.ex2}, \apply.
-  \item Add an \gui{Annotate Time} source (\gui{Sources} \ra \gui{Annotate
-    Time} or use the quick launch: ctrl+space Win/Linux, alt+space Mac), \apply.
-  \item Move the annotation around as necessary.
-  \item Play~\vcrPlay and observe how the time annotation changes.
-    \savecounter
-  \end{enumerate}
-
-  \begin{inlinefig}
-    \includegraphics[width=\scw]{images/AnnotateTimeSource}
-  \end{inlinefig}
-
-  There are instances when the current animation time is not the same as
-  the time step read from a data file.  Often it is important to know what
-  the time stored in the data file is, and there is a special version of
-  annotate time that acts as a filter.
-
-
-  \begin{enumerate}
-    \restorecounter
-  \item Select \gui{can.ex2}.
-  \item Use the quick launch (ctrl+space Win/Linux, alt+space Mac) to apply
-    the \gui{Annotate Time Filter}. \filterindex{annotate time filter}
-  \item \apply.
-  \item Move the annotation around as necessary.
-  \item Check the animation mode in the \gui{Animation View}.  If it is set
-    to \gui{Snap to TimeSteps}, change it to \gui{Real Time}.
-  \item Play~\vcrPlay and observe how the time annotation changes.
-  \end{enumerate}
-
-  \begin{inlinefig}
-    \includegraphics[width=\scw]{images/AnnotateTimeFilter}
-  \end{inlinefig}
-\end{exercise}
-
-
 \section{Animations}
+\label{sec:Animations}
 
 We have already seen how to animate a data set with time in it
-(hit~\vcrPlay).  However, ParaView's animation capabilities go far beyond
-that.  With ParaView you can animate nearly any property of any pipeline
-object.
+(hit~\vcrPlay) and other ways to manipulate temporal data in
+Section~\ref{sec:Time}.  However, ParaView's animation capabilities go far
+beyond that.  With ParaView you can animate nearly any property of any
+pipeline object.
 
 \begin{exercise}{Animating Properties}
   \label{ex:AnimatingProperties}%
