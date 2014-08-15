@@ -1926,7 +1926,7 @@ dialog box.
   selection remains.
 \end{exercise}
 
-One of the easiest ways of creating a selection is to pick elements right
+Another way of creating a selection is to pick elements right
 inside the 3D view.  Most of the 3D view selections are performed with a
 \keyterm{rubber-band selection}.  That is, by clicking and dragging the
 mouse in the 3D view, you will create a boxed region that will select
@@ -1972,9 +1972,9 @@ operations on the selection. These include inverting the selection (a
 checkbox just over the spreadsheet), adding labels
 (Exercise~\ref{ex:LabelingSelections}), freezing selections
 (Exercise~\ref{ex:DataElementSelectionsVsSpatialSelections}), and shortcuts
-for the \gui{Extract Selection}~\extractSelection and \gui{Plot Selection
-  Over Time}~\plotSelectionOverTime filters (Exercises
-\ref{ex:ExtractingASelection} and \ref{ex:PlotOverTime}, respectively).
+for the \gui{Plot Selection Over Time}~\plotSelectionOverTime and
+\gui{Extract Selection}~\extractSelection filters (Exercises
+\ref{ex:PlotOverTime} and \ref{ex:ExtractingASelection}, respectively).
 
 Experiment with selections in \gui{Find Data}~\findData a bit.  Open the
 \gui{Find Data}~\findData dialog box.  Then make selections using the
@@ -1985,7 +1985,7 @@ with the \gui{Invert selection} checkbox.
 It should be noted that selections can be internally represented in
 different ways. Some are recorded as a list of data element ids. Others are
 specified as a region in space or by query parameters. Although the
-selections all look the same, they can be have differently, especially with
+selections all look the same, they can behave differently, especially with
 respect to changes in time. The following exercise demonstrates how these
 different selection mechanisms can behave differently.
 
@@ -2026,85 +2026,93 @@ different selection mechanisms can behave differently.
   the same throughout the animation.
 \end{exercise}
 
-The \keyterm{spreadsheet view} is an important tool to use for quantitative
-drill down. The spreadsheet view allows you to read the actual values of
-scalar fields throughout the data and the selection mechanism will help you
-identify the values of interest.
+% The spreadsheet view seems very unimportant for selections now that there
+% is a mini-spreadsheet in the find data dialog. Thus, suppress this
+% exercise and make sure the others do not depend on the spreadsheet.
 
-\begin{exercise}{The Spreadsheet View and Selection}
-  \label{ex:TheSpreadsheetViewAndSelection}%
-  \begin{enumerate}
-  \item If you do not already have it loaded from the previous exercise,
-    open the file \gui{can.ex2}, load all variables, \apply (see
-    Exercise~\ref{ex:LoadingTemporalData}).
-  \item Split the view vertically~\splitViewV.
-  \item In the new view, click the \gui{Spreadsheet View} button.
-  \item Make \gui{can.ex2} visible (by clicking the appropriate \eyeballg)
-    if not already visible.
-    \savecounter
-  \end{enumerate}
+%% The \keyterm{spreadsheet view} is an important tool to use for quantitative
+%% drill down. The spreadsheet view allows you to read the actual values of
+%% scalar fields throughout the data and the selection mechanism will help you
+%% identify the values of interest.
 
-  As you can see, the spreadsheet view is fairly simple.  It shows the
-  field data in tabular form for one field type (e.g. point or cell data)
-  of one block of one data set.  This constraint is enforced to ensure that
-  every row has the same column data.
+%% \begin{exercise}{The Spreadsheet View and Selection}
+%%   \label{ex:TheSpreadsheetViewAndSelection}%
+%%   \begin{enumerate}
+%%   \item If you do not already have it loaded from the previous exercise,
+%%     open the file \gui{can.ex2}, load all variables, \apply (see
+%%     Exercise~\ref{ex:LoadingTemporalData}).
+%%   \item Split the view vertically~\splitViewV.
+%%   \item In the new view, click the \gui{Spreadsheet View} button.
+%%   \item Make \gui{can.ex2} visible (by clicking the appropriate \eyeballg)
+%%     if not already visible.
+%%     \savecounter
+%%   \end{enumerate}
 
-  You can sort the rows of the spreadsheet by clicking on a variable 
-  name at the top of each column.  The spreadsheet will sort the 
-  spreadsheet even if the data is spread across multiple remote ParaView 
-  servers.
+%%   As you can see, the spreadsheet view is fairly simple.  It shows the
+%%   field data in tabular form for one field type (e.g. point or cell data)
+%%   of one block of one data set.  This constraint is enforced to ensure that
+%%   every row has the same column data.
+
+%%   You can sort the rows of the spreadsheet by clicking on a variable 
+%%   name at the top of each column.  The spreadsheet will sort the 
+%%   spreadsheet even if the data is spread across multiple remote ParaView 
+%%   servers.
  
-  Note the widgets at the top of the spreadsheet view.  These let you
-  quickly select the pipeline object, choose the type of field to show,
-  choose the precision shown for floating point numbers, and hide
-  everything but the selection.  As with any view, the spreadsheet view has
-  its own \gui{Display} panels.
+%%   Note the widgets at the top of the spreadsheet view.  These let you
+%%   quickly select the pipeline object, choose the type of field to show,
+%%   choose the precision shown for floating point numbers, and hide
+%%   everything but the selection.  As with any view, the spreadsheet view has
+%%   its own \gui{Display} panels.
 
-  \begin{inlinefig}
-    \includegraphics[scale=\bbscale]{images/SpreadsheetViewLabeled}
-  \end{inlinefig}
+%%   \begin{inlinefig}
+%%     \includegraphics[scale=\bbscale]{images/SpreadsheetViewLabeled}
+%%   \end{inlinefig}
 
-  \begin{enumerate}
-    \restorecounter
-  \item In the \gui{Attribute} combo box, select \gui{Cell Data}.
-  \item Scroll around the spreadsheet view and find some highlighted rows.
-    (You may have to select a different block in the \gui{Display} panel.)
-    \savecounter
-  \end{enumerate}
+%%   \begin{enumerate}
+%%     \restorecounter
+%%   \item In the \gui{Attribute} combo box, select \gui{Cell Data}.
+%%   \item Scroll around the spreadsheet view and find some highlighted rows.
+%%     (You may have to select a different block in the \gui{Display} panel.)
+%%     \savecounter
+%%   \end{enumerate}
 
-  \begin{inlinefig}
-    \includegraphics[width=\scw]{images/SpreadsheetViewExample}
-  \end{inlinefig}
+%%   \begin{inlinefig}
+%%     \includegraphics[width=\scw]{images/SpreadsheetViewExample}
+%%   \end{inlinefig}
 
-  Those highlighted rows are the ones that are part of the current
-  selection.  This coordination of selection between views is an important
-  mechanism to link views.  In this example, it can be difficult to identify
-  the selected items in the spreadsheet view.  Often, you just want to see
-  the data in the selection.
+%%   Those highlighted rows are the ones that are part of the current
+%%   selection.  This coordination of selection between views is an important
+%%   mechanism to link views.  In this example, it can be difficult to identify
+%%   the selected items in the spreadsheet view.  Often, you just want to see
+%%   the data in the selection.
 
-  \begin{enumerate}
-    \restorecounter
-  \item Click on the \gui{Show only selected elements}~\icon{pqSelect32}
-    button at the top of the spreadsheet view.
-    \savecounter
-  \end{enumerate}
+%%   \begin{enumerate}
+%%     \restorecounter
+%%   \item Click on the \gui{Show only selected elements}~\icon{pqSelect32}
+%%     button at the top of the spreadsheet view.
+%%     \savecounter
+%%   \end{enumerate}
 
-  We have now seen a selection made in the 3D view show up in the
-  spreadsheet view.  The linking works in reverse as well.  We can make
-  selections in the spreadsheet and they will be displayed in the 3D view.
+%%   We have now seen a selection made in the 3D view show up in the
+%%   spreadsheet view.  The linking works in reverse as well.  We can make
+%%   selections in the spreadsheet and they will be displayed in the 3D view.
 
-  \begin{enumerate}
-  \item Uncheck \gui{Show only selected elements}.
-  \item Select a few rows in the spreadsheet view.
-  \item Find the resulting selection in the 3D view.
-  \end{enumerate}
-\end{exercise}
+%%   \begin{enumerate}
+%%   \item Uncheck \gui{Show only selected elements}.
+%%   \item Select a few rows in the spreadsheet view.
+%%   \item Find the resulting selection in the 3D view.
+%%   \end{enumerate}
+%% \end{exercise}
 
-The spreadsheet provides the most readable way to inspect field data.
-However, sometimes it is helpful to place the field data directly in the 3D
-view.  The next exercise describes how we can do that.
+%% The spreadsheet provides the most readable way to inspect field data.
+%% However, sometimes it is helpful to place the field data directly in the 3D
+%% view.  The next exercise describes how we can do that.
 
 \index{labels|(}
+
+The spreadsheet in the find dialog provides a readable way to inspect field
+data. However, sometimes it is helpful to place the field data directly in
+the 3D view. The next exercise describes how we can do that.
 
 \begin{exercise}{Labeling Selections}
   \label{ex:LabelingSelections}%
@@ -2112,22 +2120,27 @@ view.  The next exercise describes how we can do that.
   \item If you do not already have it loaded from the previous exercise,
     open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
-  \item If you do not have a few cells selected from the previous exercise,
-    select a few now. (For this exercise it is not a good idea to select a
-    large amount of cells.)
+  \item Go to the last time step~\vcrLast.
   \item If it is not already visible, show the \gui{Find Data}~\findData
     dialog box.
-  \item In the \gui{Labels} chooser, select \gui{EQPS}.
+  \item Using the controls at the top of the find data dialog box, create a
+    selection where \gui{Global ID} \gui{is min}. Click \gui{Run Selection
+      Query}.
+  \item In the \gui{Cell Labels} chooser, select \gui{EQPS}.
   \end{enumerate}
 
   \begin{inlinefig}
-    \includegraphics[width=\scw]{images/SpreadsheetSelection}
+    \includegraphics[width=\scw]{images/SelectionLabels}
   \end{inlinefig}
 
   ParaView places the values for the \gui{EQPS} field near the selected
-  cell that contains that value.  It is also possible to change the look of
-  the font with respect to type, size, and color with the \gui{Find Data}
-  dialog box.
+  cell that contains that value. You should be able to see it in the 3D
+  view. It is also possible to change the look of the font with respect to
+  type, size, and color by clicking the \icon{pqAdvanced26} button to the
+  right of the label choosers.
+
+  You can turn off the labels by unchecking the entry in the \gui{Cell
+    Labels} chooser.
 \end{exercise}
 
 \index{labels|)}
@@ -2142,14 +2155,30 @@ selection.
   \item If you do not already have it loaded from the previous exercise,
     open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
-  \item If you do not have a few cells selected from the previous exercise,
-    select a few now. (For this exercise it is not a good idea to select a
-    large amount of cells.)
-  \item With the selection still active, add the \gui{Plot Selection Over
-    Time}~\plotSelectionOverTime filter.
-  \item \apply.
-  \item Go to the \gui{Display} panel and select different blocks to plot
-    (which correspond to each of the selected elements).
+  \item If it is not already visible, show the \gui{Find Data}~\findData
+    dialog box.
+  \item Using the controls at the top of the find data dialog box, create a
+    selection where \gui{EQPS} \gui{is max}. Click \gui{Run Selection
+      Query}.
+  \item Click the \gui{Plot Selection Over Time} button at the bottom of
+    the find data dialog box to add that filter. This filter is also easily
+    accessible by the \plotSelectionOverTime toolbar button in the main
+    ParaView window.
+  \item In the properties panel in the main ParaView window, click \apply.
+    \savecounter
+  \end{enumerate}
+
+  ParaView has created a plot of the field values of the cell with the
+  maximum EQPS over time. Right now the plot is messy because ParaView is
+  reporting statistics for all field values of the selection (for example,
+  what is the element identifier for the cell with the highest
+  EQPS). However, all we want right now is information about the EQPS field
+  itself.
+
+  \begin{enumerate}
+    \restorecounter
+  \item In the display controls of the properties panel, turn off all plot
+    series except for \gui{max(EQPS)}.
   \end{enumerate}
 
   \begin{inlinefig}
@@ -2157,9 +2186,17 @@ selection.
   \end{inlinefig}
 
   Note that the selection you had was automatically added as the selection
-  to use in the \gui{Properties} panel.  If you want to change the
-  selection, simply make a new one and click \gui{Copy Active Selection} in
-  the \gui{Properties} panel.
+  to use in the \gui{Properties} panel when the \gui{Plot Selection Over
+    Time}~\plotSelectionOverTime filter was created.  If you want to change
+  the selection, simply make a new one and click \gui{Copy Active
+    Selection} in the \gui{Properties} panel.
+
+  Also note that the plot was for the maximum EQPS value at each timestep,
+  which could potentially be from a different cell at every timestep. If
+  the desire is to identify a cell with a maximum value at some timestep
+  and then plot that cell's value at every timestep, then use the
+  \gui{Freeze Selection} feature demonstrated in
+  Exercise~\ref{ex:DataElementSelectionsVsSpatialSelections}.
 \end{exercise}
 
 You can also extract a selection in order to view the selected points or
@@ -2172,7 +2209,7 @@ done through the \gui{Extract Selection}~\extractSelection filter.
   \item If you do not already have it loaded from the previous exercise,
     open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
-  \item Turn off cell labels if they are still showing (check the
+  \item Turn off cell labels if they are still showing (use the
     \gui{Find Data} dialog).
   \item Make a sizable cell selection for example, with Select Cells
     Through~\selectCellsThrough.
