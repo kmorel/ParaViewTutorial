@@ -60,7 +60,7 @@ logical units of ParaView are as follows.
   serial application.
 \end{description}
 
-These logical units need not by physically separated.  Logical units are
+These logical units need not be physically separated.  Logical units are
 often embedded in the same application, removing the need for any
 communication between them.  There are three modes in which you can run
 ParaView.
@@ -93,7 +93,7 @@ minimized.
   \includegraphics[scale=\bbscale]{images/RunModeClientRenderDataServer}
 \end{inlinefig}
 
-The third mode is \keyterm{client-render server-data server} mode.  In this
+The third mode is \keyterm{client--render-server--data-server} mode.  In this
 mode, all three logical units are running in separate programs.  As before,
 the client is connected to the render server via a single socket
 connection.  The render server and data server are connected by many socket
@@ -131,7 +131,7 @@ To compile ParaView on a parallel machine, you will need the following.
 \item OpenGL (or use Mesa 3D \href{http://www.mesa3d.org}{www.mesa3d.org}
   if otherwise unavailable)
 \item Qt 4.7 (optional)
-\item Python (optional)
+\item Python +NumPy +Matplotlib (optional)
 \end{itemize}
 
 Compiling without one of the optional libraries means a feature will not be
@@ -189,7 +189,7 @@ We are fortunate in that once you have a parallel framework, performing
 parallel visualization tasks is straightforward.  The data we deal with is
 contained in a mesh, which means the data is already broken into little
 pieces by the cells.  We can do visualization on a distributed parallel
-machine by first dividing the cells amongst the processes.  For
+machine by first dividing the cells among the processes.  For
 demonstrative purposes, consider this very simplified mesh.
 
 \begin{inlinefig}
@@ -206,8 +206,10 @@ blue, yellow, and pink regions.
 
 Once partitioned, some visualization algorithms will work by simply
 allowing each process to independently run the algorithm on its local
-collection of cells.  For example, take clipping.  Let us say that we
-define a clipping plane and give that same plane to each of the processes.
+collection of cells.  For example, take clipping (which is demonstrated in
+multiple exercises including \ref{ex:UsingMultipleViews}).  Let us say that
+we define a clipping plane and give that same plane to each of the
+processes.
 
 \begin{inlinefig}
   \includegraphics[scale=\bbscale]{images/ParallelExampleClip1}
@@ -230,22 +232,24 @@ Unfortunately, blindly running visualization algorithms on partitions of
 cells does not always result in the correct answer.  As a simple example,
 consider the \keyterm{external faces} algorithm.  The external faces
 algorithm finds all cell faces that belong to only one cell, thereby
-identifying the boundaries of the mesh.
+identifying the boundaries of the mesh. What happens when we run external
+faces independently on our partitions?
 
 \begin{inlinefig}
   \includegraphics[scale=\bbscale]{images/ParallelExampleExternalFaces1}
 \end{inlinefig}
 
 Oops.  We see that when all the processes ran the external faces algorithm
-independently, many internal faces where incorrectly identified as being
+independently, many internal faces were incorrectly identified as being
 external.  This happens where a cell in one partition has a neighbor in
 another partition.  A process has no access to cells in other partitions,
 so there is no way of knowing that these neighboring cells exist.
 
 The solution employed by ParaView and other parallel visualization systems
-is to use \keyterm{ghost cells}.  Ghost cells are cells that are held in
-one process but actually belong to another.  To use ghost cells, we first
-have to identify all the neighboring cells in each partition.  We then copy
+is to use \keyterm{ghost cells} (sometimes also called
+\keyterm{halo regions}).  Ghost cells are cells that are held in one
+process but actually belong to another.  To use ghost cells, we first have
+to identify all the neighboring cells in each partition.  We then copy
 these neighboring cells to the partition and mark them as ghost cells, as
 indicated with the gray colored cells in the following example.
 
@@ -327,7 +331,7 @@ data you wish to repartition.
 
 The most common use case for D3 is to attach it directly to your
 unstructured grid reader.  Regardless of how well load balanced the incoming
-data might be, it is important to be able to retrieve ghost cell so that
+data might be, it is important to be able to retrieve ghost cells so that
 subsequent filters will generate the correct data.  The example above shows
 a cutaway of the extract surface filter on an unstructured grid.  On the
 left we see that there are many faces improperly extracted because we are
@@ -337,27 +341,27 @@ D3 filter.
 
 \section{Matching Job Size to Data Size}
 
-\emph{How many processors should I have in my ParaView server?}  This is a
+\emph{How many cores should I have in my ParaView server?}  This is a
 common question with many important ramifications.  It is also an
 enormously difficult question.  The answer depends on a wide variety of
-factors including what hardware each process has, how much data is being
+factors including what hardware each processor has, how much data is being
 processed, what type of data is being processed, what type of visualization
 operations are being done, and your own patience.
 
 Consequently, we have no hard answer.  We do however have several rules of thumb.
 
 \textbf{If you are loading structured data} (image data, rectilinear grid,
-structured grid), try to have a minimum of one processor per 20 million
-cells.  If you can spare the processors, one processor for every 5 to 10
+structured grid), try to have a minimum of one core per 20 million
+cells.  If you can spare the cores, one core for every 5 to 10
 million cells is usually plenty.
 
 \textbf{If you are loading unstructured data} (poly data, unstructured
-grid), try to have a minimum of one processor per 1 million cells.  If you
-can spare the processors, one processor for every 250 to 500 thousand cells
+grid), try to have a minimum of one core per 1 million cells.  If you
+can spare the cores, one core for every 250 to 500 thousand cells
 is usually plenty.
 
 As stated before, these are just rules of thumb, not absolutes.  You should
-always try to experiment to gage what your processor to data size should
+always try to experiment to gage what your core to data size should
 be.  And, of course, there will always be times when the data you want to
 load will stretch the limit of the resources you have available.  When this
 happens, you will want to make sure that you avoid data explosion and that
@@ -555,7 +559,7 @@ needed in memory.  The \gui{Temporal Cache} filter will also hold data for
 multiple instances of time.  Also keep in mind that some of the temporal
 filters such as the temporal statistics and the filters that plot over time
 may need to iteratively load all data from disk.  Thus, it may take an
-impractically long amount of time even if does not require any extra
+impractically long amount of time even though it does not require any extra
 memory.
 
 The \gui{Programmable Filter}~\icon{pqProgrammableFilter24} is also a
@@ -618,7 +622,7 @@ range rather than extract all of the cells with the
 \gui{Threshold}~\threshold filter.  Be aware that substituting filters can
 have an effect on downstream filters.  For example, running the
 \gui{Histogram}~\histogram filter after
-\gui{Threshold}~\threshold will have an entirely different effect then
+\gui{Threshold}~\threshold will have an entirely different effect than
 running it after the roughly equivalent \gui{Contour}~\contour filter.
 
 
@@ -655,6 +659,8 @@ the entire ParaView job.
 
 \section{Rendering}
 
+\index{rendering|(}
+
 Rendering is the process of synthesizing the images that you see based on
 your data.  The ability to effectively interact with your data depends
 highly on the speed of the rendering.  Thanks to advances in 3D hardware
@@ -662,6 +668,9 @@ acceleration, fueled by the computer gaming market, we have the ability to
 render 3D quickly even on moderately priced computers.  But, of course, the
 speed of rendering is proportional to the amount of data being rendered.
 As data gets bigger, the rendering process naturally gets slower.
+
+\index{rendering!interactive|see{interactive render}}
+\index{rendering!still|see{still render}}
 
 To ensure that your visualization session remains interactive, ParaView
 supports two modes of rendering that are automatically flipped as
@@ -688,7 +697,8 @@ The interactive render is a compromise between speed and accuracy.  As
 such, many of the rendering parameters concern when and how lower levels of
 detail are used.
 
-\subsection{Basic Parameter Settings}
+\subsection{Basic Rendering Settings}
+\label{sec:BasicRenderingSettings}
 
 Some of the most important rendering options are the LOD parameters.
 During interactive rendering, the geometry may be replaced with a lower
@@ -701,87 +711,109 @@ fewer polygons.
   \includegraphics[width=.28\linewidth]{images/GeometricLOD10}
 \end{inlinefig}
 
-The resolution of the geometric approximation can be controlled.  The
-decimation algorithm strives to place the polygons in a coarse grid.  In
-the proceeding images, the left image is the full resolution; the middle
-image is decimation on a $50^3$ grid, and the right image is decimation on
-a $10^3$ grid.
+The resolution of the geometric approximation can be controlled. In the
+proceeding images, the left image is the full resolution; the middle image
+is the default decimation for interactive rendering, and the right image is
+ParaView's maximum decimation setting.
 
 The 3D rendering parameters are located in the settings dialog box which is
 accessed in the menu from \gui{Edit} \ra \gui{Settings} (\gui{ParaView} \ra
-\gui{Preferences} on the Mac).  The basic rendering options in the dialog
-are in the \gui{Render View} \ra \gui{General} section.
+\gui{Preferences} on the Mac).  The rendering options in the dialog
+are in the \gui{Render View} tab.
 
 \begin{inlinefig}
-  \includegraphics[width=\scw]{images/SettingsRendering}
+  \includegraphics[width=0.8\scw]{images/SettingsRendering}
 \end{inlinefig}
 
-The options pertaining to rendering performance have the following
-meanings.
+The options pertaining to the geometric decimation for interactive
+rendering are located in a section labeled \gui{Interactive Rendering
+  Options}. Some of these options are considered advanced, so to access
+them you have to either toggle on the advanced options with the
+\icon{pqAdvanced26} button or search for the option using the edit box at
+the top of the dialog. The interactive rendering options include the
+following.
+
+\begin{itemize}
+\item \index{LOD Threshold} Set the data size at which to use a decimated
+  geometry in interactive rendering. If the geometry size is under this
+  threshold, ParaView always renders the full geometry. Increase this value
+  if you have a decent graphics card that can handle larger data. Try
+  decreasing this value if your interactive renders are too slow.
+\item \index{LOD Resolution} Set the factor that controls how large the
+  decimated geometry should be. This control is set to a value between 0
+  and 1. 0 produces a very small number of triangles but possibly with a
+  lot of distortion. 1 produces more detailed surfaces but with larger
+  geometry. \icon{pqAdvanced26}
+\item \index{interactive render!delay} Add a delay between an interactive
+  render and a still render. ParaView usually performs a still render
+  immediately after an interactive motion is finished (for example,
+  releasing the mouse button after a rotation). This option can add a delay
+  that can give you time to start a second interaction before the still
+  render starts, which is helpful if the still render takes a long time to
+  complete. \icon{pqAdvanced26}
+\item \index{interactive render!outline} Use an outline in place of
+  decimated geometry. The outline is an alternative for when the geometry
+  decimation takes too long or still produces too much geometry. However, it
+  is more difficult to interact with just an outline.
+\end{itemize}
+
+ParaView contains many more rendering settings. Here is a summary of some
+other settings that can effect the rendering performance regardless of
+whether ParaView is run in client-server mode or not. These options are
+spread among several categories, and several are considered advanced.
 
 \begin{description}
-\item[Use Immediate Mode Rendering] \index{immediate mode rendering} When
-  checked, geometry is sent to the graphics card for immediate rendering.
-  When unchecked, the geometry is first compiled into display lists for
-  more efficient rendering.  The display lists usually render faster, but
-  require initial time to compile during the first frame and extra memory
-  to store.
-\item[LOD Threshold] \index{LOD Threshold} Controls when to replace the
-  geometry with a decimated version of the geometry during interactive
-  rendering.  The checkbox turns the feature on or off.  When on, the
-  slider gives a threshold for the feature.  If the geometry size is below
-  the threshold, it is considered small enough to render.  When the
-  geometry size is above the threshold, the decimated form is used during
-  rendering.  When unchecked, the full geometry is always rendered.
-\item[LOD Resolution] \index{LOD Resolution} Controls the size of geometry
-  to create for geometric level of detail.  Moving the slider to the right
-  results in a more coarse representation.
-\item[Lock Interactive Render] Specify a pause between an interactive
-  render and a still render.  This pause allows you to let go of the mouse
-  and drag again (to perhaps change from rotate to pan) without having to
-  wait for a full still render.
-\item[Use outline for LOD rendering] Normally ParaView uses a decimated
-  version of the geometry for its interactive render.  When this box is
-  checked, ParaView instead uses a simple bounding box outline.  This saves
-  the time to make the decimated geometry and any rendering time.
-\item[Allow Rendering Interrupts] \index{rendering interrupts} When
-  checked, a still render may be interrupted by a request to perform an
-  interactive render.  Not all rendering modes support interrupts.
-\item[Outline Threshold] \index{outline threshold} When an unstructured
-  dataset exceeds this threshold, the default representation mode is set
-  to outline instead of surface.
-\item[Enable Depth Peeling] \index{depth peeling} ParaView uses an
-  algorithm called depth peeling to properly render translucent surfaces.
-  With it, the top surface is rendered and then ``peeled away'' so that the
-  next lower surface can be rendered and so on.  If you find that making
-  surfaces transparent really slows things down or renders completely
-  incorrectly, then your graphics hardware may not be implementing the
-  depth peeling extensions well; try shutting off depth peeling.  You can
-  also adjust the number of depth peels used.  Using more peels allows more
-  depth complexity but allowing less peels runs faster.
-\item[Coincident Topology Resolution] \index{coincident geometry} It is
-  sometimes the case you wish to render lines that are coincident with a
-  surface (for example, rendering a wireframe of cells on top of their
-  surface).  Rendering systems generally can have problems resolving hidden
-  surfaces in these circumstances.  These options allow you to change the
-  ``tricks'' ParaView's rendering uses to resolve these issues.  Generally
-  you do not need to change these options unless there is a problem with
-  the rendering.
-\item[Use Offscreen Rendering for Screenshots] \index{offscreen rendering}
-  ParaView usually uses offscreen rendering when creating screenshots to
-  avoid having other windows on your desktop affect the images.  However,
-  some hardware places restrictions on offscreen rendering that can cause
-  artifacts.  If you find that your saved images look different then the
-  ones on screen (for example, more dark), try disabling this feature.
+\item[\gui{Geometry Mapper Options}]~
+  \begin{itemize}
+  \item \index{immediate mode rendering} \index{display lists} Enable or
+    disable the use of display lists. Display lists are internal structures
+    built by graphics systems. They can potentially speed up rendering but
+    can also take up memory.
+  \end{itemize}
+\item[\gui{Translucent Rendering Options}]~
+  \begin{itemize}
+  \item \index{depth peeling} Enable or disable depth peeling. Depth
+    peeling is a technique ParaView uses to properly render translucent
+    surfaces. With it, the top surface is rendered and then ``peeled away''
+    so that the next lower surface can be rendered and so on.  If you find
+    that making surfaces transparent really slows things down or renders
+    completely incorrectly, then your graphics hardware may not be
+    implementing the depth peeling extensions well; try shutting off depth
+    peeling. \icon{pqAdvanced26}
+  \item Set the maximum number of peels to use with depth peeling. Using
+    more peels allows more depth complexity but allowing less peels runs
+    faster. You can try adjusting this parameter if translucent geometry
+    renders too slow or translucent images do not look correct.
+    \icon{pqAdvanced26}
+  \end{itemize}
+\item[\gui{Miscellaneous}]~
+  \begin{itemize}
+  \item When creating very large datasets, default to the outline
+    representation. Surface representations usually require ParaView to
+    extract geometry of the surface, which takes time and memory. For data
+    with size above this threshold, use the outline representation, which
+    has very little overhead, by default instead.
+  \item \index{rendering!performance} Show or hide annotation providing
+    rendering performance information. This information is handy when
+    diagnosing performance problems. \icon{pqAdvanced26}
+  \end{itemize}
 \end{description}
 
+Note that this is not a complete list of ParaView rendering settings. We
+have left out settings that do not significantly effect rendering
+performance. We have also left out settings that are only valid for
+parallel client-server rendering, which are discussed in
+Section~\ref{sec:ParallelRenderParameters}.
+
 \subsection{Basic Parallel Rendering}
+
+\index{rendering!parallel|(}
 
 When performing parallel visualization, we are careful to ensure that the
 data remains partitioned among all of the processes up to and including
 the rendering processes.  ParaView uses a parallel rendering library called
 \keyterm{IceT}.  IceT uses a \keyterm{sort-last} algorithm for parallel
-rendering.  This parallel rendering algorithm allows each process to
+rendering.  This parallel rendering algorithm has each process
 independently render its partition of the geometry and then
 \keyterm{composites} the partial images together to form the final image.
 
@@ -790,9 +822,9 @@ independently render its partition of the geometry and then
 \end{inlinefig}
 
 The preceding diagram is an oversimplification.  IceT contains multiple
-parallel image compositing algorithms such as \keyterm{binary tree} and
-\keyterm{binary swap} that efficiently divide work amongst processes using
-multiple phases.
+parallel image compositing algorithms such as \keyterm{binary tree},
+\keyterm{binary swap}, and \keyterm{radix-k} that efficiently divide work
+among processes using multiple phases.
 
 \begin{inlinefig}
   \includegraphics[scale=\bbscale]{images/ParallelRenderingDetail}
@@ -851,69 +883,78 @@ the dimensions are divided.  In the proceeding images, the left image has
 the full resolution.  The following images were rendered with the
 resolution reduced by a factor of 2, 4, and 8, respectively.
 
+ParaView also has the ability to compress images before transferring them
+from server to client. Compression, of course, reduces the amount of data
+transferred and therefore makes the most of the available bandwidth.
+However, the time it takes to compress and decompress the images adds to
+the latency.
+
+ParaView contains two different image compression algorithms for
+client-server rendering. The first is a custom algorithm called
+\keyterm{Squirt}, which stands for Sequential Unified Image Run Transfer.
+Squirt is a run-length encoding compression that reduces color depth to
+increase run lengths. The second algorithm uses the \keyterm{Zlib}
+compression library, which implements a variation of the Lempel-Ziv
+algorithm. Zlib typically provides better compression than Squirt, but
+takes longer to perform and hence adds to the latency.
+
 \subsection{Parallel Render Parameters}
+\label{sec:ParallelRenderParameters}
 
 \begin{inlinefig}
-  \includegraphics[width=\scw]{images/SettingsServer}
+  \includegraphics[width=0.8\scw]{images/SettingsServer}
 \end{inlinefig}
 
 Like the other 3D rendering parameters, the parallel rendering parameters
-are located in the settings dialog box which is accessed in the menu from
+are located in the settings dialog box, which is accessed in the menu from
 \gui{Edit} \ra \gui{Settings} (\gui{ParaView} \ra \gui{Preferences} on the
 Mac).  The parallel rendering options in the dialog are in the \gui{Render
-  View} \ra \gui{Server} section.  The options have the following meanings.
+  View} tab (intermixed with several other rendering options such as those
+described in Section~\ref{sec:BasicRenderingSettings}). The parallel and
+client-server options are divided among several categories, and several are
+considered advanced.
 
 \begin{description}
-\item[Remote Render Threshold] \index{remote render threshold} The checkbox
-  turns remote rendering on or off.  The slider controls the threshold at
-  which to use parallel rendering.  Whenever the geometry is below the
-  threshold, the geometry is moved to the location where display occurs
-  (usually the client).  Unchecking this box forces all geometry to be
-  copied to the display, which can be dangerous.
-%% \item[Client Outline Threshold] \index{client outline threshold} Controls
-%%   when to render a bounding box in lieu of a reduced geometry (or other
-%%   representation) during interactive rendering.  If the checkbox is on and
-%%   the lower level geometry is above the given threshold, a bounding box is
-%%   rendered in place of the actual geometry.
-\item[Suppress Ordered Compositing] \index{ordered compositing} To view
-  volume rendering and transparent polygons correctly, a special parallel
-  rendering mode called ordered compositing is required.  However, this
-  mode has some additional computation and memory.  Checking this box
-  prevents ordered compositing from ever happening.
-\item[Interactive Subsample Rate] \index{subsample} The overhead of
-  parallel rendering is proportional to the size of the images generated.
-  Thus, you can speed up interactive rendering by specifying an image
-  subsampling rate.  When this box is checked, interactive renders will
-  create smaller images, which are then magnified when displayed.  This
-  parameter is only used during interactive renders.  A full resolution
-  image is always used during a still render.
-\item[Image Compression] Before images are shipped from server to client,
-  they can be compressed using one of two compression algorithms.
-  \keyterm{Squirt} or \keyterm{Zlib}. To make the compression
-  more effective, either algorithm can reduce the color resolution of
-  the image before compression.  The sliders determine the amount of color
-  bits saved.  Full color resolution is always used during a still render.
-\item[Apply presets for...] The optimal settings used on this page are
-  dependent on the network characteristics.  This chooser lets you
-  automatically set up the settings for several common networks.
-\item[Non-Interactive Subsample Rate] Tiled displays are often used for
-  multiple things.  For example, the display may be used for small
-  collaborations or during large presentations.  In the large presentation,
-  the audience is unlikely to be able to resolve all of the pixels in the
-  display.  If that is the case, this option allows you to subsample the
-  still renders and save a significant amount of time.
-%% \item[Compositing Threshold] \index{compositing threshold} The compositing
-%%   threshold is the equivalent of the remote render threshold for tiled
-%%   displays.  The trade offs for performing compositing are different.
-%%   Tiled displays typically have a higher overhead for compositing due to
-%%   their higher resolution displays and they have a lower overhead for
-%%   geometry collection because it is usually done within a high speed
-%%   network.  Thus, it might make sense to set the compositing threshold
-%%   higher than the remote render threshold.  If the geometry size is under
-%%   the compositing threshold, then the entire visible geometry will be
-%%   broadcast to all rendering nodes and each will render directly to their
-%%   tile.
+\item[\gui{Remote/Parallel Rendering Options}]~
+  \begin{itemize}
+  \item \index{remote render threshold} Set the data size at which to
+    render remotely in parallel or to render locally. If the geometry is
+    over this threshold (and ParaView is connected to a remote server), the
+    data is rendered in parallel remotely and images are sent back to the
+    client. If the geometry is under this threshold, the geometry is sent
+    back to the client and images are rendered locally on the client.
+  \item Set the sub-sampling factor for still (non-interactive) rendering.
+    Some large displays have more resolution than is really necessary, so
+    this sub-sampling reduces the resolution of all images displayed.
+    \icon{pqAdvanced26}
+  \end{itemize}
+\item[\gui{Client/Server Rendering Options}]~
+  \begin{itemize}
+  \item \index{interactive render!subsample} \index{subsample} Set the
+    interactive subsampling factor. The overhead of parallel rendering is
+    proportional to the size of the images generated.  Thus, you can speed
+    up interactive rendering by specifying an image subsampling rate.  When
+    this box is checked, interactive renders will create smaller images,
+    which are then magnified when displayed.  This parameter is only used
+    during interactive renders. \icon{pqAdvanced26}
+  \end{itemize}
+\item[\gui{Image Compression}]~
+  \begin{itemize}
+  \item Before images are shipped from server to client, they optionally
+    can be compressed using one of two compression algorithms:
+    Squirt\index{Squirt} or Zlib\index{Zlib}. To make the compression more
+    effective, either algorithm can reduce the color resolution of the
+    image before compression.  The sliders determine the amount of color
+    bits saved. Full color resolution is always used during a still
+    render. \icon{pqAdvanced26}
+  \item Suggested image compression presets are provided for several common
+    network types. When attempting to select the best image compression
+    options, try starting with the presets that best match your connection.
+    \icon{pqAdvanced26}
+  \end{itemize}
 \end{description}
+
+\index{rendering!parallel|)}
 
 \subsection{Parameters for Large Data}
 
@@ -923,28 +964,28 @@ parameters.  The optimal parameters depend on your data and the hardware
 ParaView is running on, but here are several pieces of advice that you
 should follow.
 
-\begin{enumerate}
-\item If your rendering cluster does not have special rendering hardware,
-  turn \gui{Use Immediate Mode Rendering} on.  Turning this option on will
+\begin{itemize}
+\item Try turning off display lists. Turning this option off will
   prevent the graphics system from building special rendering structures.
   If you have graphics hardware, these rendering structures are important
   for feeding the GPUs fast enough.  However, if you do not have GPUs,
   these rendering structures do not help much.
-\item Try turning the \gui{LOD Threshold} \emph{off}.  The geometry
-  decimation can take a long time with large data, and it sometimes does a
-  poor job if your data has high curvatures or strange connectivity.  If
-  the LOD is improving your performance, try moving the \gui{LOD
-    Resolution} slider all the way to the right (10x10x10).
-\item Always have remote rendering on (controlled by the checkbox next to
-  \gui{Remote Render Threshold}).  The remote rendering will use the power
-  of entire server to render and ship images to the client.  If remote
-  rendering is off, geometry is shipped back to the client.  When you have
-  large data, it is always faster to ship images than to ship data.
-\item Turn on subsampling and adjust the \gui{Subsample Rate} as needed.
-  If image compositing is slow, if the connection between client and server
-  has low bandwidth, or if you are rendering very large images, then a
-  higher subsample rate can greatly improve your interactive rendering
-  performance.
+\item If there is a long pause before the first interactive render of a
+  particular data set, it might be the creation of the decimated
+  geometry. Try using an outline instead of decimated geometry for
+  interaction. You could also try lowering the factor of the decimation to
+  0 to create smaller geometry.
+\item Avoid shipping large geometry back to the client. The remote
+  rendering will use the power of entire server to render and ship images
+  to the client.  If remote rendering is off, geometry is shipped back to
+  the client.  When you have large data, it is always faster to ship images
+  than to ship data (although if your network has a high latency, this
+  could become problematic for interactive frame rates).
+\item Adjust the interactive image sub-sampling for client-server rendering
+  as needed.  If image compositing is slow, if the connection between
+  client and server has low bandwidth, or if you are rendering very large
+  images, then a higher subsample rate can greatly improve your interactive
+  rendering performance.
 \item Make sure \gui{Image Compression} is on.  It has a tremendous effect
   on desktop delivery performance, and the artifacts it introduces, which
   are only there during interactive rendering, are minimal.  Lower
@@ -952,12 +993,15 @@ should follow.
   Zlib will create smaller images at the cost of longer
   compression/decompression times.
 \item If the network connection has a high latency, adjust the parameters
-  to avoid remote rendering during interaction.  Turn up \gui{Remote Render
-  Threshold} and try checking the \gui{Use outline for LOD rendering} box
-  if necessary.
-\item If still render is slow, try turning up the \gui{Lock Interactive
-  Render} value to avoid unnecessary renders.
-\end{enumerate}
+  to avoid remote rendering during interaction. In this case, you can try
+  turning up the remote rendering threshold a bit, and this is a place
+  where using the outline for interactive rendering is effective.
+\item If the still (non-interactive) render is slow, try turning on the
+  delay between interactive and still rendering to avoid unnecessary
+  renders.
+\end{itemize}
+
+\index{rendering|)}
 
 
 % Chapter Visualizing Large Models
