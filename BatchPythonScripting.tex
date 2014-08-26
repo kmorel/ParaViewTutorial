@@ -1,6 +1,8 @@
 \chapter{Batch Python Scripting}
 \label{chap:BatchPythonScripting}
 
+\index{Python|(}
+
 Python scripting can be leveraged in two ways within ParaView.  First,
 Python scripts can automate the setup and execution of visualizations by
 performing the same actions as a user at the GUI.  Second, Python scripts
@@ -19,13 +21,12 @@ in this tutorial.  See
 \href{http://catalyst.paraview.org/}{http://catalyst.paraview.org/} for
 more information on Catalyst).
 
-This tutorial gives only a brief introduction to Python scripting.  The
-most recent and complete documentation is kept on the ParaView Wiki.
-
-\begin{quote}
-  \ifthenelse{\boolean{savetrees}}{\scriptsize}{}
-  \href{http://www.paraview.org/Wiki/ParaView/Python_Scripting}{http://www.paraview.org/Wiki/ParaView/Python\_Scripting}
-\end{quote}
+This tutorial gives only a brief introduction to Python scripting. More
+comprehensive documentation on scripting is given in the \emph{ParaView
+  User's Guide}. There are also further links on ParaView's documentation
+web page
+(\href{http://www.paraview.org/documentation}{http://www.paraview.org/documentation})
+including a complete reference to the ParaView Python API.
 
 \section{Starting the Python Interpreter}
 \label{sec:StartingThePythonInterpreter}
@@ -70,22 +71,25 @@ you are running in parallel.
 It is also possible to use the ParaView Python modules from programs
 outside of ParaView.  This can be done by pointing the \texttt{PYTHONPATH}
 environment variable to the location of the ParaView libraries and Python
-modules and pointing the \texttt{LD\_LIBRARY\_PATH} (on Unix/Linux/Mac) or
-\texttt{PATH} (on Windows) environment variable to the ParaView libraries.
-Running the Python script this way allows you to take advantage of
-third-party applications such as IDLE.  For more information on setting up
-your environment, consult the ParaView Wiki.
+modules and pointing the \texttt{LD\_LIBRARY\_PATH} (on Unix/Linux),
+\texttt{DYLD\_LIBRARY\_PATH} (on Mac), or \texttt{PATH} (on Windows)
+environment variable to the ParaView libraries.  Running the Python script
+this way allows you to take advantage of third-party applications such as
+IDLE.  For more information on setting up your environment, consult the
+ParaView Wiki.
 
 \section{Tracing ParaView State}
 \label{sec:TracingParaViewState}
+
+\index{Python!trace|(}
 
 Before diving into the depths of the Python scripting features, let us take
 a moment to explore the automated facilities for creating Python scripts.
 The ParaView GUI's Python \gui{Trace}\index{trace} feature allows one to
 very easily create Python scripts for many common tasks. To use
 \gui{Trace}, one simply begins a trace recording via \gui{Start Trace},
-found in the Tools Menu, and ends a trace recording via \gui{Stop Trace},
-also found in the Tools Menu. This produces a Python script that
+found in the \gui{Tools} menu, and ends a trace recording via \gui{Stop Trace},
+also found in the \gui{Tools} menu. This produces a Python script that
 reconstructs the actions taken in the GUI. That script contains the same
 set of operations that we are about to describe. As such, \gui{Trace}
 recordings are a good resource when you are trying to figure out how to do
@@ -100,13 +104,13 @@ descriptions will help in understanding the contents of any given
   the~\disconnect button.
 
   \begin{enumerate}
-  %% \item If you have not already done so, open the Python shell in the
-  %%   ParaView GUI by selecting \gui{Tools} \ra \gui{Python Shell} from the
-  %%   menu.
-  \item Click the \gui{Start Trace} in the Tool menu.
+  \item Click the \gui{Start Trace} in the \gui{Tools} menu.
+  \item A dialog box with options for the trace is presented. We will
+    discuss the meaning of these options later. For now, just click
+    \gui{OK}.
   \item Build a simple pipeline in the main
     ParaView GUI.  For example, create a sphere source and then clip it.
-  \item Click \gui{Stop Trace} in the Tools meu.  
+  \item Click \gui{Stop Trace} in the \gui{Tools} menu.
   \item An editing window will open populated with a Python script that
     replicates the operations you just made.
     %% Save the Python script to somewhere on your hard drive.
@@ -130,8 +134,48 @@ not have an exercise on state Python scripts, but suffice it to say they
 can be used in much the same way as traced Python scripts.  You are welcome
 to experiment with this feature as you like.
 
+\begin{inlinefig}
+  \includegraphics[width=0.8\scw]{images/TraceOptions}
+\end{inlinefig}
+
+As noted earlier in the exercise, Python tracing has some options that are
+presented in a dialog box before the tracing starts. The first option
+selections what properties are saved to the trace. Some properties you
+explicitly set through the GUI, such as a value entered in a GUI
+widget. Some properties are set internally by the ParaView application,
+such as the initial position of a clip plane based on the bounds of the
+object it is being applied to. Many other properties are left at some
+default value. You can choose one of the following classes of properties to
+save:
+\begin{description}
+\item[\gui{all properties}] Traces the values of all properties even if
+  they remain at the default. This can be helpful to introspect all
+  possible properties or to ensure a consistent state regardless of the
+  settings for other users. This also yields a very verbose output that can
+  be hard to read.
+\item[\gui{any *modified* properties}] Ignores any properties that do not
+  change from their defaults. This is a good option for most use cases.
+\item[\gui{only *user-modified* properties}] Ignores any properties that
+  are not explicitly set by the user. Traces of this nature rely on any
+  internally set properties being reapplied when the script is run.
+\end{description}
+
+The next option has to do with supplemental objects that are managed by the
+ParaView GUI (or client) rather than in the server's state. Check this box
+to capture all of the state associated with these objects, which includes
+color maps, color bars, and other annotation.
+
+Finally, ParaView provides the option to show the trace file as it is being
+generated. This can be a helpful option to use when learning what Python
+commands can be used to replicate particular actions in the ParaView GUI.
+
+\index{Python!trace|)}
+
 \section{Macros}
 \label{sec:Macros}
+
+\index{macro|(}
+\index{Python!macro|(}
 
 A simple but powerful way to customize the behavior of ParaView is to
 add your Python script as a \keyterm{macro}.  A macro is simply an 
@@ -178,6 +222,9 @@ Any Python script can be assigned to a macro.
   visualization on different data.
 \end{exercise}
 
+\index{macro|)}
+\index{Python!macro|)}
+
 \section{Creating a Pipeline}
 \label{sec:CreatingAPipeline}
 
@@ -198,6 +245,8 @@ you when you bring up the scripting dialog in ParaView, but you must add it
 yourself when using the Python interpreter in other programs (including
 \progname{pvpython} and \progname{pvbatch}).
 
+\index{proxy|seealso{Python, proxy}}
+
 The \textpy{paraview.simple} module defines a function for every source,
 reader, filter, and writer defined in ParaView.  The function will be the
 same name as shown in the GUI menus with spaces and special characters
@@ -206,8 +255,8 @@ removed.  For example, the \pyfunc{Sphere} function corresponds to
 function corresponds to \gui{Filters} \ra \gui{Data Analysis} \ra \gui{Plot
   Over Line}.  Each function creates a pipeline object, which will show up
 in the pipeline browser (with the exception of writers), and returns an
-object that is a \keyterm{proxy} that can be used to query and manipulate the
-properties of that pipeline object.
+object that is a \keyterm{proxy}\index{Python!proxy} that can be used to
+query and manipulate the properties of that pipeline object.
 
 There are also several other functions in the \textpy{paraview.simple}
 module that perform other manipulations.  For example, the pair of
@@ -239,7 +288,7 @@ Render()
 
   The \pyfunc{Sphere} command creates a sphere pipeline object.  Once it is
   executed you will see an item in the pipeline browser created.  We save a
-  \index{proxy}proxy to the pipeline object in the variable
+  \index{Python!proxy}proxy to the pipeline object in the variable
   \textpy{sphere}.  We are not using this variable (yet), but it is good
   practice to save references to your pipeline objects.
 
@@ -280,12 +329,13 @@ for the pipeline objects.  As we have seen in the exercises of
 Chapter~\ref{chap:BasicUsage}, it is common to have to modify the
 parameters of the objects using the properties panel.
 
-In Python scripting, we use the \keyterm{proxy} returned from the creation
-functions to manipulate the pipeline objects.  These proxies are in fact
-Python objects with class attributes that correspond to the same properties
-you set in the properties panel.  They have the same names as those in the
-properties panel with spaces and other illegal characters removed.  You can
-set them by simply assigning them a value.
+In Python scripting, we use the \keyterm{proxy}\index{Python!proxy}
+returned from the creation functions to manipulate the pipeline objects.
+These proxies are in fact Python objects with class attributes that
+correspond to the same properties you set in the properties panel.  They
+have the same names as those in the properties panel with spaces and other
+illegal characters removed.  You can set them by simply assigning them a
+value.
 
 \begin{exercise}{Changing Pipeline Object Properties}
   \label{ex:ChangingPipelineObjectProperties}%
@@ -460,8 +510,10 @@ pipeline browser.
     to what is selected in the pipeline browser.
   \item Select something new in the pipeline browser and call
     \textpy{GetActiveSource()} again.
-  \item Change the active object with the \pyfunc{SetActiveSource()}
-    function.  Observe the change in the pipeline browser.
+  \item Change the active object with the \textpy{SetActiveSource()}
+    function. You can use one of the proxy objects you created earlier as
+    an argument to \pyfunc{SetActiveSource}. Observe the change in the
+    pipeline browser.
   \end{itemize}
 \end{exercise}
 
@@ -502,7 +554,7 @@ does.  For example
 \end{python}
 will first give help on the \pyfunc{Sphere} function, then use it to create
 an object, and then give help on the object that was returned (including a
-list of all the properties for the \index{proxy}proxy).
+list of all the properties for the \index{Python!proxy}proxy).
 
 Most of the widgets displayed in the properties panel's \gui{Properties} group
 are automatically generated from the same introspection that builds the
@@ -515,11 +567,10 @@ Regardless of whether the GUI contains a custom panel for a pipeline
 object, you can still get information about that object's properties from
 the GUI's online help.  As always, bring up the help with the
 \icon{pqHelp32} toolbar button.  You can find documentation for all the
-available pipeline objects under the \gui{Sources Menu}, \gui{Filters
-  Menu}, \gui{Readers}, and \gui{Writers} entries in the help
-\gui{Contents}.  Each entry gives a list of objects of that type.  Clicking
-on any one of the objects gives a list of the properties you can set from
-within Python.
+available pipeline objects under the \gui{Sources}, \gui{Filters},
+\gui{Readers}, and \gui{Writers} entries in the help \gui{Contents}.  Each
+entry gives a list of objects of that type.  Clicking on any one of the
+objects gives a list of the properties you can set from within Python.
 
 \begin{inlinefig}
   \includegraphics[width=\scw]{images/ObjectHelp}
@@ -532,9 +583,10 @@ within Python.
 The equivalent to opening a file in the ParaView GUI is to create a reader
 in Python scripting.  Reader objects are created in much the same way as
 sources and filters; \textpy{paraview.simple} has a function for each
-reader type that creates the pipeline object and returns a \index{proxy}proxy
-object. One can instantatiate any given reader directly as described
-below, or more simply call \textpy{reader = OpenDataFile(\argdesc{filename})}
+reader type that creates the pipeline object and returns a
+\index{Python!proxy}proxy object. One can instantatiate any given reader
+directly as described below, or more simply call \textpy{reader =
+  OpenDataFile(\argdesc{filename})}
 
 All reader objects have at least one property (hidden in the GUI) that
 specifies the file name.  This property is conventionally called either
@@ -564,7 +616,13 @@ file name.
 reader = OpenDataFile('\argdesc{path}/disk_out_ref.ex2')
 Show()
 Render()
+ResetCamera()
   \end{pythonpluscommands}
+
+  Note that we have added a \pyfunc{ResetCamera} to the end of these
+  commands because the disk\_out\_ref.ex2 data does not fit in the standard
+  view. The GUI automatically resets the camera when adding data to an
+  empty view, but Python scripting does not.
 \end{exercise}
 
 
@@ -629,7 +687,7 @@ separate representation object instance for every pipeline-object--view
 pair.  This is so that each view can display the data differently.
 
 Representations are created automatically.  You can get the
-\index{proxy}proxy to the representation objects with the
+\index{Python!proxy}proxy to the representation objects with the
 \pyfunc{GetRepresentation} function.  With no arguments, this function will
 return the representation for the active pipeline object and the active
 view.  You can also specify a pipeline object or view or both.
@@ -642,9 +700,9 @@ view.  You can also specify a pipeline object or view or both.
   beginning this one.
 
   Let us change the color of the geometry to blue and give it a very
-  pronounced specular highlight (that is, make it really shiny).  Type in
-  the following into the Python shell to get the representation and change
-  the material properties.
+  pronounced specular highlight\index{specular highlight} (that is, make it
+  really \index{shiny}shiny).  Type in the following into the Python shell
+  to get the representation and change the material properties.
 
   \begin{python}
 readerRep = GetRepresentation()
@@ -670,6 +728,7 @@ Render()
   \end{python}
 \end{exercise}
 
+\index{Python|)}
 
 
 
