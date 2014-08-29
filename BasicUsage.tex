@@ -479,7 +479,7 @@ These submenus are organized as follows.
 \item[Temporal] Filters that analyze or modify data that changes over time.
   All filters can work on data that changes over time because they are
   executed on each time snapshot.  However, filters in this category will
-  introspect the available time extents and examine how data changes over
+  retrieve the available time extents and examine how data changes over
   time.
 \item[Alphabetical] An alphabetical listing of all the filters available.
   If you are not sure where to find a particular filter, this list is
@@ -1151,9 +1151,10 @@ object.  Let us try an example of that now.
   \end{inlinefig}
 
   The solid opaque mesh is replaced with a translucent volume. You may
-  notice that when rotating the image is temporarily replaced with a
-  simpler image for performance reasons, which we discuss
-  in more detail later in Chapter~\ref{chap:VisualizingLargeModels}.
+  notice that when rotating your object that the rendering is temporarily
+  replaced with a simpler transparent surface for performance reasons. We
+  discuss this behavior in more detail later in
+  Chapter~\ref{chap:VisualizingLargeModels}.
 \end{exercise}
 
 A useful feature of ParaView's volume rendering is that it can be mixed
@@ -1978,7 +1979,7 @@ Feel free to experiment with the selections now.
 You can manage your selection with the \gui{Find Data}~\findData dialog
 even if the selection was created with one of these 3D interactions rather
 than directly with a find data query. The find data dialog allows you to
-view all the points and cells in the selection as well perform simple
+view all the points and cells in the selection as well as perform simple
 operations on the selection. These include inverting the selection (a
 checkbox just over the spreadsheet), adding labels
 (Exercise~\ref{ex:LabelingSelections}), freezing selections
@@ -2376,7 +2377,7 @@ to automatically generate such an animation.
   \begin{enumerate}
   \item Place the camera where you want the orbit to start.  The camera
     will move to the right around the viewpoint.
-  \item Now make sure the animation view panel is visible (\gui{View} \ra
+  \item Make sure the animation view panel is visible (\gui{View} \ra
     \gui{Animation View} if it is not).
   \item In the property selection widgets, select \gui{Camera} in the first
     box and \gui{Orbit} in the second box.
@@ -2404,5 +2405,38 @@ to automatically generate such an animation.
   The camera will now animate around the object.
 \end{exercise}
 
+Another common camera annotation is to follow an object as it moves
+through space. Imagine a simulation of a traveling bullet or vehicle. If we
+hold the camera steady, then the object will quickly move out of view. To
+help with this situation, ParaView provides a special track that allows the
+camera to follow the data in the scene.
+
+\begin{exercise}{Following Data in an Animation}%
+  \label{ex:FollowingDataInAnAnimation}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to select \gui{Edit} \ra
+  \gui{Reset Session} from the menu.
+
+  \begin{enumerate}
+  \item Open the file \gui{can.ex2}, load all variables, \apply (see
+    Exercise~\ref{ex:LoadingTemporalData}).
+  \item Press the~\yPlus button to orient the camera to the mesh.
+  \item Make sure the animation view panel is visible (\gui{View} \ra
+    \gui{Animation View} if it is not).
+  \item In the property selection widgets, select \gui{Camera} in the first
+    box and \gui{Follow Data} in the second box.
+    \begin{inlinefig}
+      \includegraphics[height=1.5\baselineskip]{images/AddCameraFollowData}
+    \end{inlinefig}
+    Hit the \icon{Plus} button.
+  \item Play~\vcrPlay.
+  \end{enumerate}
+
+  Note that instead of the can crushing to the bottom of the view, the
+  animation shows the can lifted up to be continually centered in the
+  image. This is because the camera is following the can down as it is
+  crushed.
+\end{exercise}
 
 % Chapter Basic Usage
