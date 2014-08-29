@@ -1070,7 +1070,7 @@ temperature variables.
 
   \begin{enumerate}
     \restorecounter
-  \item Select the \gui{Pres} variable in the \gui{Display} tab.
+  \item Select the \gui{Pres} variable in the \gui{Display} options.
   \item Change the \gui{Chart Axis} to \gui{Bottom - Right}
   \end{enumerate}
 
@@ -1905,9 +1905,13 @@ dialog box.
   In this exercise we will find all cells with a large equivalent plastic
   strain (EQPS).
 
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to select \gui{Edit} \ra
+  \gui{Reset Session} from the menu.
+
   \begin{enumerate}
-  \item If you do not already have it loaded from the previous exercise,
-    open the file \gui{can.ex2}, load all variables, \apply (see
+  \item Open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
   \item Go to the last time step~\vcrLast.
   \item Open the find data dialog~\findData.
@@ -2212,12 +2216,14 @@ done through the \gui{Extract Selection}~\extractSelection filter.
 
 \begin{exercise}{Extracting a Selection}
   \label{ex:ExtractingASelection}%
+  We are going to start a fresh visualization, so if you have been
+  following along with the exercises so far, now is a good time to reset
+  ParaView.  The easiest way to do this is to select \gui{Edit} \ra
+  \gui{Reset Session} from the menu.
+
   \begin{enumerate}
-  \item If you do not already have it loaded from the previous exercise,
-    open the file \gui{can.ex2}, load all variables, \apply (see
+  \item Open the file \gui{can.ex2}, load all variables, \apply (see
     Exercise~\ref{ex:LoadingTemporalData}).
-  \item Turn off cell labels if they are still showing (use the
-    \gui{Find Data} dialog).
   \item Make a sizable cell selection for example, with Select Cells
     Through~\selectCellsThrough.
   \item Create an \gui{Extract Selection}~\extractSelection
