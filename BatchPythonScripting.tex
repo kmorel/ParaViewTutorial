@@ -836,15 +836,18 @@ In all cases ParaView uses the file name extension to determine the specific fil
   Let us first probe the data to get something compact out of it. Then we will save out the result of the probe in the form of a comma separated values file so that we can look at it in a text editor and import it into any other tool we choose.
 
   \begin{pythonpluscommands}
-probe = PlotOverLine()
-probe.Source.Point1 = [0,0,0]
-probe.Source.Point2 = [0,0,10]
+plot = PlotOverLine()
+plot.Source.Point1 = [0,0,0]
+plot.Source.Point2 = [0,0,10]
 writer = CreateWriter('\argdesc{path}/plot.csv')
 writer.UpdatePipeline()
   \end{pythonpluscommands}
 
   Next, lets save out a screenshot of our results.
   \begin{pythonpluscommands}
+plotView = CreateView('XYChartView')
+Show(plot)
+Render()
 SaveScreenshot('\argdesc{path}/plot.png')
   \end{pythonpluscommands}
 \end{exercise}
