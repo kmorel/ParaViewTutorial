@@ -790,7 +790,8 @@ view.UseGradientBackground = True
 Render()
   \end{python}
 
-  Next, let us ask the view what position the camera is sitting at, and then move it within a loop to create a short animation.
+  Next, let us ask the view what position the camera is sitting at, and
+  then move it within a for loop to create a short animation.
   \begin{python}
 x,y,z = view.CameraPosition
 print x,y,z
@@ -826,25 +827,26 @@ compressed animations is as simple as typing
 In all cases ParaView uses the file name extension to determine the specific file type to create.
 
 \begin{exercise}{Save Results}
-  \label{ex:ControlView}%
-  This exercise is a continuation of Exercise~\ref{ex:CreatingAReader}.
-  If you do not have the exodus file open, you will need to finish that
-  exercise before beginning this one.
+  \label{ex:SaveResults}%
+  This exercise is a continuation of Exercise~\ref{ex:CreatingAReader} (and
+  optionally Exercises \ref{ex:GettingFieldInformation} through
+  \ref{ex:ControlView}). If you do not have the exodus file open, you will
+  need to finish that exercise before beginning this one.
 
   Let us first probe the data to get something compact out of it. Then we will save out the result of the probe in the form of a comma separated values file so that we can look at it in a text editor and import it into any other tool we choose.
 
-  \begin{python}
+  \begin{pythonpluscommands}
 probe = PlotOverLine()
-probe.Source.Point1 = [0,0,-10]
-probe.Source.Point1 = [0,0,10]
+probe.Source.Point1 = [0,0,0]
+probe.Source.Point2 = [0,0,10]
 writer = CreateWriter('\argdesc{path}/plot.csv')
 writer.UpdatePipeline()
-  \end{python}
+  \end{pythonpluscommands}
 
   Next, lets save out a screenshot of our results.
-  \begin{python}
+  \begin{pythonpluscommands}
 SaveScreenshot('\argdesc{path}/plot.png')
-  \end{python}
+  \end{pythonpluscommands}
 \end{exercise}
 
 As you can see, ParaView's scripting interface is quite powerful, and once you know the fundamentals and are familiar with Python's syntax, it is fairly easy to get up and running with it. We have just touched on the higher level aspects of ParaView scriptability in this tutorial. More details, including how to run python scripted filters, how to work with numpy and other tools, and how to package your scripts for execution under batch schedulers can be found online.
