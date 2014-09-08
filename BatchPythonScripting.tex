@@ -265,6 +265,11 @@ functions \pyfunc{Show} and \pyfunc{Hide} turn on and off, respectively,
 the visibility of a pipeline object in a view.  The \pyfunc{Render}
 function causes a view to be redrawn.
 
+To obtain a concise list of the functions available in \textpy{paraview.simple},
+invoke \textpy{dir(paraview.simple)}. Alternatively, as explained in
+Section~\ref{sec:OnlineHelp} you can get a verbose listing via
+\textpy{help(paraview.simple)}.
+
 \begin{exercise}{Creating and Showing a Source}
   \label{ex:CreatingAndShowingASource}%
   If you have been following an exercise in a previous section, now is a
@@ -335,8 +340,10 @@ returned from the creation functions to manipulate the pipeline objects.
 These proxies are in fact Python objects with class attributes that
 correspond to the same properties you set in the properties panel.  They
 have the same names as those in the properties panel with spaces and other
-illegal characters removed.  You can set them by simply assigning them a
-value.
+illegal characters removed.  Use \pyfunc{dir(variable)} or
+\pyfunc{help(variable)} to get a list of all attributes on any variable
+that you have access to.  In most cases, simply assign values to an object's
+attributes in order to change them.
 
 \begin{exercise}{Changing Pipeline Object Properties}
   \label{ex:ChangingPipelineObjectProperties}%
@@ -348,6 +355,13 @@ value.
   Recall that we have so far created two Python variables, \textpy{sphere}
   and \textpy{shrink}, that are proxies to the corresponding pipeline
   objects.  First, enter the following command into the Python shell to get
+  a concise listing of all attributes of the sphere.
+
+  \begin{python}
+dir(sphere)
+  \end{python}
+
+  Next, enter the following command into the Python shell to get
   the current value of the \gui{Theta Resolution} property of the sphere.
 
   \begin{python}
@@ -431,7 +445,13 @@ Render()
   Multiple filters are attached to an input is known as \keyterm{fan in}.
   In ParaView's Python scripting, fan in is handled much like fan out, by
   explicitly defining a filter's inputs.  When setting multiple inputs (on
-  a single port), simply set the input to a list of pipeline objects rather
+  a single
+  port\footnote{
+  Filters that have multiple input ports, like \textpy{ResampleWithDataset},
+  use different names to distinguish amongst the input properties instead.
+  The ports are typically called
+  ``Input'' and ``Source'' but consult \gui{Trace} or \pyfunc{help} to be sure.
+  }), simply set the input to a list of pipeline objects rather
   than a single one.  For example, let us group the results of the shrink
   and extract edges filters using the \gui{Group Datasets} filter.  Type
   the following line in the Python shell.
@@ -585,7 +605,7 @@ The equivalent to opening a file in the ParaView GUI is to create a reader
 in Python scripting.  Reader objects are created in much the same way as
 sources and filters; \textpy{paraview.simple} has a function for each
 reader type that creates the pipeline object and returns a
-\index{Python!proxy}proxy object. One can instantatiate any given reader
+\index{Python!proxy}proxy object. One can instantiate any given reader
 directly as described below, or more simply call \textpy{reader =
   OpenDataFile(\argdesc{filename})}
 
@@ -688,8 +708,13 @@ properties such as coloring and lighting.  Parameters made available in the
 separate representation object instance for every pipeline-object--view
 pair.  This is so that each view can display the data differently.
 
-Representations are created automatically.  You can get the
-\index{Python!proxy}proxy to the representation objects with the
+Representations are created automatically by the GUI. In python scripting
+they are created with the \pyfunc{Show} function instead.
+In fact \textpy{Show} returns a \index{Python!proxy}proxy to the
+representation.
+Therefore you can save \pyfunc{Show}'s return value in a variable as we've
+done above for sources, filters and readers.
+If you neglect to save it, you can always get it back with the
 \pyfunc{GetRepresentation} function.  With no arguments, this function will
 return the representation for the active pipeline object and the active
 view.  You can also specify a pipeline object or view or both.
@@ -730,8 +755,100 @@ Render()
   \end{python}
 \end{exercise}
 
-\index{Python|)}
+\section{Views}
+\label{sec:Views}
+\index{views}
 
+Drawing areas or windows are called Views in ParaView.
+As with readers, sources, filters, and representations, views are wrapped
+into python objects and these can be obtained and controlled via scripts.
+Views are created automatically by the GUI but in python scripts they are created and returned by the \pyfunc{Render} function instead.
+To get access to the currently active view, call \pyfunc{GetActiveView} and to get a list of all Views, call GetRenderView() instead.
+
+Once you have a view you have access to all of the properties that you see on
+the \gui{View} group of the GUI. For instance you can easily change the
+display of the orientation widget, the background color, lighting and more.
+Besides these first level properties, the view also gives you access to other scene wide controls such as the camera, animation time, and when not running alongside the GUI, the view's size.
+
+\begin{exercise}{Controlling the View}
+  \label{ex:ControlView}%
+  This exercise is a continuation of Exercise~\ref{ex:CreatingAReader} (and
+  optionally Exercises~\ref{ex:GettingFieldInformation}
+  and~\ref{ex:ColoringData}).
+  If you do not have the exodus file open, you will need to finish that
+  exercise before beginning this one.
+
+  Let us change the background color of the scene from ParaView's default gray 
+  to a nice gradient instead. Type the following into the Python shell
+  to get a hold of the View and change it.
+
+  \begin{python}
+view = GetActiveView()
+view.Background = [0, 0, 0]
+view.Background2 = [0, 0, 0.6]
+view.UseGradientBackground = True
+Render()
+  \end{python}
+
+  Next, let us ask the view what position the camera is sitting at, and then move it within a loop to create a short animation.
+  \begin{python}
+x,y,z = view.CameraPosition
+print x,y,z
+for iter in range(0,10):
+  x = x + 1
+  y = y + 1
+  z = z + 1
+  view.CameraPosition = [x,y,z]
+  print x,y,z
+  Render()
+  \end{python}
+
+\end{exercise}
+
+
+\section{Saving Results}
+\label{sec:Saving}
+\index{Saving Results}
+
+Within a script it is easy to save out results, and by saving your data and
+your scripts it becomes easy to create reproducible visualization with
+ParaView.
+
+As within the GUI, there are several products that you might like to save off when you are working with ParaView.
+\begin{itemize}
+\item To save out the data produced by a filter, get a hold of the source that you want to save, then create, assign a file name to and update a writer proxy.
+This is analogous to clicking on a pipeline element and selecting \gui{File \ra Save Data}.
+\item Saving images is as simple as typing \textpy{SaveScreenshot(`\argdesc{path}/filename.still\_extension')}.
+\item Assuming your ParaView is linked to an encoder and codecs, saving
+compressed animations is as simple as typing
+\textpy{WriteAnimation(`\argdesc{path}/filename.animation\_extension')}.
+\end{itemize}
+In all cases ParaView uses the file name extension to determine the specific file type to create.
+
+\begin{exercise}{Save Results}
+  \label{ex:ControlView}%
+  This exercise is a continuation of Exercise~\ref{ex:CreatingAReader}.
+  If you do not have the exodus file open, you will need to finish that
+  exercise before beginning this one.
+
+  Let us first probe the data to get something compact out of it. Then we will save out the result of the probe in the form of a comma separated values file so that we can look at it in a text editor and import it into any other tool we choose.
+
+  \begin{python}
+probe = PlotOverLine()
+probe.Source.Point1 = [0,0,-10]
+probe.Source.Point1 = [0,0,10]
+writer = CreateWriter('\argdesc{path}/plot.csv')
+writer.UpdatePipeline()
+  \end{python}
+
+  Next, lets save out a screenshot of our results.
+  \begin{python}
+SaveScreenshot('\argdesc{path}/plot.png')
+  \end{python}
+\end{exercise}
+
+As you can see, ParaView's scripting interface is quite powerful, and once you know the fundamentals and are familiar with Python's syntax, it is fairly easy to get up and running with it. We have just touched on the higher level aspects of ParaView scriptability in this tutorial. More details, including how to run python scripted filters, how to work with numpy and other tools, and how to package your scripts for execution under batch schedulers can be found online.
+\index{Python|)}
 
 
 % Chapter Batch Python Scripting
