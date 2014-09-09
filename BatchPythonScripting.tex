@@ -761,13 +761,15 @@ Render()
 
 Drawing areas or windows are called Views in ParaView.
 As with readers, sources, filters, and representations, views are wrapped
-into python objects and these can be obtained and controlled via scripts.
-Views are created automatically by the GUI but in python scripts they are created and returned by the \pyfunc{Render} function instead.
-To get access to the currently active view, call \pyfunc{GetActiveView} and to get a list of all Views, call GetRenderView() instead.
+into python objects and these can be created, obtained and controlled via scripts.
+
+Views are usually created for you by the GUI, but in python you have to create views more intentionally.
+The most convenient way to do so is to rely on the way that \pyfunc{Render} returns a view, creating one first if necessary.
+If you prefer, you can create specific view types via \pyfunc{CreateView(`viewname')} or \pyfunc{CreateRenderView}, \pyfunc{CreateXYPlotView} and the like.
+However you make them, call \pyfunc{GetRenderView} to get a list of all Views,  or \pyfunc{GetActiveView} get access to the currently active view
 
 Once you have a view you have access to all of the properties that you see on
-the \gui{View} group of the GUI. For instance you can easily change the
-display of the orientation widget, the background color, lighting and more.
+the \gui{View} group of the GUI. For instance you can easily turn on and off the orientation widget, change the background color, alter the lighting and more.
 Besides these first level properties, the view also gives you access to other scene wide controls such as the camera, animation time, and when not running alongside the GUI, the view's size.
 
 \begin{exercise}{Controlling the View}
@@ -815,7 +817,7 @@ Within a script it is easy to save out results, and by saving your data and
 your scripts it becomes easy to create reproducible visualization with
 ParaView.
 
-As within the GUI, there are several products that you might like to save off when you are working with ParaView.
+As within the GUI, there are several products that you might like to save out when you are working with ParaView.
 \begin{itemize}
 \item To save out the data produced by a filter, get a hold of the source that you want to save, then create, assign a file name to and update a writer proxy.
 This is analogous to clicking on a pipeline element and selecting \gui{File \ra Save Data}.
@@ -843,7 +845,7 @@ writer = CreateWriter('\argdesc{path}/plot.csv')
 writer.UpdatePipeline()
   \end{pythonpluscommands}
 
-  Next, lets save out a screenshot of our results.
+  Next, lets create a \gui{LineChartView} to show the plot in and then save out a screenshot of our results.
   \begin{pythonpluscommands}
 plotView = CreateView('XYChartView')
 Show(plot)
