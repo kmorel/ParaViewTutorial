@@ -763,10 +763,14 @@ Drawing areas or windows are called Views in ParaView.
 As with readers, sources, filters, and representations, views are wrapped
 into python objects and these can be created, obtained and controlled via scripts.
 
-Views are usually created for you by the GUI, but in python you have to create views more intentionally.
-The most convenient way to do so is to rely on the way that \pyfunc{Render} returns a view, creating one first if necessary.
-If you prefer, you can create specific view types via \pyfunc{CreateView(`viewname')} or \pyfunc{CreateRenderView}, \pyfunc{CreateXYPlotView} and the like.
-However you make them, call \pyfunc{GetRenderView} to get a list of all Views,  or \pyfunc{GetActiveView} get access to the currently active view
+Views are usually created for you by the GUI, but in python you have to
+create views more intentionally.  The most convenient way to do so is to
+rely on the way that \pyfunc{Render} returns a view, creating one first if
+necessary.  If you prefer, you can create specific view types via
+\pyfunc{CreateView('\argdesc{viewname}')} or \pyfunc{CreateRenderView},
+\pyfunc{CreateXYPlotView} and the like.  However you make them, call
+\pyfunc{GetRenderView} to get a list of all Views, or
+\pyfunc{GetActiveView} get access to the currently active view
 
 Once you have a view you have access to all of the properties that you see on
 the \gui{View} group of the GUI. For instance you can easily turn on and off the orientation widget, change the background color, alter the lighting and more.
@@ -797,7 +801,7 @@ Render()
   \begin{python}
 x,y,z = view.CameraPosition
 print x,y,z
-for iter in range(0,10):
+for iter in xrange(0,10):
   x = x + 1
   y = y + 1
   z = z + 1
@@ -819,14 +823,18 @@ ParaView.
 
 As within the GUI, there are several products that you might like to save out when you are working with ParaView.
 \begin{itemize}
-\item To save out the data produced by a filter, get a hold of the source that you want to save, then create, assign a file name to and update a writer proxy.
-This is analogous to clicking on a pipeline element and selecting \gui{File \ra Save Data}.
-\item Saving images is as simple as typing \textpy{SaveScreenshot(`\argdesc{path}/filename.still\_extension')}.
+\item To save out the data produced by a filter, get a hold of the source
+  that you want to save, then create, assign a file name to and update a
+  writer proxy.  This is analogous to clicking on a pipeline element and
+  selecting \gui{File \ra Save Data}.
+\item Saving images is as simple as typing
+  \textpy{SaveScreenshot('\argdesc{path}/filename.still\_extension')}.
 \item Assuming your ParaView is linked to an encoder and codecs, saving
-compressed animations is as simple as typing
-\textpy{WriteAnimation(`\argdesc{path}/filename.animation\_extension')}.
+  compressed animations is as simple as typing
+  \textpy{WriteAnimation('\argdesc{path}/filename.animation\_extension')}.
 \end{itemize}
-In all cases ParaView uses the file name extension to determine the specific file type to create.
+In all cases ParaView uses the file name extension to determine the
+specific file type to create.
 
 \begin{exercise}{Save Results}
   \label{ex:SaveResults}%
