@@ -366,13 +366,12 @@ found in the \gui{Display} group of the properties panel.)
 
 \begin{exercise}{Representation and Field Coloring}
   \label{ex:RepresentationAndFieldColoring}%
-  Play with the data representation a bit.  Make sure
-  \gui{disk\_out\_ref.ex2} is selected in the pipeline browser.  (If you do
-  not have the data loaded, repeat Exercise~\ref{ex:OpeningAFile}.)  Use
-  the variable chooser to color the surface by the \gui{Pres} variable.
-  Then turn the color legend on to see the actual pressure values.  To see
+  Play with the data representation a bit. Make sure
+  \gui{disk\_out\_ref.ex2} is selected in the pipeline browser. (If you do
+  not have the data loaded, repeat Exercise~\ref{ex:OpeningAFile}.) Use the
+  variable chooser to color the surface by the \gui{Pres} variable. To see
   the structure of the mesh, change the representation to \gui{Surface With
-    Edges}.  You can view both the cell structure and the interior of the
+    Edges}. You can view both the cell structure and the interior of the
   mesh with the \gui{Wireframe} representation.
 
   \begin{inlinefig}
@@ -458,29 +457,33 @@ These submenus are organized as follows.
 
 \begin{description}
 \item[Recent] The list of most recently used filters sorted with the most
-  recently used filters on top.
+  recently used filters on top. \index{recent filters} \index{filters!recent}
 \item[AMR] A set of filters designed specifically for data in an adaptive
-  mesh refinement (AMR) \index{AMR} structure.
+  mesh refinement (AMR) \index{AMR} structure. \index{filters!AMR}
+\item[Annotation] Filters that add annotation (such as text information) to
+  the visualization. \index{filters!annotation}
 \item[CTH] Filters used to process results from a CTH \index{CTH} simulation.
 \item[Common] The most common filters.  This is the same list of filters
   available in the filters toolbar and listed previously.
+  \index{filters!common} \index{common filters}
 \item[CosmoTools] This contains filters developed at LANL for cosmology
-  research.
+  research. \index{CosmoTools} \index{filters!CosmoTools}
 \item[Data Analysis] The filters designed to retrieve quantitative values
   from the data.  These filters compute data on the mesh, extract elements
-  from the mesh, or plot data.
+  from the mesh, or plot data. \index{filters!data analysis}
 \item[Material Analysis] Filters for processing data from volume fractions
-  of materials.
+  of materials. \index{filters!material analysis}
 \item[Quadrature Points] Filters to support simulation data given as
   integration points that can be used for numerical integration with
-  Gaussian quadrature.
+  Gaussian quadrature. \index{filters!quadrature points}
 \item[Statistics] This contains filters that provide descriptive
-  statistics of data, primarily in tabular form.
+  statistics of data, primarily in tabular form. \index{filters!statistics}
+  \index{statistcs filters}
 \item[Temporal] Filters that analyze or modify data that changes over time.
   All filters can work on data that changes over time because they are
   executed on each time snapshot.  However, filters in this category will
   retrieve the available time extents and examine how data changes over
-  time.
+  time. \index{temporal filters} \index{filters!temporal}
 \item[Alphabetical] An alphabetical listing of all the filters available.
   If you are not sure where to find a particular filter, this list is
   guaranteed to have it.  There are also many filters that are not listed
@@ -1590,7 +1593,7 @@ text annotation wherever you want in a 3D view.  There is a special
   for placing the text in the most common locations.
 
   \begin{inlinefig}
-    \includegraphics[width=.66\scw]{images/TextPosition}
+    \includegraphics[width=.75\scw]{images/TextPosition}
   \end{inlinefig}
 \end{exercise}
 

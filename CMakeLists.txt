@@ -4,7 +4,7 @@ PROJECT(ParaViewTutorial NONE)
 
 INCLUDE(UseLATEX.cmake)
 
-SET(PARAVIEW_VERSION "4.2")
+SET(PARAVIEW_VERSION "4.3")
 
 SET(SHORT_TITLE "The ParaView Tutorial")
 SET(LONG_TITLE "${SHORT_TITLE} \\\\ {\\small Version ${PARAVIEW_VERSION}}")
